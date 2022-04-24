@@ -165,7 +165,7 @@
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.nav {
 		@apply bg-white border-r border-gray-100;
 	}

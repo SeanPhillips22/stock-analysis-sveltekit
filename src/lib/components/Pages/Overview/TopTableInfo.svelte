@@ -43,7 +43,7 @@
 	</tbody>
 </table>
 
-<style>
+<style type="text/postcss">
 	table {
 		@apply w-[48%] text-small text-gray-900 lg:w-auto lg:min-w-[210px];
 	}

@@ -1,5 +1,6 @@
-<script>
-	export let time
+<script lang="ts">
+	import type { Time } from './types'
+	export let time: Time
 </script>
 
 <div>
@@ -43,9 +44,20 @@
 	</ul>
 </div>
 
-<style>
+<style type="text/postcss">
 	.price-controls {
-		@apply hide-scroll flex space-x-[3px] whitespace-nowrap pl-0.5 xs:space-x-1;
+		@apply flex space-x-[3px] whitespace-nowrap pl-0.5 xs:space-x-1;
+	}
+
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	.price-controls::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.price-controls {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
 	}
 
 	.price-controls > li > button {

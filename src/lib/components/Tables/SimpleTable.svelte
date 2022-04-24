@@ -36,7 +36,7 @@
 	</tbody>
 </table>
 
-<style>
+<style type="text/postcss">
 	table tr th {
 		@apply bg-white text-left border-t border-gray-200 whitespace-nowrap;
 	}

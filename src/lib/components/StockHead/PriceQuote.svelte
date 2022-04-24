@@ -37,13 +37,13 @@
 
 	// Set the change color based on the change in price
 	let color: string
-	$: if (quote.c > 0) color = 'qg'
-	else if (quote.c < 0) color = 'qr'
+	$: if (Number(quote.c) > 0) color = 'qg'
+	else if (Number(quote.c) < 0) color = 'qr'
 	else color = 'qgr'
 
 	let extendedColor: string
-	$: if (quote.ec > 0) extendedColor = 'qg'
-	else if (quote.ec < 0) extendedColor = 'qr'
+	$: if (Number(quote.ec) > 0) extendedColor = 'qg'
+	else if (Number(quote.ec) < 0) extendedColor = 'qr'
 	else extendedColor = 'qgr'
 </script>
 

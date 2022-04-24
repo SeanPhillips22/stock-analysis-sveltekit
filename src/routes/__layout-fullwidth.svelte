@@ -42,7 +42,7 @@
 
 <Footer />
 
-<style>
+<style type="text/postcss">
 	.mainbody {
 		@apply grow xxl:grid xxl:grid-cols-leftnav gap-x-0;
 	}

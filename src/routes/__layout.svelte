@@ -35,7 +35,7 @@
 
 <Footer />
 
-<style>
+<style type="text/postcss">
 	.mainbody {
 		@apply grow xxl:grid xxl:max-w-[1420px] xxl:grid-cols-leftnav xxl:gap-x-1 xxxl:gap-x-2;
 	}

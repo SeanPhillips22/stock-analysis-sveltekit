@@ -1,11 +1,11 @@
-import { Quote } from 'types/Quote'
+import type { Quote } from './Quote'
 
 export interface Info {
 	id: number
 	symbol: string
 	ticker: string
 	name: string
-	type: string
+	type: 'stocks' | 'etf'
 	nameFull: string
 	exchange: string
 	isOTC: boolean // Is it an over the counter stock (short for exchange === 'OTCMKTS')

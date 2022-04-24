@@ -16,7 +16,7 @@
 	<StockNav {info} />
 </div>
 
-<style>
+<style type="text/postcss">
 	.container {
 		@apply mx-auto mb-2;
 	}

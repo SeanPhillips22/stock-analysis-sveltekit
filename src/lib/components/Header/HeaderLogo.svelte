@@ -18,7 +18,7 @@
 	</div>
 </a>
 
-<style>
+<style type="text/postcss">
 	.hd-logo-wrap {
 		@apply mx-1 h-8 max-w-[32px] overflow-hidden md:h-auto md:max-w-none lg:mx-0;
 	}

@@ -65,7 +65,7 @@
 	</ul>
 </nav>
 
-<style>
+<style type="text/postcss">
 	nav {
 		@apply w-full border-b-2 border-blue-brand_sharp;
 	}

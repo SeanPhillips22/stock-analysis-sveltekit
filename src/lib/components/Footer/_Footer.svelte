@@ -119,7 +119,7 @@
 	</div>
 </footer>
 
-<style>
+<style type="text/postcss">
 	.group-title {
 		@apply text-sm font-semibold uppercase tracking-wider text-gray-400;
 	}

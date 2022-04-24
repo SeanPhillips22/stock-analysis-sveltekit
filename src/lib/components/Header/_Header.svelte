@@ -12,7 +12,7 @@
 	</div>
 </header>
 
-<style>
+<style type="text/postcss">
 	header {
 		@apply sticky top-0 z-50 bg-white shadow-md landscape:static landscape:lg:sticky;
 		background-color: #ffffff;
