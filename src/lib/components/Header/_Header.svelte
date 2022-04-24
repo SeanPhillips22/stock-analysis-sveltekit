@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import HeaderLogo from './HeaderLogo.svelte'
 	import HeaderMenuToggle from './HeaderMenuToggle.svelte'
 	import HeaderSearch from './HeaderSearch.svelte'

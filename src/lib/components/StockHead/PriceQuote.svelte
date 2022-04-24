@@ -1,18 +1,20 @@
-<script>
+<script lang="ts">
 	// Display the stock price quote, for either a stock or ETF
 	// It's either one or two blocks depending on whether extended hour
 	// trading info is available
+	import type { Info } from '$lib/types/Info';
+	import type { Quote } from '$lib/types/Quote';
 	import { onMount, onDestroy } from 'svelte'
 	import SunIcon from '$lib/icons/Sun.svelte'
 	import MoonIcon from '$lib/icons/Moon.svelte'
 
-	export let info
+	export let info: Info
 
 	// Replace react query with own
 	// When component is mounted, create an interval to fetch the
 	// stock price every 5 seconds
-	let refetch
-	let freshQuote
+	let refetch: ReturnType<typeof setInterval>
+	let freshQuote: Quote
 	onMount(() => {
 		refetch = setInterval(async () => {
 			try {
@@ -34,12 +36,12 @@
 	$: quote = freshQuote ? freshQuote : info.quote
 
 	// Set the change color based on the change in price
-	let color
+	let color: string
 	$: if (quote.c > 0) color = 'qg'
 	else if (quote.c < 0) color = 'qr'
 	else color = 'qgr'
 
-	let extendedColor
+	let extendedColor: string
 	$: if (quote.ec > 0) extendedColor = 'qg'
 	else if (quote.ec < 0) extendedColor = 'qr'
 	else extendedColor = 'qgr'
@@ -80,7 +82,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.container {
 		@apply mb-5 flex flex-row items-end space-x-6 lg:space-x-4;
 	}

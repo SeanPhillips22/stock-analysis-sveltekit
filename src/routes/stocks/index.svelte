@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import Table from '$lib/components/Tables/SimpleTable.svelte'
-	export let data
+	export let data: {s: string, n: string, i: string, m: number}[]
 </script>
 
 <h1>All Stock Symbols</h1>
@@ -31,7 +31,7 @@
 	/>
 </div>
 
-<style>
+<style type="text/postcss">
 	h1 {
 		@apply border-b-[3px] border-blue-brand_sharp pb-3 mb-3 sm:mb-4 lg:mb-5;
 	}

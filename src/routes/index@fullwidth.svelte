@@ -13,7 +13,7 @@
 	</ul>
 </div>
 
-<style>
+<style type="text/postcss">
 	.hero {
 		@apply bg-gray-100 border-b border-gray-200 px-4 pb-12 pt-20 shadow-sm md:pt-32 md:pb-24 lg:pt-44 lg:pb-40 landscape:border-t-2 landscape:md:border-t-0;
 	}

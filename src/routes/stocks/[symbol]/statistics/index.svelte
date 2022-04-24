@@ -14,8 +14,8 @@
 </script>
 
 <script lang="ts">
-	export let info
-	let i = info.info
+	// export let info
+	// let i = info.info
 	export let data: any
 </script>
 

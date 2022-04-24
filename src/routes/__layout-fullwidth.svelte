@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css'
 	import NProgress from 'nprogress'
 	import { navigating } from '$app/stores'
@@ -25,7 +25,7 @@
 
 	// Get the global state for showing and hiding the navigation
 	import { navigationOpen } from '$lib/stores/navigation'
-	let showNavigation
+	let showNavigation: boolean
 	navigationOpen.subscribe((value) => {
 		showNavigation = value
 	})

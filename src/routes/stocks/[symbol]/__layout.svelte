@@ -1,8 +1,9 @@
-<script context="module">
+<script lang="ts" context="module">
+	import type { Load } from "@sveltejs/kit"
 	import StockHead from '$lib/components/StockHead/_StockHead.svelte'
 
 	export const hydrate = false
-	export async function load({ params, fetch }) {
+	export const load: Load = async({ params, fetch }) => {
 		let symbol = params.symbol
 
 		const res = await fetch(`https://api.stockanalysis.com/wp-json/sa/info?s=${symbol}&t=stocks`)
@@ -19,8 +20,10 @@
 	}
 </script>
 
-<script>
-	export let info
+<script lang="ts">
+	import type { Info } from '$lib/types/Info'
+	
+	export let info: Info
 </script>
 
 <StockHead {info} />

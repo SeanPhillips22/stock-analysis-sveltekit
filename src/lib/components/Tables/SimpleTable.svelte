@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	/*
     {
         id: the id of the column
@@ -9,8 +9,8 @@
     */
 	import { formatCell } from './formatCell'
 
-	export let columns
-	export let data
+	export let columns: {id: string, title: string, format?: string, class?: string}[]
+	export let data: any
 </script>
 
 <table>

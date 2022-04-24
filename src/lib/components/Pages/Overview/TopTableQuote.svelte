@@ -1,6 +1,7 @@
-<script>
-	export let info
-	export let data
+<script lang="ts">
+	import type { Info } from '$lib/types/Info';
+	export let info: Info
+	export let data: any
 
 	let previous = 'Previous Close'
 	if (info.ipoDate && info.quote.td === info.ipoDate) previous = 'IPO Price'

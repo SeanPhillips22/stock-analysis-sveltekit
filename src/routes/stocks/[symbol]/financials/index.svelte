@@ -1,5 +1,7 @@
-<script context="module">
-	export async function load({ params, fetch, stuff }) {
+<script lang="ts" context="module">
+	import type { Load } from "@sveltejs/kit"
+	
+	export const load: Load = async({ params, fetch, stuff }) => {
 		let symbol = params.symbol
 
 		const res = await fetch(
@@ -13,10 +15,10 @@
 	}
 </script>
 
-<script>
+<script lang="ts">
 	export let info
 	let i = info.info
-	export let data
+	export let data: any
 </script>
 
 <svelte:head>

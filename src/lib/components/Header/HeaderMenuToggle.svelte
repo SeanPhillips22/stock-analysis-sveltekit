@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import Hamburger from '$lib/icons/Hamburger.svelte'
 
 	import { navigationOpen } from '$lib/stores/navigation'
-	let showNavigation
+	let showNavigation: boolean
 	navigationOpen.subscribe((value) => {
 		showNavigation = value
 	})

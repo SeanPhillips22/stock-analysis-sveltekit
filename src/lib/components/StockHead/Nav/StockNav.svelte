@@ -1,5 +1,6 @@
-<script>
-	export let info
+<script lang="ts">
+	import type { Info } from '$lib/types/Info';
+	export let info: Info
 	import { page } from '$app/stores'
 </script>
 

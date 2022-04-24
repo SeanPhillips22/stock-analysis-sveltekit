@@ -1,23 +1,27 @@
-<script context="module">
-	export async function load({ params, fetch, stuff }) {
+<script lang="ts" context="module">
+	import type { Load } from "@sveltejs/kit"
+
+	export const load: Load = async({ params, fetch, stuff }) => {
 		let symbol = params.symbol
 
 		const res = await fetch(`https://api.stockanalysis.com/wp-json/sa/overview?symbol=${symbol}&t=stocks`)
 		const data = await res.json()
 
 		return {
+			// @ts-ignore
 			props: { info: stuff.info, data: data.data.data }
 		}
 	}
 </script>
 
-<script>
+<script lang="ts">
+	import type { Info } from '$lib/types/Info'
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
 	import InfoTable from '$lib/components/Pages/Overview/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTableQuote.svelte'
 
-	export let info
-	export let data
+	export let info: Info
+	export let data: any
 </script>
 
 <svelte:head>

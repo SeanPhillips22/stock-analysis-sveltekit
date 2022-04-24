@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
+	import type { Info } from '$lib/types/Info';
 	import Quote from './PriceQuote.svelte'
 	import StockNav from './Nav/StockNav.svelte'
-	export let info
+	export let info: Info
 </script>
 
 <div class="container">
