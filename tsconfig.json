@@ -13,5 +13,5 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "es2020"
-	}
+	},
 }
