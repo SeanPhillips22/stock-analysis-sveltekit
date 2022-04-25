@@ -53,7 +53,7 @@
 	}
 
 	.nav-item a {
-		@apply flex items-center grow p-2 text-gray-600;
+		@apply flex items-center grow p-2 mr-1 xxl:mr-0 text-gray-600;
 	}
 
 	.active {
@@ -89,7 +89,7 @@
 	}
 
 	.arrow-wrap {
-		@apply ml-auto border-l border-gray-300 px-1 cursor-pointer;
+		@apply ml-auto border-l border-gray-300 px-2 xxl:px-1 cursor-pointer;
 	}
 
 	.collapsed .arrow-wrap {

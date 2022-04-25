@@ -195,7 +195,7 @@
 
 <style type="text/postcss">
 	.nav {
-		@apply bg-white border-r border-gray-100;
+		@apply bg-white border-r border-gray-100 z-50;
 	}
 
 	.show-nav {
