@@ -80,6 +80,10 @@
 		@apply pt-0.5 block;
 	}
 
+	.collapsed .subitems {
+		@apply hidden;
+	}
+
 	.subitems li a {
 		@apply block py-1.5 pl-11 pr-2 hover:bg-gray-50 text-gray-600 hover:text-gray-900 rounded-md;
 	}
