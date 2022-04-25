@@ -12,18 +12,22 @@
 
 <svelte:window bind:innerWidth />
 
-{#if !$state.isOpen}
-	{#if innerWidth && innerWidth < 1280}
-		<div on:click={state.close} in:fade={{ duration: 150 }}>
+{#if innerWidth && innerWidth < 1280}
+	{#if !$state.isOpen}
+		<div on:click={() => state.close(innerWidth)} in:fade={{ duration: 150 }}>
 			<Close classes="header-menu-icon" />
 		</div>
 	{:else}
-		<div on:click={state.close} in:fade={{ duration: 150 }}>
+		<div on:click={state.open} in:fade={{ duration: 150 }}>
 			<Hamburger classes="header-menu-icon" />
 		</div>
 	{/if}
-{:else}
+{:else if $state.isOpen}
 	<div on:click={state.open} in:fade={{ duration: 150 }}>
+		<Hamburger classes="header-menu-icon" />
+	</div>
+{:else}
+	<div on:click={state.closeForced} in:fade={{ duration: 150 }}>
 		<Hamburger classes="header-menu-icon" />
 	</div>
 {/if}

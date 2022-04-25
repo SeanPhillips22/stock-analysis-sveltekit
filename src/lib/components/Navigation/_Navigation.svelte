@@ -1,5 +1,18 @@
 <script lang="ts">
+	// Svelte functions
+	import { afterNavigate } from '$app/navigation'
+	import { page } from '$app/stores'
 	import { fly, fade } from 'svelte/transition'
+	import { onMount } from 'svelte'
+
+	// State
+	import { state } from '$lib/stores/navigation'
+
+	// Utils
+	import { clickOutside } from '$lib/functions/ui/clickOutside'
+
+	// Components
+	import NavLogin from './NavLogin.svelte'
 	import SingleNavItem from './SingleNavItem.svelte'
 	import MenuNavItem from './MenuNavItem.svelte'
 
@@ -16,6 +29,10 @@
 	import ChevronDoubleLeft from '$lib/icons/ChevronDoubleLeft.svelte'
 	import ChevronDoubleRight from '$lib/icons/ChevronDoubleRight.svelte'
 
+	// Types
+	import type { Navigation } from './types'
+
+	// The navigation tree
 	const navigation: Navigation = [
 		{ name: 'Home', href: '/', icon: Home },
 		{
@@ -103,32 +120,21 @@
 		}
 	]
 
-	import { page } from '$app/stores'
+	// Get the current page URL
 	$: url = $page.url.pathname.toLowerCase()
 
-	// Get the global state for showing and hiding the navigation
-	import { state } from '$lib/stores/navigation'
-
 	/*
-	 * Hide the menu on mobile
+	 * Close navigation when clicking a menu item on mobile
 	 */
-	import { clickOutside } from '$lib/functions/ui/clickOutside'
-	import type { Navigation } from './types'
-	import { onMount } from 'svelte'
 	let innerWidth: number // Assign this from window:svelte
-
-	// If screen width is under 1280px, then hide the menu
-	function closeNavigation() {
-		if (!$state.isOpen && innerWidth && innerWidth < 1280) {
-			state.close
-		}
-	}
+	afterNavigate(() => {
+		state.close(innerWidth)
+	})
 
 	/*
 	 * Expanding and collapsing the navigation and/or submenus
 	 */
 	let collapsed = false
-
 	function toggleMenu() {
 		collapsed = !collapsed
 	}
@@ -155,7 +161,7 @@
 {#key $state.isOpen}
 	<div
 		class={$state.isOpen ? 'nav show-nav' : 'nav hide-nav'}
-		use:clickOutside={closeNavigation}
+		use:clickOutside={() => state.close(innerWidth)}
 		in:fly={{ x: -100, duration: 150 }}
 		out:fade={{ duration: 150 }}
 	>
@@ -181,6 +187,9 @@
 				</div>
 			</div>
 		</div>
+		{#if innerWidth && innerWidth < 1280}
+			<NavLogin />
+		{/if}
 	</div>
 {/key}
 
@@ -194,11 +203,11 @@
 	}
 
 	.hide-nav {
-		@apply block xxl:hidden fixed h-[calc(100%-50px)] xxl:h-0 shadow-2xl xxl:shadow-none;
+		@apply xxl:hidden fixed h-[calc(100%-46px)] xxl:h-0 shadow-2xl xxl:shadow-none flex flex-col;
 	}
 
 	.nav-col {
-		@apply bg-white top-14 mt-0.5 xxl:sticky px-3 xxl:px-5 py-4;
+		@apply bg-white top-14 xxl:mt-0.5 xxl:sticky px-3 xxl:px-5 pt-2 xxl:py-4 overflow-y-auto;
 	}
 
 	nav {
