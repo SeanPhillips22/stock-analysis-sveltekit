@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly, fade } from 'svelte/transition'
 	import { state } from '$lib/stores/navigation'
 	import type { NavigationNames } from './types'
 
@@ -10,18 +11,19 @@
 			name: string
 			href: string
 		}[]
+		path?: string
 	}
 
 	export let collapsed: boolean
 	export let url: string
 
-	$: parent = url.includes(item.href)
-	$: open = $state.menus[item.name] || parent
+	$: parent = item.path ? url.includes(item.path) : url.includes(item.href)
+	$: open = typeof $state.menus[item.name] !== 'undefined' ? $state.menus[item.name] : parent
 </script>
 
 <div class:collapsed>
 	<div class="nav-item" on:click={() => state.toggleMenu(item.name)} class:parent>
-		<a href={item.href} title={item.name}>
+		<a sveltekit:prefetch href={item.href} title={item.name}>
 			<svelte:component this={item.icon} classes="h-6 w-6 text-gray-500 xxl:h-5 xxl:w-5 xxxl:h-6 xxxl:w-6" />
 			<span class="nav-label">{item.name}</span>
 		</a>
@@ -32,11 +34,16 @@
 		</div>
 	</div>
 	{#if item.children}
-		<ul class="subitems" class:open>
-			{#each item.children as child (child.href)}
-				<li><a href={child.href} title={child.name} class:active={url === child.href}>{child.name}</a></li>
-			{/each}
-		</ul>
+		{#key open}
+			<ul class="subitems" class:open transition:fly={{ y: -10, duration: 75 }}>
+				{#each item.children as child (child.href)}
+					<li>
+						<a sveltekit:prefetch href={child.href} title={child.name} class:active={url === child.href}>{child.name}</a
+						>
+					</li>
+				{/each}
+			</ul>
+		{/key}
 	{/if}
 </div>
 
@@ -78,7 +85,7 @@
 	}
 
 	.arrow-wrap {
-		@apply ml-auto border-l border-gray-300 px-1;
+		@apply ml-auto border-l border-gray-300 px-1 cursor-pointer;
 	}
 
 	.collapsed .arrow-wrap {
@@ -87,10 +94,6 @@
 
 	.nav-arrow {
 		@apply h-5 w-5 text-gray-300;
-	}
-
-	.nav-arrow.closed {
-		@apply text-gray-300;
 	}
 
 	.nav-arrow.open {

@@ -10,7 +10,7 @@
 </script>
 
 <div class="nav-item" class:collapsed class:active={url === item.href}>
-	<a href={item.href} title={item.name}>
+	<a sveltekit:prefetch href={item.href} title={item.name}>
 		<svelte:component this={item.icon} classes="h-6 w-6 text-gray-500 xxl:h-5 xxl:w-5 xxxl:h-6 xxxl:w-6" />
 		<span class="nav-label">{item.name}</span>
 	</a>

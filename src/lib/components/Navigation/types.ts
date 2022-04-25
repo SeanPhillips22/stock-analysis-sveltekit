@@ -17,4 +17,5 @@ export type Navigation = {
 		name: string
 		href: string
 	}[]
+	path?: string // for pattern matching when setting active and active parent items
 }[]

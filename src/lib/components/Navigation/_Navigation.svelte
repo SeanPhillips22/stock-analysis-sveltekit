@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly, fade } from 'svelte/transition'
 	import SingleNavItem from './SingleNavItem.svelte'
 	import MenuNavItem from './MenuNavItem.svelte'
 
@@ -72,7 +73,8 @@
 					name: 'Premarket',
 					href: '/markets/premarket/'
 				}
-			]
+			],
+			path: '/markets/'
 		},
 		{
 			name: 'Screener',
@@ -91,7 +93,8 @@
 					name: 'ETF Screener',
 					href: '/screener/etf/'
 				}
-			]
+			],
+			path: '/screener/'
 		},
 		{
 			name: 'Corporate Actions',
@@ -105,16 +108,13 @@
 
 	// Get the global state for showing and hiding the navigation
 	import { state } from '$lib/stores/navigation'
-	// let showNavigation: boolean
-	// navigationState.subscribe((value) => {
-	// 	showNavigation = value.isOpen
-	// })
 
 	/*
 	 * Hide the menu on mobile
 	 */
 	import { clickOutside } from '$lib/functions/ui/clickOutside'
 	import type { Navigation } from './types'
+	import { onMount } from 'svelte'
 	let innerWidth: number // Assign this from window:svelte
 
 	// If screen width is under 1280px, then hide the menu
@@ -128,53 +128,61 @@
 	 * Expanding and collapsing the navigation and/or submenus
 	 */
 	let collapsed = false
-	let stocksExpanded = false
-	let iposExpanded = false
-	let marketsExpanded = false
-	let screenersExpanded = false
 
 	function toggleMenu() {
 		collapsed = !collapsed
-		stocksExpanded = iposExpanded = marketsExpanded = screenersExpanded = false
 	}
 
-	const toggleStocks = () => (stocksExpanded = !stocksExpanded)
-	const toggleIPOs = () => (iposExpanded = !iposExpanded)
-	const toggleMarkets = () => (marketsExpanded = !marketsExpanded)
-	const toggleScreeners = () => (screenersExpanded = !screenersExpanded)
+	/*
+	* Set the initial menu open state on mount so that it's possible to open and close the
+	submenu items
+	*/
+	onMount(() => {
+		if (url.includes('/stocks/') || url.includes('/list/')) {
+			state.setMenus({ Stocks: true })
+		} else if (url.includes('/ipos/')) {
+			state.setMenus({ IPOs: true })
+		} else if (url.includes('/markets/')) {
+			state.setMenus({ 'Market Movers': true })
+		} else if (url.includes('/screener/')) {
+			state.setMenus({ Screener: true })
+		}
+	})
 </script>
 
 <svelte:window bind:innerWidth />
 
-<!-- TODO add animations -->
-<!-- TODO expand trees on page load -->
-<!-- TODO persist state on navigation -->
-<!-- TODO active pages and parents should have background color -->
+{#key $state.isOpen}
+	<div
+		class={$state.isOpen ? 'nav show-nav' : 'nav hide-nav'}
+		use:clickOutside={closeNavigation}
+		in:fly={{ x: -100, duration: 150 }}
+		out:fade={{ duration: 150 }}
+	>
+		<div class="nav-col" class:collapsed>
+			<nav>
+				{#each navigation as item (item.name)}
+					{#if item.children}
+						<MenuNavItem {item} {collapsed} {url} />
+					{:else}
+						<SingleNavItem {item} {collapsed} {url} />
+					{/if}
+				{/each}
+			</nav>
 
-<div class={$state.isOpen ? 'nav show-nav' : 'nav hide-nav'} use:clickOutside={closeNavigation}>
-	<div class="nav-col" class:collapsed>
-		<nav>
-			{#each navigation as item (item.name)}
-				{#if item.children}
-					<MenuNavItem {item} {collapsed} {url} />
-				{:else}
-					<SingleNavItem {item} {collapsed} {url} />
-				{/if}
-			{/each}
-		</nav>
-
-		<div class="collapse">
-			<div class="nav-item" on:click={toggleMenu}>
-				{#if collapsed}
-					<ChevronDoubleRight classes="nav-icon" />
-				{:else}
-					<ChevronDoubleLeft classes="nav-icon" />
-				{/if}
-				<span class="nav-label">Collapse</span>
+			<div class="collapse">
+				<div class="nav-item" on:click={toggleMenu}>
+					{#if collapsed}
+						<ChevronDoubleRight classes="nav-icon" />
+					{:else}
+						<ChevronDoubleLeft classes="nav-icon" />
+					{/if}
+					<span class="nav-label">Collapse</span>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+{/key}
 
 <style type="text/postcss">
 	.nav {
@@ -194,11 +202,7 @@
 	}
 
 	nav {
-		@apply flex flex-col space-y-1 text-sm font-semibold;
-	}
-
-	nav a {
-		@apply text-gray-600 flex items-center;
+		@apply flex flex-col text-sm font-semibold;
 	}
 
 	.collapse {
@@ -217,15 +221,7 @@
 		@apply hidden;
 	}
 
-	.active {
-		@apply bg-blue-50 text-gray-900;
-	}
-
 	.nav-item {
 		@apply text-sm font-semibold text-gray-600 flex items-center hover:bg-gray-50 hover:text-gray-900 grow rounded-md;
-	}
-
-	.nav-item.parent {
-		@apply bg-gray-100;
 	}
 </style>
