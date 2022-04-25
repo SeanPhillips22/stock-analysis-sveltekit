@@ -1,17 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores'
-
-	// Get the global state for showing and hiding the navigation
-	import { navigationOpen } from '$lib/stores/navigation'
-	let showNavigation: boolean
-	navigationOpen.subscribe((value) => {
-		showNavigation = value
-	})
+	import SingleNavItem from './SingleNavItem.svelte'
+	import MenuNavItem from './MenuNavItem.svelte'
 
 	// Import icons
 	import Home from '$lib/icons/Home.svelte'
 	import ChartBar from '$lib/icons/ChartBar.svelte'
-	import NavArrow from '$lib/icons/NavArrow.svelte'
 	import Calendar from '$lib/icons/Calendar.svelte'
 	import Collection from '$lib/icons/Collection.svelte'
 	import Newspaper from '$lib/icons/Newspaper.svelte'
@@ -22,144 +15,162 @@
 	import ChevronDoubleLeft from '$lib/icons/ChevronDoubleLeft.svelte'
 	import ChevronDoubleRight from '$lib/icons/ChevronDoubleRight.svelte'
 
-	// Functionality for expanding and collapsing menu
-	let menuExpanded = true
-	function toggleMenu() {
-		menuExpanded = !menuExpanded
+	const navigation: Navigation = [
+		{ name: 'Home', href: '/', icon: Home },
+		{
+			name: 'Stocks',
+			href: '/stocks/',
+			icon: ChartBar,
+			children: [{ name: 'Stock Lists', href: '/list/' }]
+		},
+		{
+			name: 'IPOs',
+			href: '/ipos/',
+			icon: Calendar,
+			children: [
+				{ name: 'Recent IPOs', href: '/ipos/' },
+				{
+					name: 'IPO Calendar',
+					href: '/ipos/calendar/'
+				},
+				{
+					name: 'IPO Statistics',
+					href: '/ipos/statistics/'
+				},
+				{ name: 'IPO News', href: '/ipos/news/' }
+			]
+		},
+		{
+			name: 'ETFs',
+			href: '/etf/',
+			icon: Collection
+		},
+		{ name: 'News', href: '/news/', icon: Newspaper },
+		{
+			name: 'Trending',
+			href: '/trending/',
+			icon: TrendingUp
+		},
+		{
+			name: 'Market Movers',
+			href: '/markets/gainers/',
+			icon: ChartSquareBar,
+			children: [
+				{
+					name: 'Top Gainers',
+					href: '/markets/gainers/'
+				},
+				{
+					name: 'Top Losers',
+					href: '/markets/losers/'
+				},
+				{
+					name: 'Most Active',
+					href: '/markets/active/'
+				},
+				{
+					name: 'Premarket',
+					href: '/markets/premarket/'
+				}
+			]
+		},
+		{
+			name: 'Screener',
+			href: '/screener/stock/',
+			icon: Adjustments,
+			children: [
+				{
+					name: 'Stock Screener',
+					href: '/screener/stock/'
+				},
+				{
+					name: 'IPO Screener',
+					href: '/screener/ipo/'
+				},
+				{
+					name: 'ETF Screener',
+					href: '/screener/etf/'
+				}
+			]
+		},
+		{
+			name: 'Corporate Actions',
+			href: '/actions/',
+			icon: Archive
+		}
+	]
+
+	import { page } from '$app/stores'
+	$: url = $page.url.pathname.toLowerCase()
+
+	// Get the global state for showing and hiding the navigation
+	import { state } from '$lib/stores/navigation'
+	// let showNavigation: boolean
+	// navigationState.subscribe((value) => {
+	// 	showNavigation = value.isOpen
+	// })
+
+	/*
+	 * Hide the menu on mobile
+	 */
+	import { clickOutside } from '$lib/functions/ui/clickOutside'
+	import type { Navigation } from './types'
+	let innerWidth: number // Assign this from window:svelte
+
+	// If screen width is under 1280px, then hide the menu
+	function closeNavigation() {
+		if (!$state.isOpen && innerWidth && innerWidth < 1280) {
+			state.close
+		}
 	}
 
-	// Functionality for expanding and collapsing submenus
+	/*
+	 * Expanding and collapsing the navigation and/or submenus
+	 */
+	let collapsed = false
 	let stocksExpanded = false
 	let iposExpanded = false
 	let marketsExpanded = false
 	let screenersExpanded = false
+
+	function toggleMenu() {
+		collapsed = !collapsed
+		stocksExpanded = iposExpanded = marketsExpanded = screenersExpanded = false
+	}
+
 	const toggleStocks = () => (stocksExpanded = !stocksExpanded)
 	const toggleIPOs = () => (iposExpanded = !iposExpanded)
 	const toggleMarkets = () => (marketsExpanded = !marketsExpanded)
 	const toggleScreeners = () => (screenersExpanded = !screenersExpanded)
 </script>
 
-<div class={showNavigation ? 'nav show-nav' : 'nav hide-nav'}>
-	<div class={!menuExpanded ? 'collapsed nav-col' : 'nav-col'}>
+<svelte:window bind:innerWidth />
+
+<!-- TODO add animations -->
+<!-- TODO expand trees on page load -->
+<!-- TODO persist state on navigation -->
+<!-- TODO active pages and parents should have background color -->
+
+<div class={$state.isOpen ? 'nav show-nav' : 'nav hide-nav'} use:clickOutside={closeNavigation}>
+	<div class="nav-col" class:collapsed>
 		<nav>
-			<div class="nav-item" class:active={$page.url.pathname === '/'}>
-				<a href="/" title="Home">
-					<Home classes="nav-icon" />
-					<span class="nav-label">Home</span>
-				</a>
-			</div>
-
-			<div>
-				<div class="nav-item" class:active={$page.url.pathname === '/stocks/'} on:click={toggleStocks}>
-					<a href="/stocks/" title="Stocks">
-						<ChartBar classes="nav-icon" />
-						<span class="nav-label">Stocks</span>
-					</a>
-					<div class="arrow-wrap">
-						<NavArrow classes={stocksExpanded ? 'nav-arrow open' : 'nav-arrow closed'} />
-					</div>
-				</div>
-				<div class={stocksExpanded ? 'block' : 'hidden'}>
-					<div class="subitem"><a href="/list/" title="Stock Lists">Stock Lists</a></div>
-				</div>
-			</div>
-
-			<div>
-				<div class="nav-item" on:click={toggleIPOs}>
-					<a href="/ipos/" title="IPOs">
-						<Calendar classes="nav-icon" />
-						<span class="nav-label">IPOs</span>
-					</a>
-					<div class="arrow-wrap">
-						<NavArrow classes={iposExpanded ? 'nav-arrow open' : 'nav-arrow closed'} />
-					</div>
-				</div>
-				<div class={iposExpanded ? 'block' : 'hidden'}>
-					<ul>
-						<li class="subitem"><a href="/ipos/" title="Recent IPOs">Recent IPOs</a></li>
-						<li class="subitem"><a href="/ipos/calendar/" title="IPO Calendar">IPO Calendar</a></li>
-						<li class="subitem"><a href="/ipos/statistics/" title="IPO Statistics">IPO Statistics</a></li>
-						<li class="subitem"><a href="/ipos/news/" title="IPO News">IPO News</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="nav-item">
-				<a href="/etf/" title="ETFs">
-					<Collection classes="nav-icon" />
-					<span class="nav-label">ETFs</span>
-				</a>
-			</div>
-
-			<div class="nav-item">
-				<a href="/news/" title="News">
-					<Newspaper classes="nav-icon" />
-					<span class="nav-label">News</span>
-				</a>
-			</div>
-
-			<div class="nav-item">
-				<a href="/trending/" title="Trending">
-					<TrendingUp classes="nav-icon" />
-					<span class="nav-label">Trending</span>
-				</a>
-			</div>
-
-			<div>
-				<div class="nav-item" on:click={toggleMarkets}>
-					<a href="/markets/" title="Market Movers">
-						<ChartSquareBar classes="nav-icon" />
-						<span class="nav-label">Market Movers</span>
-					</a>
-					<div class="arrow-wrap">
-						<NavArrow classes={marketsExpanded ? 'nav-arrow open' : 'nav-arrow closed'} />
-					</div>
-				</div>
-				<div class={marketsExpanded ? 'block' : 'hidden'}>
-					<ul>
-						<li class="subitem"><a href="/markets/gainers/" title="Top Gainers">Top Gainers</a></li>
-						<li class="subitem"><a href="/markets/losers/" title="Top Losers">Top Losers</a></li>
-						<li class="subitem"><a href="/markets/active/" title="Most Active">Most Active</a></li>
-						<li class="subitem"><a href="/markets/premarket/" title="Premarket">Premarket</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div>
-				<div class="nav-item" on:click={toggleScreeners}>
-					<a href="/screener/stock/" title="Screener">
-						<Adjustments classes="nav-icon" />
-						<span class="nav-label">Screener</span>
-					</a>
-					<div class="arrow-wrap">
-						<NavArrow classes={screenersExpanded ? 'nav-arrow open' : 'nav-arrow closed'} />
-					</div>
-				</div>
-				<div class={screenersExpanded ? 'block' : 'hidden'}>
-					<ul>
-						<li class="subitem"><a href="/screener/stock/" title="Stock Screener">Stock Screener</a></li>
-						<li class="subitem"><a href="/screener/ipo/" title="IPO Screener">IPO Screener</a></li>
-						<li class="subitem"><a href="/screener/etf/" title="ETF Screener">ETF Screener</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="nav-item">
-				<a href="/actions/" title="Corporate Actions">
-					<Archive classes="nav-icon" />
-					<span class="nav-label">Corporate Actions</span>
-				</a>
-			</div>
+			{#each navigation as item (item.name)}
+				{#if item.children}
+					<MenuNavItem {item} {collapsed} {url} />
+				{:else}
+					<SingleNavItem {item} {collapsed} {url} />
+				{/if}
+			{/each}
 		</nav>
 
 		<div class="collapse">
 			<div class="nav-item" on:click={toggleMenu}>
-				{#if menuExpanded}
-					<ChevronDoubleLeft classes="nav-icon" />
-					Collapse
-				{:else}
+				{#if collapsed}
 					<ChevronDoubleRight classes="nav-icon" />
+				{:else}
+					<ChevronDoubleLeft classes="nav-icon" />
 				{/if}
+				<span class="nav-label">Collapse</span>
 			</div>
 		</div>
 	</div>
@@ -179,7 +190,7 @@
 	}
 
 	.nav-col {
-		@apply bg-white top-16 xxl:sticky px-3 xxl:px-5 py-4;
+		@apply bg-white top-14 mt-0.5 xxl:sticky px-3 xxl:px-5 py-4;
 	}
 
 	nav {
@@ -190,20 +201,12 @@
 		@apply text-gray-600 flex items-center;
 	}
 
-	.nav-item {
-		@apply text-sm font-semibold text-gray-600 flex items-center hover:bg-gray-50 hover:text-gray-900 grow rounded-md;
-	}
-
-	.nav-item a {
-		@apply px-2 py-2 flex grow;
-	}
-
-	.subitem {
-		@apply py-1.5 pl-11 pr-2;
-	}
-
 	.collapse {
-		@apply flex border-t border-gray-200 mt-4 items-center cursor-pointer;
+		@apply mt-4 hidden cursor-pointer items-center border-t border-gray-200 pt-1 xxl:flex;
+	}
+
+	.collapse .nav-item {
+		@apply p-2;
 	}
 
 	.nav-label {
@@ -214,7 +217,15 @@
 		@apply hidden;
 	}
 
-	.nav-item.active {
+	.active {
 		@apply bg-blue-50 text-gray-900;
+	}
+
+	.nav-item {
+		@apply text-sm font-semibold text-gray-600 flex items-center hover:bg-gray-50 hover:text-gray-900 grow rounded-md;
+	}
+
+	.nav-item.parent {
+		@apply bg-gray-100;
 	}
 </style>

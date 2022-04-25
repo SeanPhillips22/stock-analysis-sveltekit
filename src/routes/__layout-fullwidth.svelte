@@ -24,16 +24,12 @@
 	}
 
 	// Get the global state for showing and hiding the navigation
-	import { navigationOpen } from '$lib/stores/navigation'
-	let showNavigation: boolean
-	navigationOpen.subscribe((value) => {
-		showNavigation = value
-	})
+	import { state } from '$lib/stores/navigation'
 </script>
 
 <Header />
 
-<div class:mainbody={showNavigation}>
+<div class:mainbody={$state.isOpen}>
 	<Navigation />
 	<main>
 		<slot />

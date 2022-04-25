@@ -2,9 +2,10 @@
 	// Display the stock price quote, for either a stock or ETF
 	// It's either one or two blocks depending on whether extended hour
 	// trading info is available
-	import type { Info } from '$lib/types/Info';
-	import type { Quote } from '$lib/types/Quote';
 	import { onMount, onDestroy } from 'svelte'
+	import { fade } from 'svelte/transition'
+	import type { Info } from '$lib/types/Info'
+	import type { Quote } from '$lib/types/Quote'
 	import SunIcon from '$lib/icons/Sun.svelte'
 	import MoonIcon from '$lib/icons/Moon.svelte'
 
@@ -51,7 +52,7 @@
 	<div class:extended={quote.e}>
 		<div class="p">{quote.pd}</div>
 		{#key quote.c}
-			<div class="pc {color}">{quote.c} ({quote.cp}%)</div>
+			<div class="pc {color}" in:fade>{quote.c} ({quote.cp}%)</div>
 		{/key}
 
 		<!-- Change timestamp slightly if there is an extended hours quote -->

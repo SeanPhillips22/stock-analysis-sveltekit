@@ -33,26 +33,6 @@
 		@apply h-6 w-6 text-gray-500 xxl:h-5 xxl:w-5 xxxl:h-6 xxxl:w-6;
 	}
 
-	.arrow-wrap {
-		@apply ml-auto border-l border-gray-300 px-1;
-	}
-
-	.collapsed .arrow-wrap {
-		@apply hidden;
-	}
-
-	.nav-arrow {
-		@apply h-5 w-5;
-	}
-
-	.nav-arrow.closed {
-		@apply text-gray-300;
-	}
-
-	.nav-arrow.open {
-		@apply rotate-90 text-gray-400;
-	}
-
 	/*
 	* Tab navigation menus
 	*/

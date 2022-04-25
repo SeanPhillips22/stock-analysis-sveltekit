@@ -8,8 +8,7 @@
 		const data = await res.json()
 
 		return {
-			// @ts-ignore
-			props: { info: stuff.info, data: data.data.data }
+			props: { stuff, data: data.data.data }
 		}
 	}
 </script>
@@ -20,7 +19,8 @@
 	import InfoTable from '$lib/components/Pages/Overview/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTableQuote.svelte'
 
-	export let info: Info
+	export let stuff
+	let info: Info = stuff.info
 	export let data: any
 </script>
 
