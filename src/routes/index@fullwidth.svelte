@@ -1,3 +1,24 @@
+<script lang="ts">
+	import Movers from '$lib/components/Pages/HomePage/Movers/_Movers.svelte'
+	import HomePageSearch from '$lib/components/Search/HomePageSearch.svelte'
+	import News from '$lib/components/Pages/HomePage/News.svelte'
+	import IPOwidgets from '$lib/components/Pages/HomePage/IPOwidgets.svelte'
+
+	type Data = {
+		date: string
+		marketStatus: string
+		trending: { s: string; n: string; t: string }[]
+		gainers: { symbol: string; name: string; price: string; change: string }[]
+		losers: { symbol: string; name: string; price: string; change: string }[]
+		news: { t: string; u: string; n: string; d: string }[]
+		recentIpos: { date: string; symbol: string; name: string }[]
+		ipoCalendar: { date: string; symbol: string; name: string }[]
+	}
+
+	export let data: Data
+	let { date, marketStatus, trending, gainers, losers, news, recentIpos, ipoCalendar } = data
+</script>
+
 <div class="hero">
 	<div class="inner">
 		<h1>Search for a stock to start your analysis</h1>
@@ -7,75 +28,27 @@
 			financials, forecasts, charts and more.
 		</p>
 
-		<form action="/search/" method="get" role="search">
-			<div class="search-wrap">
-				<input class="search-input" type="text" placeholder="Company or stock symbol..." />
-			</div>
-		</form>
+		<HomePageSearch />
 
-		<h2>Links</h2>
-		<ul>
-			<li><a href="/stocks/">Stocks</a></li>
-			<li><a href="/stocks/aapl/">AAPL</a></li>
-		</ul>
+		{#if trending.length === 4}
+			<div class="trending">
+				Trending:
+				<a sveltekit:prefetch href="/stocks/{trending[0].s.toLowerCase()}/">{trending[0].s.toUpperCase()}</a>,
+				<a sveltekit:prefetch href="/stocks/{trending[1].s.toLowerCase()}/">{trending[1].s.toUpperCase()}</a>,
+				<a sveltekit:prefetch href="/stocks/{trending[2].s.toLowerCase()}/">{trending[2].s.toUpperCase()}</a>,
+				<a sveltekit:prefetch href="/stocks/{trending[3].s.toLowerCase()}/">{trending[3].s.toUpperCase()}</a>
+			</div>
+		{/if}
 	</div>
 </div>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+<div class="home-widgets">
+	<Movers {date} {marketStatus} {gainers} {losers} />
+	<div class="two-col">
+		<News {news} />
+		<IPOwidgets recent={recentIpos} upcoming={ipoCalendar} />
+	</div>
+</div>
 
 <style type="text/postcss">
 	.hero {
@@ -94,11 +67,15 @@
 		@apply mb-4 text-base sm:text-lg md:mb-5 md:text-xl lg:mb-7 lg:text-[22px];
 	}
 
-	.search-wrap {
-		@apply relative mx-auto mb-5 flex max-w-[95%] items-center text-left md:max-w-[75%] lg:max-w-lg;
+	.trending {
+		@apply text-sm xs:text-base md:text-lg lg:text-[19px];
 	}
 
-	.search-input {
-		@apply grow rounded-sm border border-gray-200 py-1.5 pl-7 text-sm placeholder-gray-700 focus:border-gray-200 focus:shadow-lg focus:outline-none focus:ring-0 tiny:pl-8 xs:pl-10 xs:text-base md:py-2 w-full bg-gray-50 hover:bg-white focus:bg-white;
+	.home-widgets {
+		@apply pt-6 pb-3 md:pt-8 lg:pt-10;
+	}
+
+	.two-col {
+		@apply mx-auto flex flex-col pt-6 md:pt-8 lg:pt-10 lg:grid lg:max-w-[1200px] lg:grid-cols-3 lg:justify-evenly lg:gap-8 first-line:lg:px-5;
 	}
 </style>

@@ -195,7 +195,7 @@
 
 <style type="text/postcss">
 	.nav {
-		@apply bg-white border-r border-gray-100 z-50;
+		@apply bg-white border-r border-gray-100 z-40;
 	}
 
 	.show-nav {
@@ -207,7 +207,7 @@
 	}
 
 	.nav-col {
-		@apply bg-white top-14 xxl:mt-0.5 xxl:sticky px-3 xxl:px-5 pt-2 xxl:py-4 overflow-y-auto;
+		@apply bg-white top-16 mt-1 xxl:mt-0 xxl:sticky px-3 xxl:px-5 pt-2 xxl:py-4 overflow-y-auto;
 	}
 
 	nav {
