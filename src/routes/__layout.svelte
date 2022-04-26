@@ -1,13 +1,22 @@
 <script lang="ts">
 	import '../app.css'
-	import NProgress from 'nprogress'
 	import { navigating } from '$app/stores'
+
+	import NProgress from 'nprogress'
 	import 'nprogress/nprogress.css'
+
 	import Header from '$lib/components/Header/_Header.svelte'
 	import Navigation from '$lib/components/Navigation/_Navigation.svelte'
 	import Footer from '$lib/components/Footer/_Footer.svelte'
 
-	// Progress bar config
+	/**
+	 * Authentication
+	 */
+	import '$lib/auth/auth'
+
+	/**
+	 * Progress bar
+	 */
 	NProgress.configure({
 		minimum: 0.16,
 		showSpinner: false
@@ -22,6 +31,9 @@
 			NProgress.done()
 		}
 	}
+
+	// Get the global state for showing and hiding the navigation
+	import { state } from '$lib/stores/navigation'
 </script>
 
 <Header />
