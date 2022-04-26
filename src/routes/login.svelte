@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { supabase } from '$lib/auth/supabase'
+	import { user } from '$lib/auth/userStore'
+
 	import Logo from '$lib/components/Logos/Logo.svelte'
-	import Spinner from '$lib/icons/Spinner.svelte'
+	import Spinner from '$lib/components/Loading/SmallSpinner.svelte'
 
 	let loading = false
+	let submitted = false
 	let email: string
 	let error: string
 
@@ -12,6 +15,7 @@
 			loading = true
 			const { error } = await supabase.auth.signIn({ email })
 			if (error) throw error
+			submitted = true
 		} catch (e: any) {
 			console.error(e)
 			error = e.message
@@ -19,28 +23,48 @@
 			loading = false
 		}
 	}
-
-	$: console.log(supabase)
 </script>
 
 <div class="wrap">
 	<a href="/" sveltekit:prefetch><Logo classes="mx-auto mb-6 h-24 w-24 sm:h-28 sm:w-28" /></a>
-	<h1>Log in to your account</h1>
-	<p>Or <a href="/pro/" sveltekit:prefetch>start your free 30-day trial</a></p>
+	{#if $user}
+		<h1>You are logged in</h1>
+		{#if $user.email}
+			<p>Logged in as {$user.email}</p>
+		{/if}
+		<div class="form-wrap">
+			<button on:click={() => supabase.auth.signOut()}>Log Out</button>
+		</div>
+	{:else if submitted}
+		<div class="submitted">
+			<h1>Click the login link in your email</h1>
+			<p>
+				Open your email and click the login link, no password required. Your browser will remember so you do not have to
+				repeat this all the time.
+			</p>
+		</div>
+	{:else}
+		<h1>Log in to your account</h1>
+		<p>Or <a href="/pro/" sveltekit:prefetch>start your free 30-day trial</a></p>
 
-	<div class="form-wrap">
-		<form on:submit|preventDefault={handleLogin}>
-			<label for="email">Email address</label>
-			<input name="email" type="email" autocomplete="email" required bind:value={email} />
-			{#if loading}
-				<button type="submit" disabled>
-					<Spinner /> Logging in...
-				</button>
-			{:else}
-				<button type="submit"> Log In </button>
-			{/if}
-		</form>
-	</div>
+		{#if error}
+			<div class="error">{error}</div>
+		{/if}
+
+		<div class="form-wrap">
+			<form on:submit|preventDefault={handleLogin}>
+				<label for="email">Email address</label>
+				<input name="email" type="email" autocomplete="email" required bind:value={email} />
+				{#if loading}
+					<button type="submit" disabled>
+						<Spinner /> Logging in...
+					</button>
+				{:else}
+					<button type="submit"> Log In </button>
+				{/if}
+			</form>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -70,5 +94,17 @@
 
 	button {
 		@apply flex w-full justify-center rounded-md border border-transparent bg-blue-brand_light py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-brand_sharp focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-2;
+	}
+
+	.submitted h1 {
+		@apply mt-2 text-center text-2xl font-bold text-gray-900 xs:mt-4 xs:text-3xl sm:mt-6;
+	}
+
+	.submitted p {
+		@apply mt-4 text-center text-smaller font-medium text-gray-600;
+	}
+
+	.error {
+		@apply border-l-4 border-red-400 bg-red-50 p-4 text-red-700 mt-5 -mb-3;
 	}
 </style>

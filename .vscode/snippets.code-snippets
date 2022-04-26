@@ -20,4 +20,13 @@
 		"body": ["console.log($1);"],
 		"description": "console.log"
 	},
+	"svelte IF": {
+		"prefix": "sif",
+		"body": [
+			"{#if $1}",
+			"\t$2",
+			"{/if}"
+		],
+		"description": "svelte IF"
+	},
 }

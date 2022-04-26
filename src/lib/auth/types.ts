@@ -25,3 +25,15 @@ export type UserObject = {
 }
 
 export type User = UserObject | null | undefined
+
+export type UserData = {
+	email: string
+	registered_date?: string
+	status?: 'active' | 'trialing' | 'past_due' | 'paused' | 'deleted' | 'cancelled'
+	next_bill_date?: string
+	next_payment_amount?: string
+	currency?: string
+	payment_method?: string
+	update_url?: string
+	cancel_url?: string
+}

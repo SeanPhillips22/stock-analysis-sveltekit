@@ -5,12 +5,6 @@ import type { User } from './types'
 // Set the user on initial load
 user.set(supabase.auth.user())
 
-// Subscribe to the user store
-let currentUser: User
-user.subscribe((value) => {
-	currentUser = value
-})
-
 // Subscribe to changes in authentication state
 supabase.auth.onAuthStateChange((event, session) => {
 	user.set(session?.user)

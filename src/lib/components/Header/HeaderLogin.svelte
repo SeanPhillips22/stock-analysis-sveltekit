@@ -2,7 +2,7 @@
 	import { user } from '$lib/auth/userStore'
 </script>
 
-{#if !user}
+{#if !$user}
 	<div class="ml-auto hidden xxl:flex gap-x-2">
 		<button class="button-white">
 			<a href="/login/">Log In</a>
@@ -24,7 +24,7 @@
 
 <style>
 	.button-white {
-		@apply inline-flex items-center justify-center w-full px-4 py-2 text-lg font-semibold rounded-sm text-gray-900 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 whitespace-nowrap;
+		@apply inline-flex items-center justify-center w-full px-4 py-1.5 text-lg font-semibold rounded-sm text-gray-900 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 whitespace-nowrap;
 	}
 
 	.button-white a {
@@ -41,7 +41,7 @@
 	}
 
 	.button-blue {
-		@apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-lg font-semibold rounded-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-brand_light text-white hover:bg-blue-brand_sharp whitespace-nowrap;
+		@apply inline-flex items-center justify-center px-4 py-1.5 border border-transparent text-lg font-semibold rounded-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-brand_light text-white hover:bg-blue-brand_sharp whitespace-nowrap;
 		background-color: #3c74d4;
 	}
 
