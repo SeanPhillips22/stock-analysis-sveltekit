@@ -18,7 +18,11 @@
 			submitted = true
 		} catch (e: any) {
 			console.error(e)
-			error = e.message
+			if (e.message === 'You must provide either an email, phone number, a third-party provider or OpenID Connect.') {
+				error = 'You must provide a valid email address.'
+			} else {
+				error = e.message
+			}
 		} finally {
 			loading = false
 		}

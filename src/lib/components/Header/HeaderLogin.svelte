@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { supabase } from '$lib/auth/supabase'
 	import { user } from '$lib/auth/userStore'
 </script>
 
@@ -14,7 +15,7 @@
 {:else}
 	<div class="ml-auto hidden xxl:flex gap-x-1">
 		<button class="button-white logged-out">
-			<a href="/login/">Log Out</a>
+			<div on:click={() => supabase.auth.signOut()}>Log Out</div>
 		</button>
 		<button class="button-white logged-out border border-gray-300">
 			<a href="/pro/my-account/">My Account</a>
