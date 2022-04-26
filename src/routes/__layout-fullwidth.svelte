@@ -7,6 +7,11 @@
 	import Navigation from '$lib/components/Navigation/_Navigation.svelte'
 	import Footer from '$lib/components/Footer/_Footer.svelte'
 
+	/**
+	 * Authentication
+	 */
+	import '$lib/auth/auth'
+
 	// Progress bar config
 	NProgress.configure({
 		minimum: 0.16,

@@ -37,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^1.35.2",
 		"@sveltejs/adapter-vercel": "^1.0.0-next.49",
 		"lightweight-charts": "^3.8.0",
 		"nprogress": "^0.2.0"

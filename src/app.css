@@ -5,7 +5,7 @@
 
 @layer components {
 	body {
-		@apply m-0 p-0;
+		@apply m-0 p-0 text-gray-900;
 	}
 
 	body > div {
@@ -25,12 +25,25 @@
 		@apply mb-4 text-3xl font-bold;
 	}
 
+	h2 {
+		@apply mb-3 text-2xl font-bold;
+	}
+
 	.header-menu-icon {
 		@apply h-8 w-8 cursor-pointer text-gray-700;
 	}
 
 	.nav-icon {
 		@apply h-6 w-6 text-gray-500 xxl:h-5 xxl:w-5 xxxl:h-6 xxxl:w-6;
+	}
+
+	.bll {
+		@apply text-blue-link hover:text-gray-900;
+		color: #1e73ba;
+	}
+
+	.bll:hover {
+		color: #111827;
 	}
 
 	/*
