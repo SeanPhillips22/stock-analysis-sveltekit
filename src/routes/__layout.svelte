@@ -3,7 +3,6 @@
 	import { navigating } from '$app/stores'
 
 	import NProgress from 'nprogress'
-	import 'nprogress/nprogress.css'
 
 	import Header from '$lib/components/Header/_Header.svelte'
 	import Navigation from '$lib/components/Navigation/_Navigation.svelte'

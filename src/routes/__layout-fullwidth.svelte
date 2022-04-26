@@ -2,7 +2,6 @@
 	import '../app.css'
 	import NProgress from 'nprogress'
 	import { navigating } from '$app/stores'
-	import 'nprogress/nprogress.css'
 	import Header from '$lib/components/Header/_Header.svelte'
 	import Navigation from '$lib/components/Navigation/_Navigation.svelte'
 	import Footer from '$lib/components/Footer/_Footer.svelte'
