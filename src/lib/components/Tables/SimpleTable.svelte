@@ -11,7 +11,7 @@
 	export let config: TableConfig
 
 	// The table state store, needed to remember state after navigating from and back
-	import { state, setSort, resetSort, setFilter } from './tableStore'
+	import { state, setSort, resetSort } from './tableStore'
 	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
 	import Pagination from './Pagination.svelte'
 
@@ -57,7 +57,7 @@
 
 	// If data is filtered, show that. Else, show the sorted data.
 	$: displayedData = $state.filter.length ? filteredData : sortedData
-	$: console.log($state)
+	$: perPage = $state.perPage || config.pagination?.perPage || 50
 </script>
 
 <div>
@@ -84,7 +84,7 @@
 		<tbody>
 			{#each displayedData as row, i}
 				{#if config.pagination}
-					{#if i >= ($state.page - 1) * config.pagination.perPage && i < $state.page * config.pagination.perPage}
+					{#if i >= ($state.page - 1) * perPage && i < $state.page * perPage}
 						<tr>
 							{#each columns as item}
 								{#if item.format}
@@ -110,7 +110,11 @@
 		</tbody>
 	</table>
 	{#if config.pagination}
-		<Pagination results={displayedData.length} perPage={config.pagination.perPage} />
+		<Pagination
+			results={displayedData.length}
+			perPage={$state.perPage || config.pagination.perPage}
+			pagination={config.pagination}
+		/>
 	{/if}
 </div>
 

@@ -34,7 +34,8 @@
 			sortable: true,
 			pagination: {
 				enabled: true,
-				perPage: 500
+				perPage: 500,
+				pageOptions: [{ option: 500 }, { option: 1000 }, { option: 10000, title: 'Show All', proOnly: true }]
 			},
 			controls: {
 				filter: true,

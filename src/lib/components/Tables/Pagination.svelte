@@ -1,16 +1,32 @@
 <script lang="ts">
-	import { state, setPage } from './tableStore'
+	import { state, setPage, setPerPage } from './tableStore'
 
 	import ChevronLeft from '$lib/icons/ChevronLeft.svelte'
 	import ChevronRight from '$lib/icons/ChevronRight.svelte'
 	import Dropdown from '../Dropdown/_Dropdown.svelte'
+	import type { PaginationOptions } from './types'
+	import LockClosed from '$lib/icons/LockClosed.svelte'
+	import Check from '$lib/icons/Check.svelte'
 
+	export let pagination: PaginationOptions
 	export let results: number
 	export let perPage: number
-	const totalPages = Math.ceil(results / perPage)
+
+	// Calculate the total number of pages that are available to paginate through
+	$: totalPages = Math.ceil(results / perPage)
 
 	const previousPage = () => setPage($state.page - 1)
 	const nextPage = () => setPage($state.page + 1)
+
+	// TODO - if proOnly and not pro, forward to /pro/
+	const setPerPageHandler = (perPage: number, proOnly?: boolean) => {
+		if (proOnly) {
+			return alert('You are not pro')
+		}
+
+		setPerPage(perPage)
+		setPage(1)
+	}
 </script>
 
 <nav>
@@ -18,13 +34,32 @@
 		<ChevronLeft classes="-mb-px h-5 w-5 text-gray-600 bp:mr-1" />
 		Previous
 	</button>
+
 	<div class="rows-wrap">
 		<div>
-			<span class="hidden sm:inline">Page </span>
+			<span class="hidden sm:inline cursor-pointer" on:click={() => setPerPage(100)}>Page </span>
 			{$state.page} of {totalPages}
 		</div>
-		<Dropdown title="{perPage} Rows" />
+
+		<Dropdown title={totalPages === 1 ? 'All Rows' : `${perPage} Rows`}>
+			{#each pagination.pageOptions as { option, title, proOnly } (option)}
+				<div
+					class="dd"
+					class:active={perPage === option}
+					on:click={() => setPerPageHandler(option, proOnly)}
+					title={proOnly ? 'Upgrade to Pro to select this option' : `Show ${option} rows per page`}
+				>
+					{title || option}
+					{#if perPage === option}
+						<Check classes="h-4 w-4" />
+					{:else if proOnly}
+						<LockClosed classes="h-4 w-4 text-gray-500" />
+					{/if}
+				</div>
+			{/each}
+		</Dropdown>
 	</div>
+
 	<button on:click={nextPage} disabled={$state.page === totalPages} class="next">
 		Next
 		<ChevronRight classes="-mb-px h-5 w-5 text-gray-600 bp:ml-1" />

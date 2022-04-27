@@ -17,12 +17,19 @@ export type Sorted = {
 // The config for the table
 export type TableConfig = {
 	sortable?: boolean
-	pagination?: {
-		enabled: boolean
-		perPage: number
-	}
+	pagination?: PaginationOptions
 	controls?: {
 		filter?: boolean
 		export?: boolean
 	}
+}
+
+export type PaginationOptions = {
+	enabled: boolean
+	perPage: number
+	pageOptions: {
+		option: number
+		title?: string
+		proOnly?: boolean
+	}[]
 }
