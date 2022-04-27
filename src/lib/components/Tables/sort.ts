@@ -5,16 +5,16 @@ export function sortColumn(data: TableData, originalData: TableData, id: string,
 	// If the column was not sorted, sort it as descending
 	if (typeof sorted === 'undefined' || typeof sorted[id] === 'undefined') {
 		data.sort((a: any, b: any) => {
-			if (a[id] < b[id]) return -1
-			if (a[id] > b[id]) return 1
+			if (a[id] < b[id]) return 1
+			if (a[id] > b[id]) return -1
 			return 0
 		})
 		sorted[id] = 'desc'
 		// If the column is sorted as descending, sort it as ascending
 	} else if (sorted[id] === 'desc') {
 		data.sort((a: any, b: any) => {
-			if (a[id] < b[id]) return 1
-			if (a[id] > b[id]) return -1
+			if (a[id] < b[id]) return -1
+			if (a[id] > b[id]) return 1
 			return 0
 		})
 		sorted[id] = 'asc'

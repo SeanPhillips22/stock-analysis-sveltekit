@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Table from '$lib/components/Tables/Table.svelte'
+	import Table from '$lib/components/Tables/SimpleTable.svelte'
 	import type { TableData } from '$lib/components/Tables/types'
 	export let data: TableData
 </script>
@@ -26,7 +26,7 @@
 			},
 			{
 				id: 'm',
-				title: 'Market',
+				title: 'Market Cap',
 				format: 'abbreviate'
 			}
 		]}

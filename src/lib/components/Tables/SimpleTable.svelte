@@ -27,6 +27,25 @@
 		sortedData = returnedData
 		sorted = returnedSorted
 	}
+
+	/**
+	 * Filter
+	 */
+	let filter = '' // Pass this as a prop to the filter input
+	let filteredData = sortedData
+	$: {
+		if (filter.length) {
+			filteredData = sortedData.filter((row) => {
+				return Object.values(row).some((value) => {
+					return value.toString().toLowerCase().includes(filter.toLowerCase())
+				})
+			})
+		}
+	}
+
+	// If data is filtered, show that. Else, show the sorted data.
+	$: displayedData = filter.length ? filteredData : sortedData
+	$: console.log(filter)
 </script>
 
 <div>
@@ -35,7 +54,7 @@
 			<h2>{title}</h2>
 		</div>
 		<div class="button-group">
-			<Controls {config} />
+			<Controls {config} bind:filter />
 		</div>
 	</div>
 	<table>
@@ -51,7 +70,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each sortedData as row}
+			{#each displayedData as row}
 				<tr>
 					{#each columns as item}
 						{#if item.format}

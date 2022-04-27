@@ -4,6 +4,7 @@
 	import Export from './Controls/Export.svelte'
 
 	export let config: TableConfig
+	export let filter: string
 </script>
 
 {#if config.controls}
@@ -13,7 +14,7 @@
 		{/if}
 
 		{#if config.controls.filter}
-			<Filter />
+			<Filter bind:filter />
 		{/if}
 	</div>
 {/if}
