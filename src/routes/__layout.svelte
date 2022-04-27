@@ -7,6 +7,7 @@
 	import Header from '$lib/components/Header/_Header.svelte'
 	import Navigation from '$lib/components/Navigation/_Navigation.svelte'
 	import Footer from '$lib/components/Footer/_Footer.svelte'
+	import HeaderAd from '$lib/components/Ads/AdSense/HeaderAd.svelte'
 
 	/**
 	 * Authentication
@@ -36,9 +37,12 @@
 
 <div class="mainbody">
 	<Navigation />
-	<main>
-		<slot />
-	</main>
+	<div>
+		<HeaderAd />
+		<main>
+			<slot />
+		</main>
+	</div>
 </div>
 
 <Footer />

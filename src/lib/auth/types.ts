@@ -1,5 +1,6 @@
 // Copy-pasted from supabase code
 export type UserObject = {
+	isPro?: boolean
 	id: string
 	app_metadata: {
 		provider?: string
@@ -26,6 +27,7 @@ export type UserObject = {
 
 export type User = UserObject | null | undefined
 
+// Display on the My Account page
 export type UserData = {
 	email: string
 	registered_date?: string
