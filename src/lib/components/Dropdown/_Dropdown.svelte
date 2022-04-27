@@ -7,7 +7,7 @@
 <div class="controls-menu">
 	<button class="controls-btn">
 		{title}
-		<ChevronDown classes="-mr-1 ml-1 h-5 w-5 xs:ml-2" aria-hidden="true" />
+		<ChevronDown classes="-mr-1 ml-1 h-5 w-5 xs:ml-2" />
 	</button>
 </div>
 

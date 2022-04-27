@@ -1,7 +1,4 @@
 <script lang="ts">
-	/**
-	 *
-	 */
 	import Controls from './Controls.svelte'
 	import { formatCell } from './formatCell'
 	import { sortColumn } from './sort'
@@ -13,39 +10,52 @@
 	export let data: TableData
 	export let config: TableConfig
 
-	data = data.slice(0, 100)
+	// The table state store, needed to remember state after navigating from and back
+	import { state, setSort, resetSort, setFilter } from './tableStore'
+	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
+
 	/**
 	 * Sort
 	 */
 	// Make a copy of the data array so it can be sorted without changing the original
 	let sortedData = [...data]
 
-	let sorted: Sorted = {}
+	// If a sort state is set, sort the data
+	$: {
+		if (!isObjectEmpty($state.sorted)) {
+			let returnedData = sortColumn(sortedData, data, $state.sorted)
+			sortedData = returnedData
+		}
+	}
+
+	// Respond to clicks on the column headers by setting a sort state
 	function sort(id: string) {
-		let { returnedData, returnedSorted } = sortColumn(sortedData, data, id, sorted)
-		// Assign the variables to trigger a state update
-		sortedData = returnedData
-		sorted = returnedSorted
+		if (isObjectEmpty($state.sorted)) {
+			setSort(id, 'desc')
+		} else if ($state.sorted[id] === 'desc') {
+			setSort(id, 'asc')
+		} else if ($state.sorted[id] === 'asc') {
+			resetSort()
+			sortedData = data
+		}
 	}
 
 	/**
 	 * Filter
 	 */
-	let filter = '' // Pass this as a prop to the filter input
 	let filteredData = sortedData
 	$: {
-		if (filter.length) {
+		if ($state.filter.length) {
 			filteredData = sortedData.filter((row) => {
 				return Object.values(row).some((value) => {
-					return value.toString().toLowerCase().includes(filter.toLowerCase())
+					return value.toString().toLowerCase().includes($state.filter.toLowerCase())
 				})
 			})
 		}
 	}
 
 	// If data is filtered, show that. Else, show the sorted data.
-	$: displayedData = filter.length ? filteredData : sortedData
-	$: console.log(filter)
+	$: displayedData = $state.filter.length ? filteredData : sortedData
 </script>
 
 <div>
@@ -54,7 +64,7 @@
 			<h2>{title}</h2>
 		</div>
 		<div class="button-group">
-			<Controls {config} bind:filter />
+			<Controls {config} bind:filter={$state.filter} />
 		</div>
 	</div>
 	<table>
@@ -70,16 +80,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each displayedData as row}
-				<tr>
-					{#each columns as item}
-						{#if item.format}
-							<td>{@html formatCell(item.format, row[item.id])}</td>
-						{:else}
-							<td>{row[item.id]}</td>
-						{/if}
-					{/each}
-				</tr>
+			{#each displayedData as row, i}
+				{#if i < 500}
+					<tr>
+						{#each columns as item}
+							{#if item.format}
+								<td>{@html formatCell(item.format, row[item.id])}</td>
+							{:else}
+								<td>{row[item.id]}</td>
+							{/if}
+						{/each}
+					</tr>
+				{/if}
 			{/each}
 		</tbody>
 	</table>
