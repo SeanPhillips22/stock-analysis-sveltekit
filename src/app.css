@@ -29,6 +29,10 @@
 		@apply mb-3 text-2xl font-bold;
 	}
 
+	.noring {
+		@apply focus:ring-0 focus:ring-offset-0;
+	}
+
 	.header-menu-icon {
 		@apply h-8 w-8 cursor-pointer text-gray-700;
 	}
@@ -141,6 +145,10 @@
 
 	.text-shadow {
 		text-shadow: 0 0 0.5px #555555;
+	}
+
+	.controls-btn {
+		@apply noring inline-flex w-full items-center justify-center whitespace-nowrap rounded-md border border-gray-300 bg-white px-2 py-1.5 text-xs font-semibold shadow-sm hover:bg-gray-50 xs:px-2.5 bp:px-3 bp:text-sm sm:px-4 sm:py-2;
 	}
 
 }

@@ -8,6 +8,7 @@
 
 <div class="container">
 	<Table
+		title={`${data.length} Stocks`}
 		{data}
 		columns={[
 			{
@@ -30,7 +31,11 @@
 			}
 		]}
 		config={{
-			sortable: true
+			sortable: true,
+			controls: {
+				filter: true,
+				export: true
+			}
 		}}
 	/>
 </div>

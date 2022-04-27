@@ -17,4 +17,8 @@ export type Sorted = {
 // The config for the table
 export type TableConfig = {
 	sortable?: boolean
+	controls?: {
+		filter?: boolean
+		export?: boolean
+	}
 }
