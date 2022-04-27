@@ -1,6 +1,7 @@
 <script lang="ts">
-	import Table from '$lib/components/Tables/SimpleTable.svelte'
-	export let data: {s: string, n: string, i: string, m: number}[]
+	import Table from '$lib/components/Tables/Table.svelte'
+	import type { TableData } from '$lib/components/Tables/types'
+	export let data: TableData
 </script>
 
 <h1>All Stock Symbols</h1>
@@ -28,6 +29,9 @@
 				format: 'abbreviate'
 			}
 		]}
+		config={{
+			sortable: true
+		}}
 	/>
 </div>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Info } from '$lib/types/Info';
+	import type { Info } from '$lib/types/Info'
 	import Quote from './PriceQuote.svelte'
 	import StockNav from './Nav/StockNav.svelte'
 	export let info: Info

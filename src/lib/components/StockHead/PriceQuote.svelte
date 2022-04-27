@@ -1,3 +1,4 @@
+<!-- TODO fix interval not clearing -->
 <script lang="ts">
 	// Display the stock price quote, for either a stock or ETF
 	// It's either one or two blocks depending on whether extended hour

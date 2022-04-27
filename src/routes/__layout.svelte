@@ -30,9 +30,6 @@
 			NProgress.done()
 		}
 	}
-
-	// Get the global state for showing and hiding the navigation
-	import { state } from '$lib/stores/navigation'
 </script>
 
 <Header />
