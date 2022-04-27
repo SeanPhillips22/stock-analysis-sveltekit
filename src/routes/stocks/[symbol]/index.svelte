@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-	import type { Load } from "@sveltejs/kit"
+	import type { Load } from '@sveltejs/kit'
 
-	export const load: Load = async({ params, fetch, stuff }) => {
+	export const load: Load = async ({ params, fetch, stuff }) => {
 		let symbol = params.symbol
 
 		const res = await fetch(`https://api.stockanalysis.com/wp-json/sa/overview?symbol=${symbol}&t=stocks`)

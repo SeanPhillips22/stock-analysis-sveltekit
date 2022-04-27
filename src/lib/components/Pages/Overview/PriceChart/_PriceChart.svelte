@@ -1,3 +1,4 @@
+<!-- TODO fix duplicate fetching of chart -->
 <script lang="ts">
 	import { browser } from '$app/env'
 	import type { Info } from '$lib/types/Info'

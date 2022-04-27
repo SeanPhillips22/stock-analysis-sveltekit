@@ -1,10 +1,10 @@
-<!-- TODO fix interval not clearing -->
 <script lang="ts">
 	// Display the stock price quote, for either a stock or ETF
 	// It's either one or two blocks depending on whether extended hour
 	// trading info is available
 	import { onMount, onDestroy } from 'svelte'
 	import { fade } from 'svelte/transition'
+	import { page } from '$app/stores'
 	import type { Info } from '$lib/types/Info'
 	import type { Quote } from '$lib/types/Quote'
 	import SunIcon from '$lib/icons/Sun.svelte'
@@ -19,6 +19,11 @@
 	let freshQuote: Quote
 	onMount(() => {
 		refetch = setInterval(async () => {
+			// If navigated away from the page, stop the interval
+			if (!$page.url.pathname.includes(info.symbol)) {
+				clearInterval(refetch)
+			}
+
 			try {
 				const resB = await fetch(`https://api.stockanalysis.com/wp-json/sa/p?s=${info.symbol}&t=stocks`)
 				const dataB = await resB.json()
