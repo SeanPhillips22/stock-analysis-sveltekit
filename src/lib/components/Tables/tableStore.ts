@@ -4,11 +4,13 @@ import type { Sorted } from './types'
 type Store = {
 	sorted: Sorted
 	filter: string
+	page: number
 }
 
 export const state = writable<Store>({
 	sorted: {},
-	filter: ''
+	filter: '',
+	page: 1
 })
 
 // Set a new sort state
@@ -31,6 +33,14 @@ export const resetSort = () => {
 export const setFilter = (filter: string) => {
 	state.update((s) => {
 		s.filter = filter
+		return s
+	})
+}
+
+// Set the page number
+export const setPage = (page: number) => {
+	state.update((s) => {
+		s.page = page
 		return s
 	})
 }

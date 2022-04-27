@@ -2,7 +2,7 @@
 	import Controls from './Controls.svelte'
 	import { formatCell } from './formatCell'
 	import { sortColumn } from './sort'
-	import type { Column, Sorted, TableConfig, TableData } from './types'
+	import type { Column, TableConfig, TableData } from './types'
 
 	// Props that are passed to the Table component
 	export let title: string
@@ -13,6 +13,7 @@
 	// The table state store, needed to remember state after navigating from and back
 	import { state, setSort, resetSort, setFilter } from './tableStore'
 	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
+	import Pagination from './Pagination.svelte'
 
 	/**
 	 * Sort
@@ -34,7 +35,7 @@
 			setSort(id, 'desc')
 		} else if ($state.sorted[id] === 'desc') {
 			setSort(id, 'asc')
-		} else if ($state.sorted[id] === 'asc') {
+		} else {
 			resetSort()
 			sortedData = data
 		}
@@ -56,6 +57,7 @@
 
 	// If data is filtered, show that. Else, show the sorted data.
 	$: displayedData = $state.filter.length ? filteredData : sortedData
+	$: console.log($state)
 </script>
 
 <div>
@@ -81,7 +83,19 @@
 		</thead>
 		<tbody>
 			{#each displayedData as row, i}
-				{#if i < 500}
+				{#if config.pagination}
+					{#if i >= ($state.page - 1) * config.pagination.perPage && i < $state.page * config.pagination.perPage}
+						<tr>
+							{#each columns as item}
+								{#if item.format}
+									<td>{@html formatCell(item.format, row[item.id])}</td>
+								{:else}
+									<td>{row[item.id]}</td>
+								{/if}
+							{/each}
+						</tr>
+					{/if}
+				{:else}
 					<tr>
 						{#each columns as item}
 							{#if item.format}
@@ -95,6 +109,9 @@
 			{/each}
 		</tbody>
 	</table>
+	{#if config.pagination}
+		<Pagination results={displayedData.length} perPage={config.pagination.perPage} />
+	{/if}
 </div>
 
 <style type="text/postcss">
@@ -122,6 +139,14 @@
 		@apply p-2 border-b border-gray-200;
 	}
 
+	table tr > *:first-child {
+		@apply pl-3;
+	}
+
+	table tr > *:last-child {
+		@apply pr-3;
+	}
+
 	table tr:nth-child(odd) {
 		background-color: #f6f7f8;
 	}
@@ -132,5 +157,9 @@
 
 	table tr td {
 		@apply max-w-[260px] truncate whitespace-nowrap;
+	}
+
+	table tr:hover td {
+		background-color: #f2f9ff !important;
 	}
 </style>

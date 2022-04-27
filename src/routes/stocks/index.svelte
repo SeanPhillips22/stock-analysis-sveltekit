@@ -32,6 +32,10 @@
 		]}
 		config={{
 			sortable: true,
+			pagination: {
+				enabled: true,
+				perPage: 500
+			},
 			controls: {
 				filter: true,
 				export: true
