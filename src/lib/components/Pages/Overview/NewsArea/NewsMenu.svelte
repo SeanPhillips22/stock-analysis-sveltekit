@@ -18,7 +18,7 @@
 	<div class="news-search">
 		<input type="text" placeholder="Search news..." />
 		<div class="search-icons">
-			<Search classes="h-5 w-5 text-gray-400" aria-hidden="true" />
+			<Search classes="h-5 w-5 text-gray-400" />
 		</div>
 	</div>
 </div>

@@ -14,21 +14,23 @@
 </script>
 
 <script lang="ts">
+	import { setContext } from 'svelte'
+
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
 	import InfoTable from '$lib/components/Pages/Overview/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTableQuote.svelte'
+	import FinancialsWidget from '$lib/components/Pages/Overview/FinancialsWidget/_FinancialsWidget.svelte'
 	import NewsArea from '$lib/components/Pages/Overview/NewsArea/_NewsArea.svelte'
 	import Sidebar1All from '$lib/components/Ads/AdSense/Sidebar1All.svelte'
 
+	import type { Overview } from '$lib/types/OverviewPageData'
 	import type { Info } from '$lib/types/Info'
 	import type { NewsObject } from '$lib/components/News/types'
-	import { setContext } from 'svelte'
-	import FinancialsWidget from '$lib/components/Pages/Overview/FinancialsWidget.svelte'
 
 	export let stuff
-	export let initialData: any
+	export let initialData: { data: Overview; news: NewsObject }
 	let info: Info = stuff.info // from layout
-	let data: any = initialData.data
+	let data: Overview = initialData.data
 	let newsObject: NewsObject = initialData.news
 
 	setContext('info', info)
@@ -49,10 +51,9 @@
 <div class="details-news-wrap">
 	<div class="details-wrap">
 		<Sidebar1All />
-		<div>Profile Widget</div>
-		<div>Financials Widget</div>
-		<FinancialsWidget />
-		<div>Analyst Widget</div>
+		<!-- <div>Profile Widget</div> -->
+		<FinancialsWidget text={data.financialIntro} data={data.financialChart} />
+		<!-- <div>Analyst Widget</div> -->
 	</div>
 	<div class="news-wrap">
 		<NewsArea news={newsObject.data} updated={newsObject.updated} />
@@ -72,7 +73,7 @@
 		@apply mt-6 lg:grid lg:grid-cols-sidebar_wide lg:gap-x-10;
 	}
 
-	.details-wrap {
+	.details-wrap:global {
 		@apply space-y-6 px-4 md:px-0 lg:order-2 lg:pt-1;
 	}
 

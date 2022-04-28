@@ -15,8 +15,10 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		// adapter: adapter({ edge: true }),
-		trailingSlash: 'always'
-	}
+		trailingSlash: 'always',
+		floc: true
+	},
+
 };
 
 export default config;
