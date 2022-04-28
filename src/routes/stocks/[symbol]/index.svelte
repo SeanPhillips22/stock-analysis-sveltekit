@@ -23,6 +23,7 @@
 	import type { Info } from '$lib/types/Info'
 	import type { NewsObject } from '$lib/components/News/types'
 	import { setContext } from 'svelte'
+	import FinancialsWidget from '$lib/components/Pages/Overview/FinancialsWidget.svelte'
 
 	export let stuff
 	export let initialData: any
@@ -50,6 +51,7 @@
 		<Sidebar1All />
 		<div>Profile Widget</div>
 		<div>Financials Widget</div>
+		<FinancialsWidget />
 		<div>Analyst Widget</div>
 	</div>
 	<div class="news-wrap">
