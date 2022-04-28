@@ -1,6 +1,7 @@
 <script lang="ts">
-	import type { Info } from '$lib/types/Info';
-	export let info: Info
+	import type { Info } from '$lib/types/Info'
+	import { getContext } from 'svelte'
+	const info: Info = getContext('info')
 	export let data: any
 
 	let previous = 'Previous Close'

@@ -23,14 +23,17 @@
 			if (!$page.url.pathname.includes(info.symbol)) {
 				clearInterval(refetch)
 			}
-
-			try {
-				const resB = await fetch(`https://api.stockanalysis.com/wp-json/sa/p?s=${info.symbol}&t=stocks`)
-				const dataB = await resB.json()
-				freshQuote = dataB
-			} catch (e) {
-				clearInterval(refetch)
+			else {
+				try {
+					const resB = await fetch(`https://api.stockanalysis.com/wp-json/sa/p?s=${info.symbol}&t=stocks`)
+					const dataB = await resB.json()
+					freshQuote = dataB
+				} catch (e) {
+					console.error(e);
+					clearInterval(refetch)
+				}
 			}
+
 		}, 5000)
 	})
 

@@ -19,7 +19,9 @@ const config = {
 		extend: {
 			gridTemplateColumns: {
 				sidebar: 'minmax(0, 1fr) 300px',
+				sidebar_wide: 'minmax(0, 1fr) 336px',
 				leftnav: 'auto minmax(0, 1fr)',
+				news: '1fr 2fr'
 			},
 			fontSize: {
 				smaller: ['0.95rem', '1.35rem'],

@@ -1,10 +1,12 @@
 <script lang="ts">
-	import SearchIcon from '../Header/SearchIcon.svelte'
+	import Search from '$lib/icons/Search.svelte'
 </script>
 
 <form action="/search/" method="get" role="search">
 	<div class="search-wrap">
-		<SearchIcon />
+		<div class="icon-wrap">
+			<Search classes="h-4 w-4 text-gray-600 xs:h-5 xs:w-5" />
+		</div>
 		<input class="search-input" type="text" placeholder="Company or stock symbol..." />
 	</div>
 </form>
@@ -12,6 +14,10 @@
 <style>
 	.search-wrap {
 		@apply relative mx-auto mb-5 flex max-w-[95%] items-center text-left md:max-w-[75%] lg:max-w-lg;
+	}
+
+	.icon-wrap {
+		@apply absolute inset-y-0 left-0 flex items-center pl-2.5;
 	}
 
 	.search-input {
