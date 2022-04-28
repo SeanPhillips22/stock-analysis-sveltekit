@@ -28,7 +28,7 @@
 
 <style>
 	.news-article {
-		@apply gap-4 bg-white p-4 shadow last:pb-1 last:shadow-none sm:grid sm:grid-cols-news sm:py-6 sm:shadow-none md:px-0 lg:gap-5;
+		@apply gap-4 py-4 last:pb-1 sm:grid sm:grid-cols-news sm:py-6 md:px-0 lg:gap-5;
 	}
 
 	.news-article > a {

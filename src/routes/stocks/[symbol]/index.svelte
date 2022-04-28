@@ -18,6 +18,7 @@
 	import InfoTable from '$lib/components/Pages/Overview/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTableQuote.svelte'
 	import NewsArea from '$lib/components/Pages/Overview/NewsArea/_NewsArea.svelte'
+	import Sidebar1All from '$lib/components/Ads/AdSense/Sidebar1All.svelte'
 
 	import type { Info } from '$lib/types/Info'
 	import type { NewsObject } from '$lib/components/News/types'
@@ -46,7 +47,7 @@
 
 <div class="details-news-wrap">
 	<div class="details-wrap">
-		<div>Sidebar1</div>
+		<Sidebar1All />
 		<div>Profile Widget</div>
 		<div>Financials Widget</div>
 		<div>Analyst Widget</div>
@@ -66,7 +67,7 @@
 	}
 
 	.details-news-wrap {
-		@apply mt-6 px-0 md:px-4 lg:grid lg:grid-cols-sidebar_wide lg:gap-x-10 lg:px-6;
+		@apply mt-6 lg:grid lg:grid-cols-sidebar_wide lg:gap-x-10;
 	}
 
 	.details-wrap {

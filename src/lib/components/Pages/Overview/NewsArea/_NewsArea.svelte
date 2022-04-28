@@ -22,7 +22,7 @@
 
 <style>
 	.news-wrap {
-		@apply mt-6 px-4 md:px-0 lg:mt-0;
+		@apply mt-6 lg:mt-0;
 	}
 
 	h2 {
@@ -30,7 +30,7 @@
 	}
 
 	.no-news {
-		@apply mt-6 px-4 md:px-0 lg:mt-0;
+		@apply mt-6 lg:mt-0;
 	}
 
 	.no-news h2 {

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import LiteYoutubeEmbed from './LiteYoutubeEmbed.svelte'
+
 	import Tickers from './Tickers.svelte'
 	import type { NewsItem } from './types'
 
@@ -10,7 +12,9 @@
 
 <div class="news-video">
 	<h3>{title}</h3>
-	<div class="embed">Embed</div>
+	<div class="embed">
+		<LiteYoutubeEmbed id={url} {title} />
+	</div>
 	<p>{text}</p>
 	{#if tickers && tickers.length}
 		<div class="tickers"><Tickers {tickers} intro={related} /></div>

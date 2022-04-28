@@ -25,6 +25,6 @@
 
 <style>
 	.news-feed:global {
-		@apply mb-2 flex flex-col space-y-3 bg-gray-200 sm:space-y-0 sm:divide-y sm:divide-gray-100 sm:bg-white lg:border-0;
+		@apply mb-2 flex flex-col divide-y divide-gray-200 sm:divide-gray-100 lg:border-0;
 	}
 </style>
