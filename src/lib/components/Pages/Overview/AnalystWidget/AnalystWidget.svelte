@@ -28,26 +28,32 @@
 	}
 </script>
 
-<div>
-	<h2 class="mb-2">Analyst Forecast</h2>
-	{#if data.analystIntro}
-		<p class="mb-4">{data.analystIntro}</p>
-	{/if}
-
-	<div class="wrap">
-		<div class="target-title">Price Target</div>
-		<div class="target {targetColor}">{priceTarget}</div>
-		{#if ['upside', 'downside'].includes(updown)}
-			<div class="difference">({difference} {updown})</div>
+{#if data.analystTarget && data.analysts !== 'n/a'}
+	<div>
+		<h2 class="mb-2">Analyst Forecast</h2>
+		{#if data.analystIntro}
+			<p class="mb-4">{data.analystIntro}</p>
 		{/if}
 
-		<div class="consensus">
-			Analyst Consensus: <span class="font-bold {consensusColor}">{data.analysts}</span>
+		<div class="wrap">
+			<div class="target-title">Price Target</div>
+			<div class="target {targetColor}">{priceTarget}</div>
+			{#if ['upside', 'downside'].includes(updown)}
+				<div class="difference">({difference} {updown})</div>
+			{/if}
+
+			<div class="consensus">
+				Analyst Consensus: <span class="font-bold {consensusColor}">{data.analysts}</span>
+			</div>
+
+			<AnalystWidgetChart ratings={data.analystChart} />
 		</div>
 
-		<AnalystWidgetChart ratings={data.analystChart} />
+		{#if !info.exceptions.hideForecast}
+			<Button href={`/stocks/${info.symbol}/forecast/`} title="Stock Forecasts" classes="w-full mt-4" />
+		{/if}
 	</div>
-</div>
+{/if}
 
 <style>
 	.wrap {

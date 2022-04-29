@@ -53,10 +53,16 @@
 
 <div class="details-news-wrap">
 	<div class="details-wrap">
-		<Sidebar1All />
+		{#if newsObject.data.length > 5}
+			<Sidebar1All />
+		{/if}
 		<ProfileWidget />
-		<FinancialsWidget />
-		<AnalystWidget />
+		{#if data.financialChart}
+			<FinancialsWidget />
+		{/if}
+		{#if data.analystChart}
+			<AnalystWidget />
+		{/if}
 	</div>
 	<div class="news-wrap">
 		<NewsArea news={newsObject.data} updated={newsObject.updated} />

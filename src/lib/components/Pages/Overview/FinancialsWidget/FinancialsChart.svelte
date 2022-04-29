@@ -4,7 +4,7 @@
 	 *
 	 * TODO make lazy loaded and only render client-side
 	 */
-	import { onDestroy, onMount } from 'svelte'
+	import { onMount } from 'svelte'
 	import Highcharts from 'highcharts'
 	import { format } from '$lib/components/Tables/formatCell'
 
@@ -47,9 +47,6 @@
 					fontFamily:
 						'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
 				}
-			},
-			exporting: {
-				enabled: true
 			},
 			title: {
 				text: undefined
@@ -128,6 +125,9 @@
 					let y = this.y ? format(this.y, 0).toString() : ''
 					return `<div style="font-size: 15px;">${y}</div>`
 				}
+			},
+			credits: {
+				enabled: false
 			}
 		})
 	})

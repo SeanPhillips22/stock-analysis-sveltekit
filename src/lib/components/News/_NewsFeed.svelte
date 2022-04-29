@@ -14,7 +14,7 @@
 </script>
 
 <div class="news-feed">
-	{#each news as item (item.title)}
+	{#each news as item}
 		{#if item.type === 'Video'}
 			<NewsVideo {item} {related} />
 		{:else}
