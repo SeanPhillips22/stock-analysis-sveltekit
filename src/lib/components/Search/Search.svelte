@@ -50,11 +50,11 @@
 	// Perform the search
 	// use an abort controller to abandon the previous request
 	// to prevent any race conditions
-	let controller = new AbortController()
-	let signal = controller.signal
+	let controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined
+	let signal = controller?.signal
 	const search = async (query: string) => {
 		if (searching) {
-			controller.abort()
+			controller?.abort()
 			controller = new AbortController()
 			signal = controller.signal
 		}
@@ -97,7 +97,7 @@
 			debouncedQuery = ''
 			clearTimeout(timer)
 			if (searching) {
-				controller.abort()
+				controller?.abort()
 				controller = new AbortController()
 				signal = controller.signal
 			}
