@@ -31,6 +31,14 @@ export const dec3 = new Intl.NumberFormat('en-US', {
 	maximumFractionDigits: 3
 })
 
+export function format(value: number, decimals: 0 | 2 | 3) {
+	if (!value) return '-'
+	if (decimals === 0) return dec0.format(value)
+	if (decimals === 2) return dec2.format(value)
+	if (decimals === 3) return dec3.format(value)
+	return value
+}
+
 export function abbreviate(value: number, noDec?: boolean) {
 	if (!value) return '-'
 
