@@ -4,7 +4,6 @@
 	import { goto } from '$app/navigation'
 	import Search from '$lib/icons/Search.svelte'
 	import Result from './Result.svelte'
-	import { doSearch } from './doSearch'
 	import type { SearchResult } from './types'
 	import { clickOutside } from '$lib/functions/ui/clickOutside'
 	import SmallSpinner from '../Loading/SmallSpinner.svelte'
@@ -49,9 +48,32 @@
 	}
 
 	// Perform the search
+	// use an abort controller to abandon the previous request
+	// to prevent any race conditions
+	let controller = new AbortController()
+	let signal = controller.signal
 	const search = async (query: string) => {
+		if (searching) {
+			controller.abort()
+			controller = new AbortController()
+			signal = controller.signal
+		}
+
 		searching = true
-		let searchResults = await doSearch(query)
+		let searchResults = []
+
+		try {
+			let res = await fetch('https://api.stockanalysis.com/search?q=' + query, { signal })
+			let data = await res.json()
+			searchResults = data
+			num = 1 // reset the number for keyboard navigation
+		} catch (e: any) {
+			if (e.name == 'AbortError') {
+				// do nothing
+			}
+			return []
+		}
+
 		results = searchResults
 		searching = false
 	}
@@ -63,7 +85,7 @@
 		clearTimeout(timer)
 		timer = setTimeout(() => {
 			debouncedQuery = v
-		}, 150)
+		}, 100)
 	}
 
 	// When there is a search query, debounce the query
@@ -74,6 +96,14 @@
 		} else {
 			debouncedQuery = ''
 			clearTimeout(timer)
+			if (searching) {
+				controller.abort()
+				controller = new AbortController()
+				signal = controller.signal
+			}
+			searching = false
+			trendingIsShowing = true
+			results = trending
 		}
 	}
 
@@ -82,9 +112,6 @@
 		if (debouncedQuery.length) {
 			trendingIsShowing = false
 			search(debouncedQuery)
-		} else {
-			trendingIsShowing = true
-			results = trending
 		}
 	}
 
@@ -185,7 +212,7 @@
 				<ul>
 					{#if results.length}
 						{#each results as result, i (result.s)}
-							<li><Result {result} {i} {num} on:resultClick={() => (open = false)} /></li>
+							<li><Result {result} {i} {inputRef} {num} on:resultClick={() => (open = false)} /></li>
 						{/each}
 					{:else if debouncedQuery.length}
 						<li class="no-results">

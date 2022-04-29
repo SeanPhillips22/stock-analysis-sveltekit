@@ -82,9 +82,29 @@
 				break
 		}
 	}
+
+	// Focus the active search result when scrolling down with keyboard navigation
+	// in order to make the dropdown scroll with the keyboard
+	// then immediately yield the focus back to the input element
+	// so that it continues to listen to the key presses
+	export let inputRef: HTMLInputElement
+	let linkRef: HTMLAnchorElement | null = null
+	$: isActive = i === num - 1
+	$: {
+		if (isActive && linkRef && num > 5) {
+			linkRef.focus()
+			inputRef.focus()
+		}
+	}
 </script>
 
-<a href={url} on:click={() => dispatch('resultClick')} sveltekit:prefetch class:active-search-result={i === num - 1}>
+<a
+	href={url}
+	on:click={() => dispatch('resultClick')}
+	sveltekit:prefetch
+	class:active-search-result={isActive}
+	bind:this={linkRef}
+>
 	<span class="text-left min-w-[3rem]">{symbol}</span>
 	<span class="text-left grow">{name}</span>
 	<span class="hidden text-sm sm:block">{tag}</span>
