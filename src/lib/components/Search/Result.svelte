@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores'
 	import { createEventDispatcher } from 'svelte'
 	const dispatch = createEventDispatcher()
 
@@ -13,14 +14,76 @@
 
 	let path = type === 's' ? 'stocks' : 'etf'
 	let tag = type === 's' ? 'Stock' : 'ETF'
+	let url = `/${path}/${symbol.toLowerCase()}/`
+
+	// If the user is on a subpage (f.x. /financials/) then append that to the URL
+	let splitRoute = $page.routeId?.split('/')
+	let currentPage: string | undefined = splitRoute ? splitRoute[0] : undefined
+
+	if (splitRoute && splitRoute.length > 2 && (currentPage === 'stocks' || currentPage === 'etf')) {
+		let subPage = splitRoute[2]
+
+		switch (subPage) {
+			case 'chart':
+				url += 'chart/'
+				break
+
+			case 'dividend':
+				url += 'dividend/'
+				break
+
+			case 'company':
+				if (type === 's') url += 'company/'
+				break
+
+			case 'statistics':
+				if (type === 's') url += 'statistics/'
+
+				break
+
+			case 'forecast':
+				if (type === 's') url += 'forecast/'
+				break
+
+			case 'holdings':
+				if (type === 'e') url += 'holdings/'
+				break
+
+			case 'financials':
+				{
+					if (type === 's') {
+						let statementType = splitRoute[3] ?? null // income statement, etc
+						let financialPeriod = splitRoute[4] ? splitRoute[4] + '/' : '' // quarterly or trailing
+
+						switch (statementType) {
+							case 'balance-sheet':
+								url += 'financials/balance-sheet/' + financialPeriod
+								break
+
+							case 'cash-flow-statement':
+								url += 'financials/cash-flow-statement/' + financialPeriod
+								break
+
+							case 'ratios':
+								url += 'financials/ratios/' + financialPeriod
+								break
+
+							default:
+								financialPeriod = splitRoute[3] ? splitRoute[3] + '/' : ''
+								url += 'financials/' + financialPeriod
+								break
+						}
+					}
+				}
+				break
+
+			default:
+				break
+		}
+	}
 </script>
 
-<a
-	href="/{path}/{symbol.toLowerCase()}/"
-	on:click={() => dispatch('resultClick')}
-	sveltekit:prefetch
-	class:active={i === 0}
->
+<a href={url} on:click={() => dispatch('resultClick')} sveltekit:prefetch class:active={i === 0}>
 	<span class="text-left min-w-[3rem]">{symbol}</span>
 	<span class="text-left grow">{name}</span>
 	<span class="hidden text-sm sm:block">{tag}</span>
