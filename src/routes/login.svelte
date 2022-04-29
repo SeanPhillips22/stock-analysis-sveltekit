@@ -29,47 +29,49 @@
 	}
 </script>
 
-<div class="wrap">
-	<a href="/" sveltekit:prefetch><Logo classes="mx-auto mb-6 h-24 w-24 sm:h-28 sm:w-28" /></a>
-	{#if $user}
-		<h1>You are logged in</h1>
-		{#if $user.email}
-			<p>Logged in as {$user.email}</p>
-		{/if}
-		<div class="form-wrap">
-			<button on:click={() => supabase.auth.signOut()}>Log Out</button>
-		</div>
-	{:else if submitted}
-		<div class="submitted">
-			<h1>Click the login link in your email</h1>
-			<p>
-				Open your email and click the login link, no password required. Your browser will remember so you do not have to
-				repeat this all the time.
-			</p>
-		</div>
-	{:else}
-		<h1>Log in to your account</h1>
-		<p>Or <a href="/pro/" sveltekit:prefetch>start your free 30-day trial</a></p>
+<main>
+	<div class="wrap">
+		<a href="/" sveltekit:prefetch><Logo classes="mx-auto mb-6 h-24 w-24 sm:h-28 sm:w-28" /></a>
+		{#if $user}
+			<h1>You are logged in</h1>
+			{#if $user.email}
+				<p>Logged in as {$user.email}</p>
+			{/if}
+			<div class="form-wrap">
+				<button on:click={() => supabase.auth.signOut()}>Log Out</button>
+			</div>
+		{:else if submitted}
+			<div class="submitted">
+				<h1>Click the login link in your email</h1>
+				<p>
+					Open your email and click the login link, no password required. Your browser will remember so you do not have
+					to repeat this all the time.
+				</p>
+			</div>
+		{:else}
+			<h1>Log in to your account</h1>
+			<p>Or <a href="/pro/" sveltekit:prefetch>start your free 30-day trial</a></p>
 
-		{#if error}
-			<div class="error">{error}</div>
-		{/if}
+			{#if error}
+				<div class="error">{error}</div>
+			{/if}
 
-		<div class="form-wrap">
-			<form on:submit|preventDefault={handleLogin}>
-				<label for="email">Email address</label>
-				<input name="email" type="email" autocomplete="email" required bind:value={email} />
-				{#if loading}
-					<button type="submit" disabled>
-						<Spinner /> Logging in...
-					</button>
-				{:else}
-					<button type="submit"> Log In </button>
-				{/if}
-			</form>
-		</div>
-	{/if}
-</div>
+			<div class="form-wrap">
+				<form on:submit|preventDefault={handleLogin}>
+					<label for="email">Email address</label>
+					<input name="email" type="email" autocomplete="email" required bind:value={email} />
+					{#if loading}
+						<button type="submit" disabled>
+							<Spinner /> Logging in...
+						</button>
+					{:else}
+						<button type="submit"> Log In </button>
+					{/if}
+				</form>
+			</div>
+		{/if}
+	</div>
+</main>
 
 <style>
 	.wrap {

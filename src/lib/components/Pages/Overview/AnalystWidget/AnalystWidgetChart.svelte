@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import Highcharts from 'highcharts'
-	import { format } from '$lib/components/Tables/formatCell'
 
 	export let ratings: {
 		buy: number

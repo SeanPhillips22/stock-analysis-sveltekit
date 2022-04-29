@@ -12,6 +12,10 @@
 		@apply flex min-h-screen flex-col;
 	}
 
+	.contain {
+		@apply mx-auto mb-10 w-full xl:max-w-screen-xl xxl:mx-0 px-3 py-5 xs:px-4 xs:py-6 lg:px-6 xxl:px-8;
+	}
+
 	a {
 		@apply text-blue-link hover:text-gray-900;
 		color: #1e73ba;

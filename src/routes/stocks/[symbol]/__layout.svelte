@@ -26,11 +26,10 @@
 	export let info: Info
 </script>
 
-<StockHead {info} />
+<main class="contain">
+	<StockHead {info} />
 
-<div class="stock-content">
-	<slot />
-</div>
-
-<style>
-</style>
+	<div class="stock-content">
+		<slot />
+	</div>
+</main>

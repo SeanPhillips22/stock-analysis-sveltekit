@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { user } from '$lib/auth/userStore'
+	import { page } from '$app/stores'
 </script>
 
-{#if !$user?.isPro}
+{#if !$user?.isPro && $page.url.pathname !== '/'}
 	<div class="ad-banner wrap">
 		<div class="ha1 placeholder">{' '}</div>
 	</div>
@@ -10,7 +11,7 @@
 
 <style>
 	.wrap {
-		@apply mt-3 -mb-2 text-center;
+		@apply mt-3 -mb-2 text-center xl:max-w-screen-xl;
 	}
 
 	.ha1 {

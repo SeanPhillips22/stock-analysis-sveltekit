@@ -12,7 +12,6 @@
 
 	const info: Info = getContext('info')
 	const data: Overview = getContext('data')
-	console.log(data)
 </script>
 
 {#if data}
