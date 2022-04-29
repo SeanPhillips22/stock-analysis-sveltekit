@@ -207,7 +207,7 @@
 	}
 
 	.nav-col {
-		@apply bg-white top-16 mt-1 xxl:mt-0 xxl:sticky px-3 xxl:px-5 pt-2 xxl:py-4 overflow-y-auto;
+		@apply bg-white top-14 mt-1 xxl:mt-0 xxl:sticky px-3 xxl:px-5 pt-2 xxl:py-4 overflow-y-auto;
 	}
 
 	nav {

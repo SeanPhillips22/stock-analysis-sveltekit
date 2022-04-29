@@ -7,7 +7,7 @@
 
 <div class="container">
 	<div class="stock-head">
-		<h1>{info.nameFull} ({info.ticker})</h1>
+		<h1>{info.nameFull || info.name} ({info.ticker})</h1>
 		<div class="details">{info.exchange}: {info.ticker} · IEX Real-Time Price · USD</div>
 	</div>
 
