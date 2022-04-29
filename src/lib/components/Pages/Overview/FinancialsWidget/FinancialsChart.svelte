@@ -130,12 +130,6 @@
 				}
 			}
 		})
-
-		onDestroy(() => {
-			Highcharts.charts.forEach((chart: any) => {
-				chart.destroy()
-			})
-		})
 	})
 </script>
 
