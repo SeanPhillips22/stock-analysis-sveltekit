@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { page } from '$app/stores'
 	import { fade } from 'svelte/transition'
+	import { goto } from '$app/navigation'
 	import Search from '$lib/icons/Search.svelte'
 	import Result from './Result.svelte'
 	import { doSearch } from './doSearch'
@@ -87,6 +87,48 @@
 			results = trending
 		}
 	}
+
+	let num = 1 // The number of the highlighted result
+	let inputRef: HTMLInputElement
+	function keyboardNavigation(e: KeyboardEvent) {
+		let key = e.key
+		let resultsCount = results.length
+
+		switch (key) {
+			case 'Escape':
+			case 'Tab':
+				open = false
+				inputRef.blur()
+				break
+
+			case 'ArrowDown':
+				e.preventDefault()
+				if (num < resultsCount) {
+					num++
+				}
+				break
+
+			case 'ArrowUp':
+				e.preventDefault()
+				if (num > 1) {
+					num--
+				}
+				break
+
+			case 'Enter':
+				let active: HTMLLinkElement | null = document.querySelector('.active-search-result')
+				if (active) {
+					e.preventDefault()
+					let selected = active.href
+					let selectedUrl = new URL(selected)
+					let selectedPath = selectedUrl.pathname
+					goto(selectedPath)
+					open = false
+					inputRef.blur()
+				}
+				break
+		}
+	}
 </script>
 
 <form action="/search/" method="get" role="search">
@@ -108,7 +150,9 @@
 				open = true
 				if (!initialFetched) initial()
 			}}
+			on:keydown={keyboardNavigation}
 			bind:value={query}
+			bind:this={inputRef}
 		/>
 
 		<!-- Search Spinner or "x" to close search -->
@@ -141,7 +185,7 @@
 				<ul>
 					{#if results.length}
 						{#each results as result, i (result.s)}
-							<li><Result {result} {i} on:resultClick={() => (open = false)} /></li>
+							<li><Result {result} {i} {num} on:resultClick={() => (open = false)} /></li>
 						{/each}
 					{:else if debouncedQuery.length}
 						<li class="no-results">

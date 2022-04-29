@@ -7,6 +7,7 @@
 
 	export let result: SearchResult
 	export let i: number // The index of the result
+	export let num: number // The highlighted result for keyboard navigation
 
 	let symbol = result.s
 	let name = result.n
@@ -83,7 +84,7 @@
 	}
 </script>
 
-<a href={url} on:click={() => dispatch('resultClick')} sveltekit:prefetch class:active={i === 0}>
+<a href={url} on:click={() => dispatch('resultClick')} sveltekit:prefetch class:active-search-result={i === num - 1}>
 	<span class="text-left min-w-[3rem]">{symbol}</span>
 	<span class="text-left grow">{name}</span>
 	<span class="hidden text-sm sm:block">{tag}</span>
@@ -94,7 +95,7 @@
 		@apply flex flex-row items-center gap-x-1 sm:gap-x-2 py-1.5 px-2 sm:px-3 hover:bg-gray-100 text-gray-900;
 	}
 
-	.active {
+	.active-search-result {
 		@apply bg-gray-100;
 	}
 </style>
