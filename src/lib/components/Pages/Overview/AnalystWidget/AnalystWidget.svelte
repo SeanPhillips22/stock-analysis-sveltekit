@@ -1,0 +1,72 @@
+<script lang="ts">
+	/**
+	 * The analyst rating and price target widget shown on the stock overview pages
+	 * Has a text snippet and a chart.
+	 */
+	import { getContext } from 'svelte'
+
+	import type { Info } from '$lib/types/Info'
+	import type { Overview } from '$lib/types/OverviewPageData'
+	import Button from '$lib/components/Buttons/Button.svelte'
+	import AnalystWidgetChart from './AnalystWidgetChart.svelte'
+
+	const info: Info = getContext('info')
+	const data: Overview = getContext('data')
+
+	let targetColor: string = 'text-gray-800'
+	let consensusColor: string = 'text-gray-800'
+
+	let priceTarget = data.analystTarget[0]
+	let difference = data.analystTarget[1]
+	let updown = data.analystTarget[2]
+
+	if (updown === 'upside') {
+		targetColor = 'text-green-700'
+		consensusColor = 'text-green-800'
+	} else if (updown === 'downside') {
+		targetColor = consensusColor = 'text-red-600'
+	}
+</script>
+
+<div>
+	<h2 class="mb-2">Analyst Forecast</h2>
+	{#if data.analystIntro}
+		<p class="mb-4">{data.analystIntro}</p>
+	{/if}
+
+	<div class="wrap">
+		<div class="target-title">Price Target</div>
+		<div class="target {targetColor}">{priceTarget}</div>
+		{#if ['upside', 'downside'].includes(updown)}
+			<div class="difference">({difference} {updown})</div>
+		{/if}
+
+		<div class="consensus">
+			Analyst Consensus: <span class="font-bold {consensusColor}">{data.analysts}</span>
+		</div>
+
+		<AnalystWidgetChart ratings={data.analystChart} />
+	</div>
+</div>
+
+<style>
+	.wrap {
+		@apply border border-gray-200 p-2 xs:p-3;
+	}
+
+	.target-title {
+		@apply m-auto mb-2 text-center text-xl font-semibold text-gray-900;
+	}
+
+	.target {
+		@apply mb-0.5 text-center text-4xl font-semibold;
+	}
+
+	.difference {
+		@apply mb-1.5 text-center text-xl;
+	}
+
+	.consensus {
+		@apply py-1 text-center text-lg font-semibold text-gray-900;
+	}
+</style>

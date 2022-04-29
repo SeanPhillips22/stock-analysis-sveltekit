@@ -5,7 +5,7 @@
 </script>
 
 <button class="button {classes}">
-	<a {href}>{title}</a>
+	<a {href} sveltekit:prefetch>{title}</a>
 </button>
 
 <style>

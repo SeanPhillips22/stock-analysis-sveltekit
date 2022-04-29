@@ -1,10 +1,16 @@
 <script lang="ts">
+	/**
+	 * Container for the news feed on stock overview pages. Has a news menu
+	 * above the news feed with buttons and search functionality.
+	 *
+	 * TODO check for fresh news if it hasn't been updated in a while
+	 */
 	import type { NewsArray } from '$lib/components/News/types'
 	import NewsFeed from '$lib/components/News/_NewsFeed.svelte'
 	import NewsMenu from './NewsMenu.svelte'
 
 	export let news: NewsArray
-	export let updated: number // TODO add logic to fetch fresh news
+	export let updated: number
 </script>
 
 {#if news && news.length}

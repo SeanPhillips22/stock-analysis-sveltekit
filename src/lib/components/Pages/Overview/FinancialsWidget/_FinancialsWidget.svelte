@@ -2,24 +2,25 @@
 	/**
 	 * The financials widget shown on stock overview pages
 	 */
+	import { getContext } from 'svelte'
+
 	import Button from '$lib/components/Buttons/Button.svelte'
 	import FinancialsChart from './FinancialsChart.svelte'
-	export let text: string | undefined
-	export let data: any
 
-	import { getContext } from 'svelte'
 	import type { Info } from '$lib/types/Info'
+	import type { Overview } from '$lib/types/OverviewPageData'
 
 	const info: Info = getContext('info')
+	const data: Overview = getContext('data')
 </script>
 
 {#if data}
 	<div>
 		<h2>Financial Performance</h2>
-		{#if text}
-			<p class="mb-3">{text}</p>
+		{#if data.financialIntro}
+			<p class="mb-3">{data.financialIntro}</p>
 		{/if}
-		<FinancialsChart {data} />
+		<FinancialsChart data={data.financialChart} />
 		{#if info.currency !== 'USD'}
 			<span class="text-sm text-gray-700">Financial numbers in {info.currency}</span>
 		{/if}

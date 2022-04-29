@@ -26,6 +26,8 @@
 	import type { Overview } from '$lib/types/OverviewPageData'
 	import type { Info } from '$lib/types/Info'
 	import type { NewsObject } from '$lib/components/News/types'
+	import ProfileWidget from '$lib/components/Pages/Overview/ProfileWidget.svelte'
+	import AnalystWidget from '$lib/components/Pages/Overview/AnalystWidget/AnalystWidget.svelte'
 
 	export let stuff
 	export let initialData: { data: Overview; news: NewsObject }
@@ -34,6 +36,7 @@
 	let newsObject: NewsObject = initialData.news
 
 	setContext('info', info)
+	setContext('data', data)
 </script>
 
 <svelte:head>
@@ -43,17 +46,17 @@
 <div class="overview">
 	<PriceChart />
 	<div class="top-tables">
-		<InfoTable {data} />
-		<QuoteTable {data} />
+		<InfoTable />
+		<QuoteTable />
 	</div>
 </div>
 
 <div class="details-news-wrap">
 	<div class="details-wrap">
 		<Sidebar1All />
-		<!-- <div>Profile Widget</div> -->
-		<FinancialsWidget text={data.financialIntro} data={data.financialChart} />
-		<!-- <div>Analyst Widget</div> -->
+		<ProfileWidget />
+		<FinancialsWidget />
+		<AnalystWidget />
 	</div>
 	<div class="news-wrap">
 		<NewsArea news={newsObject.data} updated={newsObject.updated} />
