@@ -190,7 +190,7 @@
 
 		<!-- Search Spinner or "x" to close search -->
 		{#if searching}
-			<div class="spinner" in:fade>
+			<div class="spinner" in:fade={{ delay: 200 }}>
 				<SmallSpinner />
 			</div>
 		{:else if query.length}
@@ -199,7 +199,7 @@
 				aria-label="Clear"
 				title="Clear"
 				tabIndex="0"
-				in:fade
+				in:fade={{ delay: 200 }}
 				on:click={() => {
 					query = ''
 					open = false

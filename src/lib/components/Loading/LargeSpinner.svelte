@@ -2,7 +2,7 @@
 	export let classes = ''
 </script>
 
-<div class="flex w-full justify-center">
+<div class="flex w-full justify-center items-center">
 	<svg
 		class={classes || 'h-12 w-12 animate-spin text-blue-300'}
 		xmlns="http://www.w3.org/2000/svg"

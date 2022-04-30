@@ -7,10 +7,12 @@
 	let message = info?.ipoInfo?.ipoDate
 		? `Data will show when the stock starts trading on ${info.ipoInfo.ipoDateFormatted}.`
 		: 'Data will show when the stock starts trading.'
+
+	export let borders = false
 </script>
 
 <div class="container">
-	<div class="wrap">
+	<div class="wrap" class:borders>
 		<div class="inner">
 			<div class="title">{title}</div>
 			{#if description || message}
@@ -26,7 +28,11 @@
 	}
 
 	.wrap {
-		@apply mb-4 flex h-[180px] w-full items-center justify-center rounded-sm border border-gray-200 sm:h-[240px] lg:mb-0 lg:h-full lg:border-0 lg:border-l lg:border-gray-300 lg:pl-3;
+		@apply mb-4 flex h-[180px] w-full items-center justify-center rounded-sm  sm:h-[240px] lg:mb-0 lg:h-full;
+	}
+
+	.wrap.borders {
+		@apply border border-gray-200 lg:border-0 lg:border-l lg:border-gray-300 lg:pl-3;
 	}
 
 	.inner {
