@@ -1,3 +1,6 @@
+import type { DividendType } from './Dividend'
+import type { HoldingsType } from './Holdings'
+
 export type Overview = {
 	revenue: string
 	netIncome: string
@@ -33,4 +36,16 @@ export type Overview = {
 		strongBuy: number
 		strongSell: number
 	}
+	// ETF specific
+	assets?: string
+	nav?: string
+	er?: string
+	dividendYield?: string
+	holdings?: number
+	inception?: string
+	low52?: string
+	high52?: string
+	holdingsTable?: HoldingsType
+	dividendTable?: DividendType[]
+	change1y?: string
 }

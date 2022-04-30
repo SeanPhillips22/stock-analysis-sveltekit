@@ -17,9 +17,8 @@
 	import { setContext } from 'svelte'
 
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
-	import InfoTable from '$lib/components/Pages/Overview/TopTableInfo.svelte'
-	import QuoteTable from '$lib/components/Pages/Overview/TopTableQuote.svelte'
-	import FinancialsWidget from '$lib/components/Pages/Overview/FinancialsWidget/_FinancialsWidget.svelte'
+	import InfoTable from '$lib/components/Pages/Overview/TopTables/ETFs/TopTableInfo.svelte'
+	import QuoteTable from '$lib/components/Pages/Overview/TopTables/ETFs/TopTableQuote.svelte'
 	import NewsArea from '$lib/components/Pages/Overview/NewsArea/_NewsArea.svelte'
 	import Sidebar1All from '$lib/components/Ads/AdSense/Sidebar1All.svelte'
 
@@ -27,7 +26,8 @@
 	import type { Info } from '$lib/types/Info'
 	import type { NewsObject } from '$lib/components/News/types'
 	import ProfileWidget from '$lib/components/Pages/Overview/ProfileWidget.svelte'
-	import AnalystWidget from '$lib/components/Pages/Overview/AnalystWidget/AnalystWidget.svelte'
+	import HoldingsWidget from '$lib/components/Pages/Overview/HoldingsWidget.svelte'
+	import DividendWidget from '$lib/components/Pages/Overview/DividendWidget.svelte'
 
 	export let stuff
 	export let initialData: { data: Overview; news: NewsObject }
@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-	<title>{info.nameFull} ({info.ticker}) Stock Price, Quote & News</title>
+	<title>{info.ticker} ETF Stock Price, Quote & Overview</title>
 </svelte:head>
 
 <div class="overview">
@@ -57,11 +57,11 @@
 			<Sidebar1All />
 		{/if}
 		<ProfileWidget />
-		{#if data.financialChart}
-			<FinancialsWidget />
+		{#if data.holdingsTable}
+			<HoldingsWidget />
 		{/if}
-		{#if data.analystChart}
-			<AnalystWidget />
+		{#if data.dividendTable}
+			<DividendWidget />
 		{/if}
 	</div>
 	<div class="news-wrap">

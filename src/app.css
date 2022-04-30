@@ -54,6 +54,10 @@
 		color: #111827;
 	}
 
+	.ticker {
+		@apply ml-1 mb-1 inline-flex items-center rounded-md bg-gray-100 px-1.5 py-0.5 text-sm font-medium hover:bg-gray-200 sm:ml-1.5;
+	}
+
 	#nprogress {
 		pointer-events: none;
 	}

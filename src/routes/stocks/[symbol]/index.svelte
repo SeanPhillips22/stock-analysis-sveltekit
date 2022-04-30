@@ -17,8 +17,8 @@
 	import { setContext } from 'svelte'
 
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
-	import InfoTable from '$lib/components/Pages/Overview/TopTableInfo.svelte'
-	import QuoteTable from '$lib/components/Pages/Overview/TopTableQuote.svelte'
+	import InfoTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableInfo.svelte'
+	import QuoteTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableQuote.svelte'
 	import FinancialsWidget from '$lib/components/Pages/Overview/FinancialsWidget/_FinancialsWidget.svelte'
 	import NewsArea from '$lib/components/Pages/Overview/NewsArea/_NewsArea.svelte'
 	import Sidebar1All from '$lib/components/Ads/AdSense/Sidebar1All.svelte'
