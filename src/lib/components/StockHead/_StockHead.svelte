@@ -2,16 +2,32 @@
 	import type { Info } from '$lib/types/Info'
 	import Quote from './PriceQuote.svelte'
 	import StockNav from './Nav/StockNav.svelte'
+	import InformationCircle from '$lib/icons/InformationCircle.svelte'
+	import QuoteIpo from './QuoteIPO.svelte'
 	export let info: Info
+	let isIpo = info.state === 'upcomingipo'
 </script>
 
 <div class="container">
 	<div class="stock-head">
 		<h1>{info.nameFull || info.name} ({info.ticker})</h1>
-		<div class="details">{info.exchange}: {info.ticker} · IEX Real-Time Price · USD</div>
+		{#if info.quote && !isIpo && !info.archived}
+			<div class="details">{info.exchange}: {info.ticker} · IEX Real-Time Price · USD</div>
+		{/if}
+
+		{#if info.notice}
+			<div class="notice">
+				<InformationCircle classes="mb-1 mr-1 inline h-4 w-4 text-blue-400 xs:h-5 xs:w-5 sm:h-6 sm:w-6" />
+				<span>{info.notice}</span>
+			</div>
+		{/if}
 	</div>
 
-	<Quote {info} />
+	{#if isIpo}
+		<QuoteIpo {info} />
+	{:else}
+		<Quote {info} />
+	{/if}
 
 	<StockNav {info} />
 </div>
@@ -31,5 +47,9 @@
 
 	.details {
 		@apply mt-[1px] text-tiny text-gray-600;
+	}
+
+	.notice {
+		@apply mt-2 text-base text-gray-700 sm:text-lg;
 	}
 </style>

@@ -8,12 +8,14 @@
 	import Chart from './PriceChartChart.svelte'
 	import type { Info } from '$lib/types/Info'
 	import { getContext } from 'svelte'
+	import Unavailable from './Unavailable.svelte'
 	const info: Info = getContext('info')
 
 	let chartTime: Time = '1D'
 	let chartData: ChartData
 
 	async function fetchData(time: Time) {
+		if (info.state === 'upcomingipo') return
 		chartData = await fetchChartData(info.symbol, info.type, time)
 	}
 
@@ -21,17 +23,21 @@
 	$: fetchData(chartTime)
 </script>
 
-<div class="container">
-	<div class="controls">
-		<Controls bind:time={chartTime} />
-		<Change {chartTime} />
+{#if info.state === 'upcomingipo'}
+	<Unavailable {info} />
+{:else}
+	<div class="container">
+		<div class="controls">
+			<Controls bind:time={chartTime} />
+			<Change {chartTime} />
+		</div>
+		<div class="chart-wrap">
+			{#if browser && chartData}
+				<Chart {chartData} time={chartTime} change={info.quote.c} close={info.quote.cl} />
+			{/if}
+		</div>
 	</div>
-	<div class="chart-wrap">
-		{#if browser && chartData}
-			<Chart {chartData} time={chartTime} change={info.quote.c} close={info.quote.cl} />
-		{/if}
-	</div>
-</div>
+{/if}
 
 <style type="text/postcss">
 	.container {

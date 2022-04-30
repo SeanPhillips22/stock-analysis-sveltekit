@@ -65,7 +65,8 @@
 		{/if}
 	</div>
 	<div class="news-wrap">
-		<NewsArea news={newsObject.data} updated={newsObject.updated} />
+		<!-- updated={newsObject.updated} -->
+		<NewsArea news={newsObject.data} />
 	</div>
 </div>
 

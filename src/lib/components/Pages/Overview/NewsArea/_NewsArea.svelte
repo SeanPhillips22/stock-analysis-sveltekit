@@ -10,7 +10,7 @@
 	import NewsMenu from './NewsMenu.svelte'
 
 	export let news: NewsArray
-	export let updated: number
+	// export let updated: number
 </script>
 
 {#if news && news.length}
