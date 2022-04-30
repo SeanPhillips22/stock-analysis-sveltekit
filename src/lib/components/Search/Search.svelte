@@ -110,6 +110,7 @@
 	// When there is a search query, perform a search
 	$: {
 		if (debouncedQuery.length) {
+			open = true
 			trendingIsShowing = false
 			search(debouncedQuery)
 		}
@@ -166,8 +167,13 @@
 		<input
 			class="search-input"
 			type="text"
+			aria-label="Search"
+			role="combobox"
+			aria-expanded={open}
+			aria-controls="owned_listbox"
 			autocomplete="off"
 			spellcheck="false"
+			aria-autocomplete="list"
 			placeholder="Company or stock symbol..."
 			name="q"
 			on:mouseenter={() => {
@@ -206,10 +212,10 @@
 		<!-- Search Dropdown -->
 		{#if open}
 			<div class="results" use:clickOutside={() => (open = false)} transition:fade={{ duration: 100 }}>
-				{#if trendingIsShowing}
+				{#if trendingIsShowing && trending.length}
 					<h4>Trending</h4>
 				{/if}
-				<ul>
+				<ul role="listbox" id="owned_listbox">
 					{#if results.length}
 						{#each results as result, i (result.s)}
 							<li><Result {result} {i} {inputRef} {num} on:resultClick={() => (open = false)} /></li>
