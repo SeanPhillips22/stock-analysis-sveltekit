@@ -4,6 +4,7 @@
 	import StockNav from './Nav/StockNav.svelte'
 	import InformationCircle from '$lib/icons/InformationCircle.svelte'
 	import QuoteIpo from './QuoteIPO.svelte'
+	import ETFNav from './Nav/ETFNav.svelte'
 	export let info: Info
 	let isIpo = info.state === 'upcomingipo'
 </script>
@@ -23,13 +24,19 @@
 		{/if}
 	</div>
 
+	<!-- Stock Quote -->
 	{#if isIpo}
 		<QuoteIpo {info} />
 	{:else}
 		<Quote {info} />
 	{/if}
 
-	<StockNav {info} />
+	<!-- Navigation -->
+	{#if info.type === 'stocks'}
+		<StockNav {info} />
+	{:else}
+		<ETFNav {info} />
+	{/if}
 </div>
 
 <style type="text/postcss">
