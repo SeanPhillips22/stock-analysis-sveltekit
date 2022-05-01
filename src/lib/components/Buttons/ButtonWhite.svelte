@@ -1,9 +1,10 @@
 <script lang="ts">
 	export let href: string
 	export let title: string
+	export let classes: string | undefined = undefined
 </script>
 
-<button class="button">
+<button class="button {classes}">
 	<a {href}>{title}</a>
 </button>
 

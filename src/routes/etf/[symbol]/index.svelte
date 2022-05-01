@@ -33,6 +33,7 @@
 	$: info = stuff.info // from layout
 	$: data = initialData.data
 	$: news = initialData.news.data
+	$: updated = initialData.news.updated
 </script>
 
 <svelte:head>
@@ -60,10 +61,11 @@
 			<DividendWidget {info} {data} />
 		{/if}
 	</div>
-	<div class="news-wrap">
-		<!-- updated={newsObject.updated} -->
-		<NewsArea {news} />
-	</div>
+	{#key info.symbol}
+		<div class="news-wrap">
+			<NewsArea {info} {news} {updated} />
+		</div>
+	{/key}
 </div>
 
 <style type="text/postcss">

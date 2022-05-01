@@ -24,7 +24,7 @@
 
 <style type="text/postcss">
 	.news-video {
-		@apply flex flex-col bg-white p-4 shadow last:pb-1 last:shadow-none sm:py-6 sm:shadow-none sm:first:pt-4 md:px-0;
+		@apply flex py-4 flex-col sm:py-6 sm:first:pt-4 md:px-0;
 	}
 
 	h3 {
