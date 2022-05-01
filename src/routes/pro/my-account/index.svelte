@@ -115,7 +115,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply mx-auto max-w-3xl space-y-6 px-4 py-8 xs:space-y-8 xs:px-6 xs:py-12;
 	}

@@ -231,7 +231,7 @@
 	</div>
 </form>
 
-<style>
+<style type="text/postcss">
 	.search-wrap {
 		@apply relative flex items-center;
 	}

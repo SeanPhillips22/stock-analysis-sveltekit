@@ -7,16 +7,15 @@
 	import Change from './PriceChartChange.svelte'
 	import Chart from './PriceChartChart.svelte'
 	import type { Info } from '$lib/types/Info'
-	import { getContext } from 'svelte'
 	import Unavailable from './Unavailable.svelte'
 	import LargeSpinner from '$lib/components/Loading/LargeSpinner.svelte'
-	const info: Info = getContext('info')
+	export let info: Info
 
 	let chartTime: Time = '1D'
 	let chartData: ChartData
 	let fetching = false
 
-	async function fetchData(time: Time) {
+	async function fetchData(time: Time, symbol: string) {
 		if (info.state === 'upcomingipo') return
 
 		fetching = true
@@ -25,7 +24,7 @@
 	}
 
 	// Fetch new chart data if chartTime changes
-	$: fetchData(chartTime)
+	$: fetchData(chartTime, info.symbol)
 </script>
 
 {#if info.state === 'upcomingipo'}

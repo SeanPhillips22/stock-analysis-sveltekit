@@ -3,24 +3,22 @@
 	 * The analyst rating and price target widget shown on the stock overview pages
 	 * Has a text snippet and a chart.
 	 */
-	import { getContext } from 'svelte'
-
 	import type { Info } from '$lib/types/Info'
 	import type { Overview } from '$lib/types/OverviewPageData'
 	import Button from '$lib/components/Buttons/Button.svelte'
 	import AnalystWidgetChart from './AnalystWidgetChart.svelte'
 
-	const info: Info = getContext('info')
-	const data: Overview = getContext('data')
+	export let info: Info
+	export let data: Overview
 
 	let targetColor: string = 'text-gray-800'
 	let consensusColor: string = 'text-gray-800'
 
-	let priceTarget = data.analystTarget[0]
-	let difference = data.analystTarget[1]
-	let updown = data.analystTarget[2]
+	$: priceTarget = data.analystTarget[0]
+	$: difference = data.analystTarget[1]
+	$: updown = data.analystTarget[2]
 
-	if (updown === 'upside') {
+	$: if (updown === 'upside') {
 		targetColor = 'text-green-700'
 		consensusColor = 'text-green-800'
 	} else if (updown === 'downside') {
@@ -46,7 +44,9 @@
 				Analyst Consensus: <span class="font-bold {consensusColor}">{data.analysts}</span>
 			</div>
 
-			<AnalystWidgetChart ratings={data.analystChart} />
+			{#key info.symbol}
+				<AnalystWidgetChart ratings={data.analystChart} />
+			{/key}
 		</div>
 
 		{#if !info.exceptions.hideForecast}
@@ -55,7 +55,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply border border-gray-200 p-2 xs:p-3;
 	}

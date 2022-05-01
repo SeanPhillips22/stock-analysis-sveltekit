@@ -10,7 +10,6 @@
 	import NewsMenu from './NewsMenu.svelte'
 
 	export let news: NewsArray
-	// export let updated: number
 </script>
 
 {#if news && news.length}
@@ -26,7 +25,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.news-wrap {
 		@apply mt-6 lg:mt-0;
 	}

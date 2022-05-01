@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { getContext } from 'svelte'
-
 	import type { Overview } from '$lib/types/OverviewPageData'
 	import type { Info } from '$lib/types/Info'
 
-	const info: Info = getContext('info')
-	const data: Overview = getContext('data')
+	export let info: Info
+	export let data: Overview
 
 	let previous = 'Previous Close'
 	if (info.ipoDate && info.quote.td === info.ipoDate) previous = 'IPO Price'

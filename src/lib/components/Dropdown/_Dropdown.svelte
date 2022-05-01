@@ -27,7 +27,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.controls-menu {
 		@apply relative inline-block text-left;
 	}

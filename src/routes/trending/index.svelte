@@ -56,7 +56,7 @@
 	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
 </p>
 
-<style>
+<style type="text/postcss">
 	p {
 		@apply text-lg mb-4;
 	}

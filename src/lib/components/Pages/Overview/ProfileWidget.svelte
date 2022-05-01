@@ -2,14 +2,13 @@
 	/**
 	 * The company profile widget shown on the stock and ETF overview pages
 	 */
-	import { getContext } from 'svelte'
 
 	import type { Info } from '$lib/types/Info'
 	import type { Overview } from '$lib/types/OverviewPageData'
 	import Button from '$lib/components/Buttons/Button.svelte'
 
-	const info: Info = getContext('info')
-	const data: Overview = getContext('data')
+	export let info: Info
+	export let data: Overview
 
 	let tableData = Object.keys(data.infoTable).map((key) => {
 		return {
@@ -46,7 +45,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.table-wrap {
 		@apply mt-3 grid grid-cols-2 gap-3;
 	}

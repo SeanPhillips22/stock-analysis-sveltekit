@@ -19,7 +19,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply flex gap-x-2;
 	}

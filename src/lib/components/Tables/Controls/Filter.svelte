@@ -7,7 +7,7 @@
 	<input type="text" name="filter" placeholder="Filter..." bind:value={filter} />
 </div>
 
-<style>
+<style type="text/postcss">
 	.filter {
 		@apply relative flex min-w-[80px] max-w-[100px] items-center xs:max-w-[130px] sm:max-w-[150px];
 	}

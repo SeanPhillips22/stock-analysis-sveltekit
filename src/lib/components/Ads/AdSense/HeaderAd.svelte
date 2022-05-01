@@ -9,7 +9,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply mt-3 -mb-2 text-center xl:max-w-screen-xl;
 	}

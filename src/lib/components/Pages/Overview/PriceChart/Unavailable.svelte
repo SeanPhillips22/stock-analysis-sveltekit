@@ -22,7 +22,7 @@
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.container {
 		@apply order-3 grow;
 	}

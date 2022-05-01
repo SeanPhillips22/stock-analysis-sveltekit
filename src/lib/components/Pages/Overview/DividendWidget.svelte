@@ -2,15 +2,14 @@
 	/**
 	 * The dividend widget shown on ETF overview pages
 	 */
-	import { getContext } from 'svelte'
-
 	import Button from '$lib/components/Buttons/Button.svelte'
 
 	import type { Info } from '$lib/types/Info'
 	import type { Overview } from '$lib/types/OverviewPageData'
 
-	const info: Info = getContext('info')
-	const data: Overview = getContext('data')
+	export let info: Info
+	export let data: Overview
+
 	let d = data.dividendTable
 </script>
 
@@ -45,7 +44,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	h2 {
 		@apply mb-2;
 	}

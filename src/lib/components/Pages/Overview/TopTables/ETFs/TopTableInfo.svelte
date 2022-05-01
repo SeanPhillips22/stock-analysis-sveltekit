@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { getContext } from 'svelte'
 	import type { Overview } from '$lib/types/OverviewPageData'
-	const data: Overview = getContext('data')
+	export let data: Overview
 </script>
 
 <table>

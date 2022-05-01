@@ -2,16 +2,14 @@
 	/**
 	 * The holdings widget shown on ETF overview pages
 	 */
-	import { getContext } from 'svelte'
-
 	import Button from '$lib/components/Buttons/Button.svelte'
 
 	import type { Info } from '$lib/types/Info'
 	import type { Overview } from '$lib/types/OverviewPageData'
 	import SymbolLink from '$lib/components/SymbolLink.svelte'
 
-	const info: Info = getContext('info')
-	const data: Overview = getContext('data')
+	export let info: Info
+	export let data: Overview
 	let { list, top10 } = data.holdingsTable || {}
 </script>
 
@@ -43,7 +41,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.title {
 		@apply mb-2 flex-row items-end justify-between xs:mb-1 xs:flex;
 	}

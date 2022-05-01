@@ -27,7 +27,7 @@
 	<div class="price-info">{ipo?.ipoPriceNotice}</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply mb-5;
 	}

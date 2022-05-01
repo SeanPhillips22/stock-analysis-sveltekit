@@ -66,7 +66,7 @@
 	</button>
 </nav>
 
-<style>
+<style type="text/postcss">
 	nav {
 		@apply mt-2.5 flex flex-row justify-between space-x-1 px-1 text-sm bp:space-x-2 sm:text-base;
 	}

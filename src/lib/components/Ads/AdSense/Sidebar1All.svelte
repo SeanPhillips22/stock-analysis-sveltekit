@@ -8,7 +8,7 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply text-center;
 	}

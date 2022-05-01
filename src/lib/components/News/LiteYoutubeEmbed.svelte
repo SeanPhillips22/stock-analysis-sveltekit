@@ -80,7 +80,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.yt-lite {
 		background-color: #000;
 		position: relative;

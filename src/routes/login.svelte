@@ -73,7 +73,7 @@
 	</div>
 </main>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply sm:mx-auto sm:w-full sm:max-w-md py-8 sm:py-20;
 	}

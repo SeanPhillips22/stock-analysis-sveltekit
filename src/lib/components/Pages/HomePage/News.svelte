@@ -29,7 +29,7 @@
 	</div>
 </section>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply mx-auto px-3 xs:px-4 sm:px-5 lg:col-span-2 lg:px-0;
 	}

@@ -17,7 +17,7 @@
 	</span>
 </div>
 
-<style>
+<style type="text/postcss">
 	.heading-wrap {
 		@apply mb-1 flex flex-row items-end justify-between;
 	}

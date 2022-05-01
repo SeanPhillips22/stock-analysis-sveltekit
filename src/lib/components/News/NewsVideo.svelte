@@ -22,7 +22,7 @@
 	<div class="byline" title={timeFull}>{timeAgo} - {source}</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.news-video {
 		@apply flex flex-col bg-white p-4 shadow last:pb-1 last:shadow-none sm:py-6 sm:shadow-none sm:first:pt-4 md:px-0;
 	}

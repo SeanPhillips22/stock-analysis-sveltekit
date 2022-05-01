@@ -58,7 +58,7 @@
 	</section>
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply flex flex-col space-y-6 lg:space-y-8 pt-6 lg:pt-0;
 	}

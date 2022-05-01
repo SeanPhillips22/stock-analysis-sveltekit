@@ -23,7 +23,7 @@
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.news-menu {
 		@apply flex flex-row items-center justify-between border-b;
 	}

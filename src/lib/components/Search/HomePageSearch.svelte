@@ -6,7 +6,7 @@
 	<Search isHomePage={true} />
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply mb-5 mx-auto max-w-[95%] md:max-w-[75%] lg:max-w-lg;
 	}

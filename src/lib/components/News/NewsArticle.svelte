@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.news-article {
 		@apply gap-4 py-4 last:pb-1 sm:grid sm:grid-cols-news sm:py-6 md:px-0 lg:gap-5;
 	}

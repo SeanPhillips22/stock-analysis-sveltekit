@@ -110,7 +110,7 @@
 	<span class="hidden text-sm sm:block">{tag}</span>
 </a>
 
-<style>
+<style type="text/postcss">
 	a {
 		@apply flex flex-row items-center gap-x-1 sm:gap-x-2 py-1.5 px-2 sm:px-3 hover:bg-gray-100 text-gray-900;
 	}

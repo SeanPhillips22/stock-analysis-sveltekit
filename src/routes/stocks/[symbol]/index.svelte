@@ -14,8 +14,6 @@
 </script>
 
 <script lang="ts">
-	import { setContext } from 'svelte'
-
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
 	import InfoTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableQuote.svelte'
@@ -29,14 +27,12 @@
 	import ProfileWidget from '$lib/components/Pages/Overview/ProfileWidget.svelte'
 	import AnalystWidget from '$lib/components/Pages/Overview/AnalystWidget/AnalystWidget.svelte'
 
-	export let stuff
+	export let stuff: { info: Info }
 	export let initialData: { data: Overview; news: NewsObject }
-	let info: Info = stuff.info // from layout
-	let data: Overview = initialData.data
-	let newsObject: NewsObject = initialData.news
 
-	setContext('info', info)
-	setContext('data', data)
+	$: info = stuff.info // from layout
+	$: data = initialData.data
+	$: news = initialData.news.data
 </script>
 
 <svelte:head>
@@ -44,33 +40,33 @@
 </svelte:head>
 
 <div class="overview">
-	<PriceChart />
+	<PriceChart {info} />
 	<div class="top-tables">
-		<InfoTable />
-		<QuoteTable />
+		<InfoTable {data} />
+		<QuoteTable {info} {data} />
 	</div>
 </div>
 
 <div class="details-news-wrap">
 	<div class="details-wrap">
-		{#if newsObject.data.length > 5}
+		{#if news.length > 5}
 			<Sidebar1All />
 		{/if}
-		<ProfileWidget />
+		<ProfileWidget {info} {data} />
 		{#if data.financialChart}
-			<FinancialsWidget />
+			<FinancialsWidget {info} {data} />
 		{/if}
 		{#if data.analystChart}
-			<AnalystWidget />
+			<AnalystWidget {info} {data} />
 		{/if}
 	</div>
 	<div class="news-wrap">
 		<!-- updated={newsObject.updated} -->
-		<NewsArea news={newsObject.data} />
+		<NewsArea {news} />
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.overview {
 		@apply mt-4 flex-row gap-4 lg:flex;
 	}

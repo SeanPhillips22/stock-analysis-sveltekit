@@ -14,7 +14,7 @@
 </script>
 
 <div class="news-feed">
-	{#each news as item}
+	{#each news as item, i (i + item.title)}
 		{#if item.type === 'Video'}
 			<NewsVideo {item} {related} />
 		{:else}
@@ -23,7 +23,7 @@
 	{/each}
 </div>
 
-<style>
+<style type="text/postcss">
 	.news-feed:global {
 		@apply mb-2 flex flex-col divide-y divide-gray-200 sm:divide-gray-100 lg:border-0;
 	}

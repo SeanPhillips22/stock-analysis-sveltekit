@@ -47,7 +47,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.nav-item {
 		@apply mt-1 text-sm font-semibold text-gray-600 flex items-center hover:bg-gray-50 hover:text-gray-900 grow rounded-md;
 	}
