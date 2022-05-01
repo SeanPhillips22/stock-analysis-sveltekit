@@ -33,6 +33,10 @@
 		@apply mb-3 text-2xl font-bold;
 	}
 
+	h3 {
+		@apply mb-2.5 text-xl font-bold xs:mb-3;
+	}
+
 	.noring {
 		@apply focus:ring-0 focus:ring-offset-0;
 	}

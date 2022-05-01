@@ -3,11 +3,11 @@
 	import type { Load } from '@sveltejs/kit'
 
 	export const load: Load = async ({ fetch }) => {
-		const res = await fetch('https://api.stockanalysis.com/wp-json/sa/news?type=market')
-		const data = await res.json()
+		const res = await fetch('https://api.stockanalysis.com/wp-json/sa/news?type=stocks')
+		const initialData = await res.json()
 
 		return {
-			props: { data }
+			props: { initialData }
 		}
 	}
 </script>
@@ -17,25 +17,31 @@
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
 	import type { NewsArray } from '$lib/components/News/types'
 
-	export let data: { data: NewsArray; other: NewsArray }
+	export let initialData: { data: NewsArray; other: NewsArray }
+	$: news = initialData.data
+	$: other = initialData.other
 </script>
 
 <main class="contain">
-	<h1>Stock Market News</h1>
+	<h1>All Stock News</h1>
 
 	<nav>
 		<ul class="navmenu">
-			<li><a href="/news/" class="active">Markets</a></li>
-			<li><a href="/news/all-stocks/" sveltekit:prefetch>All Stocks</a></li>
+			<li><a href="/news/" sveltekit:prefetch>Markets</a></li>
+			<li><a href="/news/all-stocks/" class="active">All Stocks</a></li>
 			<li><a href="/news/press-releases" sveltekit:prefetch>Press Releases</a></li>
 		</ul>
 	</nav>
 
 	<div class="body-wrap">
-		<NewsFeed news={data.data} />
+		<NewsFeed {news} />
 		<aside>
 			<Sidebar1 />
-			<NewsWidget title="Stock News" news={data.other} button={{ href: '/news/', title: 'All Stock News News' }} />
+			<NewsWidget
+				title="Press Releases"
+				news={other}
+				button={{ href: '/news/press-releases/', title: 'All Press Releases' }}
+			/>
 		</aside>
 	</div>
 </main>

@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte'
-
-	onMount(() => {
-		const dianomiJs = document.createElement('script')
-		dianomiJs.src = 'https://www.dianomi.com/js/contextfeed.js'
-		document.body.appendChild(dianomiJs)
-	})
+	import { browser } from '$app/env'
 </script>
+
+{#if browser}
+	<script src="https://www.dianomi.com/js/contextfeed.js" id="dianomi_context_script"></script>
+{/if}
 
 <div id="ad-banner" class="dianomi_context" data-dianomi-context-id="410" />
 

@@ -11,7 +11,7 @@
 	import type { NewsArray } from './types'
 
 	export let news: NewsArray
-	export let related: string | undefined
+	export let related: string | undefined = undefined
 	export let paywalled = false
 
 	// Logic to serve ads

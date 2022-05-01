@@ -6,6 +6,7 @@ export type NewsItem = {
 	text: string
 	timeAgo: string
 	timeFull: string
+	time?: string
 	tickers?: string[]
 	image?: string
 }
