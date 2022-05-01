@@ -25,11 +25,13 @@
 	</div>
 
 	<!-- Stock Quote -->
-	{#if isIpo}
-		<QuoteIpo {info} />
-	{:else}
-		<Quote {info} />
-	{/if}
+	{#key info.symbol}
+		{#if isIpo}
+			<QuoteIpo {info} />
+		{:else}
+			<Quote {info} />
+		{/if}
+	{/key}
 
 	<!-- Navigation -->
 	{#if info.type === 'stocks'}
