@@ -6,8 +6,7 @@
 	import type { Info } from '$lib/types/Info'
 	import type { Time } from './types'
 
-	import { getContext } from 'svelte'
-	const info: Info = getContext('info')
+	export let info: Info
 	export let chartTime: Time
 
 	let change = info.quote.cp
