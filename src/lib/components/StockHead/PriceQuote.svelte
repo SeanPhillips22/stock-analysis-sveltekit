@@ -8,30 +8,41 @@
 	import type { Quote } from '$lib/types/Quote'
 	import SunIcon from '$lib/icons/Sun.svelte'
 	import MoonIcon from '$lib/icons/Moon.svelte'
+	import { marketOpen } from '$lib/functions/datetime/marketOpen'
 
 	export let info: Info
 
-	// Replace react query with own
-	// When component is mounted, create an interval to fetch the
-	// stock price every 5 seconds
-	let refetch: ReturnType<typeof setInterval>
+	/**
+	 * Fetch quote data
+	 * On first page load, fetch once
+	 * If market is not closed, fetch every 5 seconds
+	 */
 	let freshQuote: Quote
+	let refetch: ReturnType<typeof setInterval>
+
+	async function fetchQuote() {
+		try {
+			const res = await fetch(`https://api.stockanalysis.com/wp-json/sa/p?s=${info.symbol}&t=${info.type}`)
+			const data = await res.json()
+			freshQuote = data
+		} catch (e) {
+			console.error(e)
+			clearInterval(refetch)
+		}
+	}
+
 	onMount(() => {
-		refetch = setInterval(async () => {
-			// If navigated away from the page, stop the interval
-			if (!$page.url.pathname.includes(info.symbol)) {
-				clearInterval(refetch)
-			} else {
-				try {
-					const resB = await fetch(`https://api.stockanalysis.com/wp-json/sa/p?s=${info.symbol}&t=${info.type}`)
-					const dataB = await resB.json()
-					freshQuote = dataB
-				} catch (e) {
-					console.error(e)
+		fetchQuote()
+		if (marketOpen() !== 'closed') {
+			refetch = setInterval(async () => {
+				// If navigated away from the page, stop the interval
+				if (!$page.url.pathname.includes(info.symbol)) {
 					clearInterval(refetch)
+				} else {
+					fetchQuote()
 				}
-			}
-		}, 5000)
+			}, 5000)
+		}
 	})
 
 	// When component is unmounted, stop the interval
