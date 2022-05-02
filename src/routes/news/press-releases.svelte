@@ -34,7 +34,7 @@
 	</nav>
 
 	<div class="body-wrap">
-		<NewsFeed {news} />
+		<NewsFeed {news} related="Stocks" />
 		<aside>
 			<Sidebar1 />
 			<NewsWidget title="Stock News" news={other} button={{ href: '/news/all-stocks/', title: 'All Stock News' }} />

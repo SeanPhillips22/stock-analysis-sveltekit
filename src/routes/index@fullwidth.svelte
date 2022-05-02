@@ -19,6 +19,15 @@
 	let { date, marketStatus, trending, gainers, losers, news, recentIpos, ipoCalendar } = data
 </script>
 
+<svelte:head>
+	<title>Stock Analysis | Free Online Stock Information for Investors</title>
+	<meta
+		name="description"
+		content="Stock Analysis has everything you need to analyze stocks, including detailed financial data, statistics, news and charts."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/" />
+</svelte:head>
+
 <div class="hero">
 	<div class="inner">
 		<h1>Search for a stock to start your analysis</h1>

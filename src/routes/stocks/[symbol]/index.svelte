@@ -34,10 +34,20 @@
 	$: data = initialData.data
 	$: news = initialData.news.data
 	$: updated = initialData.news.updated
+
+	// The meta description
+	let description = `Get a real-time ${stuff.info.nameFull} (${stuff.info.ticker}) stock price quote with breaking news, financials, statistics, charts and more.`
+	if (stuff.info.state == 'upcomingipo') {
+		description = `Get the latest ${stuff.info.nameFull} (${stuff.info.ticker}) stock price quote with news, financials, IPO details and other important investing information.`
+	} else if (stuff.info.archived) {
+		description = `Get the latest ${stuff.info.nameFull} (${stuff.info.ticker}) stock price quote with news, financials and other important investing information.`
+	}
 </script>
 
 <svelte:head>
 	<title>{info.nameFull} ({info.ticker}) Stock Price, Quote & News</title>
+	<meta name="description" content={description} />
+	<link rel="canonical" href="https://stockanalysis.com/stocks/{info.symbol}/" />
 </svelte:head>
 
 <div class="overview">
