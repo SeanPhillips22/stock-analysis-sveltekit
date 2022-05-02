@@ -20,7 +20,7 @@
 			</li>
 		{/each}
 	</ul>
-	<Button href={button.href} title={button.title} classes="w-full" />
+	<Button href={button.href} title={button.title} classes="w-full mt-4" />
 </div>
 
 <style>

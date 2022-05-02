@@ -22,6 +22,15 @@
 	$: other = initialData.other
 </script>
 
+<svelte:head>
+	<title>All Stock News</title>
+	<meta
+		name="description"
+		content="The latest news on individual stocks on the US stock market, gathered from trusted finance and investing websites."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/news/all-stocks/" />
+</svelte:head>
+
 <main class="contain">
 	<h1>All Stock News</h1>
 

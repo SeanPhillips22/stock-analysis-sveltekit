@@ -20,6 +20,15 @@
 	export let data: { data: NewsArray; other: NewsArray }
 </script>
 
+<svelte:head>
+	<title>Today's Stock Market News and Breaking Stories</title>
+	<meta
+		name="description"
+		content="Get the latest stock market news and breaking stories from the world's best finance and investing websites."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/news/" />
+</svelte:head>
+
 <main class="contain">
 	<h1>Stock Market News</h1>
 

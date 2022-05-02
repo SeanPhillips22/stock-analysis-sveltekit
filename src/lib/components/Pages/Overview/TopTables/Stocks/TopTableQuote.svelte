@@ -1,43 +1,37 @@
 <script lang="ts">
+	import { quote } from '$lib/stores/quoteStore'
 	import type { Overview } from '$lib/types/OverviewPageData'
 	import type { Info } from '$lib/types/Info'
 
 	export let info: Info
 	export let data: Overview
+	let q = $quote || info.quote
 
 	let previous = 'Previous Close'
-	if (info.ipoDate && info.quote.td === info.ipoDate) previous = 'IPO Price'
+	if (info.ipoDate && q.td === info.ipoDate) previous = 'IPO Price'
 </script>
 
 <table>
 	<tbody>
 		<tr>
 			<td>Volume</td>
-			<td>{info.quote?.v && info.quote.v !== '0' ? info.quote.v : 'n/a'}</td>
+			<td>{q?.v && q.v !== '0' ? q.v : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Open</td>
-			<td>{info.quote?.o && info.quote.o !== '0.00' ? info.quote.o : 'n/a'}</td>
+			<td>{q?.o && q.o !== '0.00' ? q.o : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>{previous}</td>
-			<td>{info.quote?.cl && info.quote.cl !== '0.00' ? info.quote.cl : 'n/a'}</td>
+			<td>{q?.cl && q.cl !== '0.00' ? q.cl : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Day&apos;s Range</td>
-			<td
-				>{info.quote?.l && info.quote?.h && info.quote.l !== '0.00' && info.quote.h !== '0.00'
-					? info.quote.l + ' - ' + info.quote.h
-					: 'n/a'}</td
-			>
+			<td>{q?.l && q?.h && q.l !== '0.00' && q.h !== '0.00' ? q.l + ' - ' + q.h : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>52-Week Range</td>
-			<td
-				>{info.quote?.l52 && info.quote?.h52 && info.quote.l52 !== '0.00' && info.quote.h52 !== '0.00'
-					? info.quote.l52 + ' - ' + info.quote.h52
-					: 'n/a'}</td
-			>
+			<td>{q?.l52 && q?.h52 && q.l52 !== '0.00' && q.h52 !== '0.00' ? q.l52 + ' - ' + q.h52 : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Beta</td>

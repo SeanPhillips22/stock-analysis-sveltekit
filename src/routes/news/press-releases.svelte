@@ -22,6 +22,15 @@
 	$: other = initialData.other
 </script>
 
+<svelte:head>
+	<title>Press Releases From Publicly Traded Companies</title>
+	<meta
+		name="description"
+		content="Press releases for publicly traded companies on the US stock market. Includes important company events, earnings releases and more."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/news/press-releases/" />
+</svelte:head>
+
 <main class="contain">
 	<h1>Press Releases</h1>
 
