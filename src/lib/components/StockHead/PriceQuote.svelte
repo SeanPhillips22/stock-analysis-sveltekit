@@ -4,11 +4,15 @@
 	// trading info is available
 	import { onMount, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
-	import type { Info } from '$lib/types/Info'
-	import type { Quote } from '$lib/types/Quote'
+
+	import { setQuote } from '$lib/stores/quoteStore'
+	import { marketOpen } from '$lib/functions/datetime/marketOpen'
+
 	import SunIcon from '$lib/icons/Sun.svelte'
 	import MoonIcon from '$lib/icons/Moon.svelte'
-	import { marketOpen } from '$lib/functions/datetime/marketOpen'
+
+	import type { Info } from '$lib/types/Info'
+	import type { Quote } from '$lib/types/Quote'
 
 	export let info: Info
 
@@ -52,6 +56,7 @@
 
 	// info.quote is used as the initialdata until freshQuote has been set
 	$: quote = freshQuote ? freshQuote : info.quote
+	$: setQuote(quote)
 
 	// Set the change color based on the change in price
 	let color: string

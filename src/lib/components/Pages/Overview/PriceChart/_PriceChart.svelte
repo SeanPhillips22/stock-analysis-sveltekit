@@ -33,7 +33,7 @@
 	<div class="container">
 		<div class="controls">
 			<Controls bind:time={chartTime} />
-			<Change {info} {chartTime} />
+			<Change {info} {chartTime} {chartData} {fetching} />
 		</div>
 		<div class="chart-wrap">
 			{#if fetching}
