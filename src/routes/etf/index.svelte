@@ -1,63 +1,73 @@
-<h1>All ETF Symbols</h1>
+<script lang="ts">
+	import Sidebar from '$lib/components/Sidebar/_Sidebar.svelte'
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+	import Table from '$lib/components/Tables/SimpleTable.svelte'
+	import type { TableData } from '$lib/components/Tables/types'
+	export let data: TableData
+</script>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+<svelte:head>
+	<title>List of All ETF Ticker Symbols</title>
+	<meta
+		name="description"
+		content="An overview of all the ETF symbols listed. Explore the ETF pages to learn about the fund’s price history, holdings, dividends and more."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/etf/" />
+</svelte:head>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+<main class="contain">
+	<h1>All ETF Symbols</h1>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+	<div class="container">
+		<Table
+			title={`${data.length} ETFs`}
+			{data}
+			columns={[
+				{
+					id: 's',
+					title: 'Symbol',
+					format: 'symbol'
+				},
+				{
+					id: 'n',
+					title: 'Company Name'
+				},
+				{
+					id: 'i',
+					title: 'Industry'
+				},
+				{
+					id: 'm',
+					title: 'Market Cap',
+					format: 'abbreviate'
+				}
+			]}
+			config={{
+				sortable: true,
+				pagination: {
+					enabled: true,
+					perPage: 500,
+					pageOptions: [{ option: 500 }, { option: 1000 }, { option: 10000, title: 'Show All', proOnly: true }]
+				},
+				controls: {
+					filter: true,
+					export: true
+				}
+			}}
+		/>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+		<aside>
+			<Sidebar list={['pro', 'etfScreener', 'ipoCalendar', 'marketMovers']} />
+		</aside>
+	</div>
+</main>
 
 <style type="text/postcss">
-	p {
-		@apply text-lg mb-4;
+	h1 {
+		@apply border-b-[3px] border-blue-brand_sharp pb-3 mb-3 sm:mb-4 lg:mb-5;
+	}
+
+	.container {
+		@apply lg:grid lg:grid-cols-sidebar lg:gap-x-10;
 	}
 </style>

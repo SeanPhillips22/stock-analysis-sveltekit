@@ -4,7 +4,7 @@
 
 <div class="filter">
 	<label for="filter" class="sr-only">Filter results</label>
-	<input type="text" name="filter" placeholder="Filter..." bind:value={filter} />
+	<input type="text" name="filter" autocomplete="off" placeholder="Filter..." bind:value={filter} />
 </div>
 
 <style type="text/postcss">
