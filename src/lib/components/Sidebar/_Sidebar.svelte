@@ -44,7 +44,7 @@
 	}
 </script>
 
-<div class="sidebar">
+<aside class="sidebar">
 	<Sidebar1 />
 
 	<div class="features">
@@ -62,7 +62,7 @@
 			</div>
 		{/each}
 	</div>
-</div>
+</aside>
 
 <style>
 	.sidebar:global {

@@ -56,9 +56,7 @@
 			}}
 		/>
 
-		<aside>
-			<Sidebar />
-		</aside>
+		<Sidebar />
 	</div>
 </main>
 

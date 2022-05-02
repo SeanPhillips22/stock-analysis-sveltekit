@@ -56,9 +56,7 @@
 			}}
 		/>
 
-		<aside>
-			<Sidebar list={['pro', 'etfScreener', 'ipoCalendar', 'marketMovers']} />
-		</aside>
+		<Sidebar list={['pro', 'etfScreener', 'ipoCalendar', 'marketMovers']} />
 	</div>
 </main>
 
