@@ -23,10 +23,10 @@
 	else if (range === 'trailing') headerRowTitle = 'Quarter Ending'
 </script>
 
-<FinancialsNavigation {info} {statement} {range} />
+<FinancialsNavigation {info} {statement} range={range || 'annual'} />
 
 <div class="title-area">
-	<h2>{title} ({capitalize(range)})</h2>
+	<h2>{title} ({capitalize(range) || 'Annual'})</h2>
 	<div>Buttons</div>
 </div>
 
@@ -37,7 +37,9 @@
 				<th>{headerRowTitle}</th>
 				{#each headerRow as header}
 					{#if range === 'annual'}
-						<th>{formatYear(header)}</th>
+						<th>{formatYear(header, statement)}</th>
+					{:else if statement === 'ratios' && header === 'TTM'}
+						<th>Current</th>
 					{:else}
 						<th>{header}</th>
 					{/if}

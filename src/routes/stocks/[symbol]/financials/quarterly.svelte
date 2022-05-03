@@ -1,0 +1,41 @@
+<script lang="ts" context="module">
+	import type { Load } from '@sveltejs/kit'
+
+	export const load: Load = async ({ params, fetch, stuff }) => {
+		let symbol = params.symbol
+
+		let url = `http://stockanalysis20febr.local/wp-json/sa/financials?type=income-statement&symbol=${symbol}&range=quarterly`
+
+		const res = await fetch(url)
+		const data = await res.json()
+
+		return {
+			// @ts-ignore
+			props: { info: stuff.info, data: data.data }
+		}
+	}
+</script>
+
+<script lang="ts">
+	import FinancialTable from '$lib/components/Pages/Financials/_FinancialTable.svelte'
+	import { MAP_INCOME_STATEMENT } from '$lib/components/Pages/Financials/maps/map_income_statement'
+
+	import type { Info } from '$lib/types/Info'
+	import type { FinancialData, Range } from '$lib/components/Pages/Financials/types'
+
+	export let info: Info
+	export let data: { data: FinancialData; count: number; range: Range }
+</script>
+
+<svelte:head>
+	<title>{info.nameFull} ({info.ticker}) Financial Statements: Income</title>
+</svelte:head>
+
+<FinancialTable
+	{info}
+	{data}
+	statement="income"
+	range="quarterly"
+	title="Income Statement"
+	map={MAP_INCOME_STATEMENT}
+/>
