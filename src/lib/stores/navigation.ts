@@ -33,6 +33,14 @@ function createNavigationState() {
 					...state.menus,
 					[menu]: !state.menus[menu] || false
 				}
+			})),
+		openMenu: (menu: string) =>
+			update((state) => ({
+				...state,
+				menus: {
+					...state.menus,
+					[menu]: true
+				}
 			}))
 	}
 }

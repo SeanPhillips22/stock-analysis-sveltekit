@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fly, fade } from 'svelte/transition'
+	import { fly } from 'svelte/transition'
 	import { state } from '$lib/stores/navigation'
 	import type { NavigationNames } from './types'
 
@@ -22,12 +22,12 @@
 </script>
 
 <div class:collapsed>
-	<div class="nav-item" on:click={() => state.toggleMenu(item.name)} class:parent>
-		<a sveltekit:prefetch href={item.href} title={item.name}>
+	<div class="nav-item" class:parent>
+		<a sveltekit:prefetch href={item.href} title={item.name} on:click={() => state.openMenu(item.name)}>
 			<svelte:component this={item.icon} classes="h-6 w-6 text-gray-500 xxl:h-5 xxl:w-5 xxxl:h-6 xxxl:w-6" />
 			<span class="nav-label">{item.name}</span>
 		</a>
-		<div class="arrow-wrap">
+		<div class="arrow-wrap" on:click={() => state.toggleMenu(item.name)}>
 			<svg class="nav-arrow" class:open viewBox="0 0 20 20" aria-hidden="true" style="max-width: 20px">
 				<path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
 			</svg>
@@ -35,7 +35,7 @@
 	</div>
 	{#if item.children}
 		{#key open}
-			<ul class="subitems" class:open transition:fly={{ y: -10, duration: 75 }}>
+			<ul class="subitems" class:open in:fly={{ y: -10, duration: 75 }}>
 				{#each item.children as child (child.href)}
 					<li>
 						<a sveltekit:prefetch href={child.href} title={child.name} class:active={url === child.href}>{child.name}</a

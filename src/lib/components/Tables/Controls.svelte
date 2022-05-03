@@ -5,12 +5,13 @@
 
 	export let config: TableConfig
 	export let filter: string
+	export let data: any | undefined = undefined
 </script>
 
 {#if config.controls}
 	<div class="wrap">
 		{#if config.controls.export}
-			<Export />
+			<Export {data} />
 		{/if}
 
 		{#if config.controls.filter}

@@ -15,6 +15,9 @@
 	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
 	import Pagination from './Pagination.svelte'
 
+	// The authentication state
+	import { user } from '$lib/auth/userStore'
+
 	/**
 	 * Sort
 	 */
@@ -58,6 +61,23 @@
 	// If data is filtered, show that. Else, show the sorted data.
 	$: displayedData = $state.filter.length ? filteredData : sortedData
 	$: perPage = $state.perPage || config.pagination?.perPage || 50
+
+	/**
+	 * Rewrite the data to make it ready for export (if Pro user)
+	 */
+	let exportData: any
+	$: if ($user?.isPro) {
+		let newData = []
+
+		// The columns
+		newData[0] = columns.map((column) => column.title)
+
+		// The data rows
+		data.forEach((item: { [x: string]: any }) => {
+			newData.push([item.s, item.n, item.i, item.m])
+		})
+		exportData = newData
+	}
 </script>
 
 <div>
@@ -66,10 +86,10 @@
 			<h2>{title}</h2>
 		</div>
 		<div class="button-group">
-			<Controls {config} bind:filter={$state.filter} />
+			<Controls {config} bind:filter={$state.filter} data={exportData} />
 		</div>
 	</div>
-	<table>
+	<table id="simple-table">
 		<thead>
 			<tr>
 				{#each columns as item (item.id)}
