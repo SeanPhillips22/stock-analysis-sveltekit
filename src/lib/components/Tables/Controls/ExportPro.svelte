@@ -1,0 +1,33 @@
+<script lang="ts">
+	import Dropdown from '$lib/components/Dropdown/_Dropdown.svelte'
+
+	/**
+	 * Export data as Excel or CSV
+	 */
+
+	// Only import the Download component when needed
+	// This component imports the ExcellentExport library which is very heavy
+	// so it should only be fetched when needed
+	let Download: any
+	function importDownload() {
+		if (Download) return Download
+		return import('./Download.svelte').then((m) => {
+			Download = m.default
+			return Download
+		})
+	}
+
+	export let data: any | undefined = undefined
+</script>
+
+<div on:mouseenter={importDownload}>
+	<Dropdown title="Export">
+		{#if Download}
+			<Download {data} />
+		{:else}
+			{#await import('./Download.svelte') then value}
+				<svelte:component this={value.default} {data} />
+			{/await}
+		{/if}
+	</Dropdown>
+</div>

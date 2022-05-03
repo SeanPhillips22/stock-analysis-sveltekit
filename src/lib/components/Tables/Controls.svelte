@@ -1,7 +1,18 @@
 <script lang="ts">
-	import type { TableConfig } from './types'
+	/**
+	 * Controls buttons to show above a table.
+	 * Export, Filter, etc.
+	 */
+	// Get the active user, if any
+	import { user } from '$lib/auth/userStore'
+
+	// Components
 	import Filter from './Controls/Filter.svelte'
 	import Export from './Controls/Export.svelte'
+	import ExportPro from './Controls/ExportPro.svelte'
+
+	// Types
+	import type { TableConfig } from './types'
 
 	export let config: TableConfig
 	export let filter: string
@@ -11,7 +22,11 @@
 {#if config.controls}
 	<div class="wrap">
 		{#if config.controls.export}
-			<Export {data} />
+			{#if !$user?.isPro}
+				<Export />
+			{:else}
+				<ExportPro {data} />
+			{/if}
 		{/if}
 
 		{#if config.controls.filter}

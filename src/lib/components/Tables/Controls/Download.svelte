@@ -1,8 +1,6 @@
 <script lang="ts">
 	/**
 	 * Export data as Excel or CSV
-	 *
-	 * TODO make sure the import is dynamic and only happens when user is pro
 	 */
 	import ExcellentExport from 'excellentexport'
 

@@ -15,7 +15,7 @@
 	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
 	import Pagination from './Pagination.svelte'
 
-	// The authentication state
+	// Get the active user, if any
 	import { user } from '$lib/auth/userStore'
 
 	/**
@@ -64,6 +64,9 @@
 
 	/**
 	 * Rewrite the data to make it ready for export (if Pro user)
+	 * Each row in the table is an array of items
+	 * The first row is an array of the column names
+	 * The other rows are the data
 	 */
 	let exportData: any
 	$: if ($user?.isPro) {

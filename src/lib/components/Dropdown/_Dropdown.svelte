@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition'
 	import { clickOutside } from '$lib/functions/ui/clickOutside'
 	import ChevronDown from '$lib/icons/ChevronDown.svelte'
 
@@ -21,7 +22,7 @@
 	</button>
 
 	{#if open}
-		<div class="dropdown" on:click={close} use:clickOutside={handleClickOutside}>
+		<div class="dropdown" on:click={close} use:clickOutside={handleClickOutside} in:fly={{ y: -10, duration: 75 }}>
 			<slot />
 		</div>
 	{/if}
