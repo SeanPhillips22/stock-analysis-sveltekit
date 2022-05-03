@@ -64,7 +64,7 @@
 				<div class="mb-2"><strong>Status:</strong> {showStatus}</div>
 			{/if}
 
-			{#if !isSubscribed}
+			{#if isSubscribed}
 				{#if data?.next_bill_date}
 					<div>Next Payment Date: {data?.next_bill_date}</div>
 				{/if}

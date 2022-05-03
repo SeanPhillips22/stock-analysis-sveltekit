@@ -19,17 +19,17 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		tooltip:
 			'Cash and cash equivalents is the sum of "Cash & Equivalents" and "Short-Term Investments." This is the amount of money that a company has quick access to, assuming that the cash equivalents and short-term investments can be sold at a short notice.',
 		formula: 'Cash & Cash Equivalents = Cash & Equivalents + Short-Term Investments',
-		bold: true
+		class: 'bolded'
 	},
 	{
-		id: 'cashgrowth',
-		data: 'totalcash',
+		id: 'cashGrowth',
 		title: 'Cash Growth',
 		tooltipTitle: 'Cash Growth (YoY)',
 		format: 'growth',
 		tooltip:
 			"Cash growth is how much a company's cash and cash equivalents have increased compared to a previous time period, expressed as a percentage.",
-		formula: 'Cash Growth = ((Current Cash / Previous Cash) - 1) * 100%'
+		formula: 'Cash Growth = ((Current Cash / Previous Cash) - 1) * 100%',
+		class: 'bordered indented'
 	},
 	{
 		id: 'receivables',
@@ -59,8 +59,7 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		title: 'Total Current Assets',
 		tooltip:
 			'Total current assets includes all current assets, including cash and equivalents, short-term investments, receivables, inventory and others. Current assets are things that easily be sold for cash or will be used within one year.',
-		bold: true,
-		border: true
+		class: 'bolded bordered'
 	},
 	{
 		id: 'ppnenet',
@@ -90,15 +89,14 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		title: 'Total Long-Term Assets',
 		tooltip:
 			'Total long-term assets includes all long-term assets, including PP&E, goodwill, intangibles and others. Long-term (non-current) assets are things that can not be sold for cash easily or are considered to last for more than one year.',
-		bold: true
+		class: 'bolded'
 	},
 	{
 		id: 'assets',
 		title: 'Total Assets',
 		tooltip:
 			'Total assets is the sum of all current and non-current assets on the balance sheet. Assets are everything that the company owns.',
-		extrabold: true,
-		border: true
+		class: 'extrabolded bordered'
 	},
 	{
 		id: 'payables',
@@ -133,8 +131,7 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		title: 'Total Current Liabilities',
 		tooltip:
 			'Total current liabilities are all financial obligations that the company owes and are due within one year. This includes accounts payable, deferred revenue, current debt and others.',
-		bold: true,
-		border: true
+		class: 'bolded bordered'
 	},
 	{
 		id: 'debtnc',
@@ -153,7 +150,7 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		title: 'Total Long-Term Liabilities',
 		tooltip:
 			'Total long-term liabilities are all long-term (non-current) financial obligations of the company, including long-term debt and others.',
-		bold: true
+		class: 'bolded'
 	},
 	{
 		id: 'liabilities',
@@ -161,8 +158,7 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		tooltip:
 			'Total liabilities are all financial obligations of the company, including both current and long-term (non-current) liabilities. Liabilities are everything that the company owes.',
 		formula: 'Total Liabilities = Current Liabilities + Long-Term Liabilities',
-		extrabold: true,
-		border: true
+		class: 'extrabolded bordered'
 	},
 	{
 		id: 'debt',
@@ -170,20 +166,19 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		tooltip:
 			'Total debt is the total amount of liabilities categorized as "debt" on the balance sheet. It includes both current and long-term (non-current) debt.',
 		formula: 'Total Debt = Current Debt + Long-Term Debt',
-		bold: true
+		class: 'bolded'
 	},
 	{
-		id: 'debtgrowth',
-		data: 'debt',
+		id: 'debtGrowth',
 		title: 'Debt Growth',
 		tooltipTitle: 'Debt Growth (YoY)',
-		format: 'growth',
+		format: 'inverted-growth',
 		tooltip: 'Debt growth is the change in total debt compared to a previous period.',
-		formula: 'Debt Growth = ((Current Debt / Previous Debt) - 1) * 100%'
+		formula: 'Debt Growth = ((Current Debt / Previous Debt) - 1) * 100%',
+		class: 'indented bordered'
 	},
 	{
 		id: 'commonstocknet',
-		data: 'commonstocknet',
 		title: 'Common Stock',
 		tooltip:
 			"Common stock is the par value of the company's outstanding common stock, multiplied by the par value. This information is not very useful as the par value is usually set as an arbitrary amount of one cent."
@@ -205,15 +200,14 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		tooltip:
 			'Shareholders’ equity is also called book value or net worth. It can be seen as the amount of money held by investors inside the company. It is calculated by subtracting all liabilities from all assets.',
 		formula: "Shareholders' Equity = Total Assets - Total Liabilities",
-		extrabold: true,
-		border: true
+		class: 'extrabolded bordered'
 	},
 	{
 		id: 'liabilitiesequity',
 		title: 'Total Liabilities and Equity',
 		tooltip:
 			"Total liabilities and equity are calculated by adding up total liabilities and shareholders' equity. This number is identical to total assets.",
-		bold: true
+		class: 'bolded'
 	},
 	{
 		id: 'netcash',
@@ -223,13 +217,13 @@ export const MAP_BALANCE_SHEET: FinancialsMap[] = [
 		formula: 'Net Cash / Debt = Total Cash - Total Debt'
 	},
 	{
-		id: 'netcashgrowth',
-		data: 'netcash',
+		id: 'netCashGrowth',
 		title: 'Net Cash / Debt Growth',
 		tooltipTitle: 'Net Cash / Debt Growth (YoY)',
 		format: 'growth',
 		tooltip: 'The change in the net cash / debt position compared to a previous time period.',
-		formula: 'Net Cash / Debt Growth = ((Current / Previous) - 1) * 100%'
+		formula: 'Net Cash / Debt Growth = ((Current / Previous) - 1) * 100%',
+		class: 'indented bordered'
 	},
 	{
 		id: 'netcashpershare',

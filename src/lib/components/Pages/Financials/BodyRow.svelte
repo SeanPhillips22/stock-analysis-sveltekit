@@ -104,4 +104,8 @@
 	.indented td:first-child {
 		@apply pl-5;
 	}
+
+	.extrabolded {
+		@apply font-bold;
+	}
 </style>

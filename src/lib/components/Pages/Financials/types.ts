@@ -9,40 +9,11 @@ export type Statement = 'income' | 'balance-sheet' | 'cash-flow-statement' | 'ra
 export type Range = 'annual' | 'quarterly' | 'trailing'
 
 export type FinancialsMap = {
+	id: string
 	title: string
 	tooltipTitle?: string
 	tooltip?: string
-	bold?: boolean
-	extrabold?: boolean
-	data?: string
-	format?: string
+	format?: 'percentage' | 'pershare' | 'ratio' | 'growth' | 'inverted-growth' | 'reduce_precision'
 	formula?: string
-	indent?: boolean
-	border?: boolean
 	class?: string
-	id:
-		| DataId
-		| 'cor'
-		| 'gp'
-		| 'sgna'
-		| 'rnd'
-		| 'otheropex'
-		| 'opex'
-		| 'opinc'
-		| 'intexp'
-		| 'interestIncome'
-		| 'interestExpense'
-		| 'otherincome'
-		| 'pretax'
-		| 'taxexp'
-		| 'netinc'
-		| 'prefdivis'
-		| 'netinccmn'
-		| 'shareswa'
-		| 'shareswadil'
-		| 'shareschange'
-		| 'epsdil'
-		| 'fcfps'
-		| 'taxrate'
-		| 'depamor'
 }

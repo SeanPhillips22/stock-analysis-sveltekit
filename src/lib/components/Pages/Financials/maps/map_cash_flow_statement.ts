@@ -13,107 +13,104 @@ export const MAP_CASH_FLOW_STATEMENT: FinancialsMap[] = [
 		title: 'Depreciation & Amortization',
 		tooltip:
 			"Depreciation and amortization are accounting methods for calculating how the value of a business's assets change over time. Depreciation refers to physical assets, while amortization refers to intangible assets.",
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'sbcomp',
 		title: 'Share-Based Compensation',
 		tooltip:
 			'Share-based compensation is the value of shares issued for the purpose of compensating the executives and employees of a company.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'otheroperating',
 		title: 'Other Operating Activities',
 		tooltip:
 			'Other operating activities are items affecting the operating cash flow that do not fit into the categories above. These can include changes in accounts payables and receivables, changes in inventory, and various others.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncfo',
 		title: 'Operating Cash Flow',
 		tooltip:
 			'Operating cash flow, also called cash flow from operating activities, measures the amount of cash that a company generates from normal business activities. It is the amount of cash left after all cash income has been received, and all cash expenses have been paid.',
-		bold: true
+		class: 'bolded'
 	},
 	{
-		id: 'ocfgrowth',
-		data: 'ncfo',
+		id: 'ocfGrowth',
 		title: 'Operating Cash Flow Growth',
 		tooltipTitle: 'Operating Cash Flow Growth (YoY)',
 		format: 'growth',
 		tooltip:
 			'Operating cash flow growth is the percentage change in cash flow from operations compared to a previous period.',
 		formula: 'OCF Growth = ((Current OCF / Previous OCF) - 1) * 100%',
-		border: true
+		class: 'bordered'
 	},
 	{
 		id: 'capex',
 		title: 'Capital Expenditures',
 		tooltip:
 			'Capital expenditures are also called payments for property, plants and equipment. It measures cash spent on long-term assets that will be used to run the business, such as manufacturing equipment, real estate and others.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncfbus',
 		title: 'Acquisitions',
 		tooltip: 'The amount of cash spent on acquiring other businesses.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncfinv',
 		title: 'Change in Investments',
 		tooltip:
 			'The cash either spent or received from purchasing or selling investments. A positive number implies that the company was a net seller of investments. A negative number implies that the company was a net buyer of investments.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'otherinvesting',
 		title: 'Other Investing Activities',
 		tooltip: 'Other investing activities are investing activities that do not belong to any of the categories above.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncfi',
 		title: 'Investing Cash Flow',
 		tooltip:
 			'Investing cash flow is the total change in cash from buying and selling investments and long-term assets.',
-		bold: true,
-		border: true
+		class: 'bolded bordered'
 	},
 	{
 		id: 'ncfdiv',
 		title: 'Dividends Paid',
 		tooltip: 'The total amount paid out as cash dividends to shareholders.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncfcommon',
 		title: 'Share Issuance / Repurchase',
 		tooltip:
 			'The cash gained from issuing shares, or cash spent on repurchasing shares via share buybacks. A positive number implies that the company issued more shares than it repurchased. A negative number implies that the company bought back shares.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncfdebt',
 		title: 'Debt Issued / Paid',
 		tooltip:
 			'The cash gained from issuing debt, or cash spent on paying back debts. A positive number implies that the company took on more debt than it paid. A negative number implies that the company paid back debts.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'otherfinancing',
 		title: 'Other Financing Activities',
 		tooltip: 'Other financing activities are financing activites that do not belong to the categories above.',
-		indent: true
+		class: 'indented'
 	},
 	{
 		id: 'ncff',
 		title: 'Financing Cash Flow',
 		tooltip:
 			'Financing cash flow is the total change in cash through financing activities. This includes dividend payments, share issuance and repurchases, changes in debt levels and others.',
-		border: true,
-		bold: true
+		class: 'bolded bordered'
 	},
 	{
 		id: 'ncf',
@@ -121,7 +118,7 @@ export const MAP_CASH_FLOW_STATEMENT: FinancialsMap[] = [
 		tooltip:
 			'Net cash flow is the sum of the operating, investing and financing cash flow numbers. It is the change in cash and equivalents on the company\'s balance sheet during the accounting period. It is often shown as "increase/decrease in cash and equivalents" on the cash flow statement.',
 		formula: 'Net Cash Flow = Operating Cash Flow + Investing Cash Flow + Financing Cash Flow',
-		bold: true
+		class: 'bolded'
 	},
 	{
 		id: 'fcf',
@@ -131,19 +128,18 @@ export const MAP_CASH_FLOW_STATEMENT: FinancialsMap[] = [
 		formula: 'Free Cash Flow = Operating Cash Flow - Capital Expenditures'
 	},
 	{
-		id: 'fcfgrowth',
-		data: 'fcf',
+		id: 'fcfGrowth',
 		title: 'Free Cash Flow Growth',
 		tooltipTitle: 'Free Cash Flow Growth (YoY)',
 		format: 'growth',
 		tooltip: 'Free cash flow growth is the percentage change in free cash flow compared to a previous period.',
-		formula: 'FCF Growth = ((Current FCF / Previous FCF) - 1) * 100%'
+		formula: 'FCF Growth = ((Current FCF / Previous FCF) - 1) * 100%',
+		class: 'indented bordered'
 	},
 	{
-		id: 'fcfmargin',
-		data: 'fcf',
+		id: 'fcfMargin',
 		title: 'Free Cash Flow Margin',
-		format: 'margin',
+		format: 'percentage',
 		tooltip: 'FCF margin is the percentage of revenue left as free cash flow.',
 		formula: 'FCF Margin = (Free Cash Flow / Revenue) * 100%'
 	},

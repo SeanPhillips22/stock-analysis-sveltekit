@@ -7,16 +7,16 @@ export const MAP_RATIOS: FinancialsMap[] = [
 		format: 'reduce_precision',
 		tooltip: "Market capitalization, or market cap, is the total value of all of a company's outstanding shares.",
 		formula: 'Market Cap = Shares Outstanding * Stock Price',
-		bold: true
+		class: 'bolded'
 	},
 	{
-		id: 'marketcapgrowth',
-		data: 'marketcap',
+		id: 'marketCapGrowth',
 		title: 'Market Cap Growth',
 		tooltipTitle: 'Market Cap Growth (YoY)',
 		format: 'growth',
 		tooltip: "Market cap growth is how much a company's market cap has increased compared to a previous point in time.",
-		formula: 'Market Cap Growth = ((Current Market Cap / Previous Market Cap) - 1) * 100%'
+		formula: 'Market Cap Growth = ((Current Market Cap / Previous Market Cap) - 1) * 100%',
+		class: 'indented bordered'
 	},
 	{
 		id: 'ev',
@@ -54,7 +54,6 @@ export const MAP_RATIOS: FinancialsMap[] = [
 		id: 'pfcf',
 		title: 'P/FCF Ratio',
 		format: 'ratio',
-
 		tooltip:
 			'The price to free cash flow (P/FCF) ratio is similar to the P/E ratio, except it uses free cash flow instead of accounting earnings.',
 		formula: 'P/FCF Ratio = Market Capitalization / Free Cash Flow'
@@ -63,11 +62,10 @@ export const MAP_RATIOS: FinancialsMap[] = [
 		id: 'pocf',
 		title: 'P/OCF Ratio',
 		format: 'ratio',
-
 		tooltip:
 			'The price to operating cash flow (P/OCF) ratio measures the price of a stock relative to operating cash flow.',
 		formula: 'P/OCF Ratio = Market Capitalization / Operating Cash Flow',
-		border: true
+		class: 'bordered'
 	},
 	{
 		id: 'evrevenue',
@@ -100,7 +98,7 @@ export const MAP_RATIOS: FinancialsMap[] = [
 		tooltip:
 			"The enterprise value to free cash flow (EV/FCF) ratio is similar to the price to free cash flow ratio, except the price is adjusted for the company's cash and debt.",
 		formula: 'EV/FCF Ratio = Enterprise Value / Free Cash Flow',
-		border: true
+		class: 'bordered'
 	},
 	{
 		id: 'debtequity',
@@ -133,7 +131,7 @@ export const MAP_RATIOS: FinancialsMap[] = [
 		tooltip:
 			"The current ratio is used to measure a company's short-term liquidity. A low number can indicate that a company will have trouble paying its upcoming liabilities.",
 		formula: 'Current Ratio = Current Assets / Current Liabilities',
-		border: true
+		class: 'bordered'
 	},
 	{
 		id: 'assetturnover',
@@ -166,7 +164,7 @@ export const MAP_RATIOS: FinancialsMap[] = [
 		tooltip:
 			'Return on invested capital (ROIC) measures how effective a company is at investing its capital in order to increase profits. It is calculated by dividing the NOPAT (Net Operating Income After Tax) by the average invested capital in the previous year.',
 		formula: 'ROIC = (NOPAT / Average Invested Capital) * 100%',
-		border: true
+		class: 'bordered'
 	},
 	{
 		id: 'earningsyield',
