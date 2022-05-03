@@ -4,7 +4,7 @@ export type FinancialData = {
 	[key: string]: any[]
 }
 
-export type Statement = 'income' | 'balance-sheet' | 'cash-flow-statement' | 'ratios'
+export type Statement = 'income-statement' | 'balance-sheet' | 'cash-flow-statement' | 'ratios'
 
 export type Range = 'annual' | 'quarterly' | 'trailing'
 

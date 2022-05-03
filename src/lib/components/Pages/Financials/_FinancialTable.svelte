@@ -1,11 +1,16 @@
 <script lang="ts">
-	import FinancialsNavigation from '$lib/components/Pages/Financials/FinancialsNavigation.svelte'
 	import { capitalize } from '$lib/functions/utils/capitalize'
 	import { formatYear } from './functions'
 
+	import FinancialsNavigation from '$lib/components/Pages/Financials/FinancialsNavigation.svelte'
+	import BodyRow from './BodyRow.svelte'
+
 	import type { Info } from '$lib/types/Info'
 	import type { FinancialData, Statement, Range, FinancialsMap } from './types'
-	import BodyRow from './BodyRow.svelte'
+
+	import { user } from '$lib/auth/userStore'
+	import FinancialControls from './FinancialControls.svelte'
+	import TableTitle from './TableTitle.svelte'
 
 	export let info: Info
 	export let data: { data: FinancialData; count: number; range: Range }
@@ -21,13 +26,45 @@
 	let headerRowTitle = 'Year'
 	if (range === 'quarterly') headerRowTitle = 'Quarter Ended'
 	else if (range === 'trailing') headerRowTitle = 'Quarter Ending'
+
+	/**
+	 * If pro user, fetch the full data
+	 */
+	let exportData: any[] = []
+	async function fetchFullData() {
+		let host = import.meta.env.VITE_PUBLIC_API_URL
+		let url = `${host}/financials?type=${statement}&symbol=${info.symbol}&range=${range}`
+		url += '&f=' + import.meta.env.VITE_PUBLIC_PRO_KEY
+
+		const res = await fetch(url)
+		const fullData = await res.json()
+
+		d = fullData.data
+		headerRow = fullData.data.datekey
+
+		// Rewrite the financial data to make it ready for export
+		// It should be an array of arrays
+		exportData[0] = [headerRowTitle, ...headerRow]
+		Object.keys(d).forEach((key) => {
+			if (key === 'datekey') return
+			let title = map.find((m) => m.id === key)?.title
+			exportData.push([title, ...d[key]])
+		})
+	}
+	$: {
+		if ((range === 'annual' && data.count > 10) || data.count > 40) {
+			if ($user?.isPro) {
+				fetchFullData()
+			}
+		}
+	}
 </script>
 
 <FinancialsNavigation {info} {statement} range={range || 'annual'} />
 
 <div class="title-area">
-	<h2>{title} ({capitalize(range) || 'Annual'})</h2>
-	<div>Buttons</div>
+	<TableTitle {info} {title} {range} {statement} />
+	<FinancialControls data={exportData} />
 </div>
 
 <div class="table-wrap">
@@ -57,10 +94,6 @@
 <style>
 	.title-area {
 		@apply md:flex md:flex-row md:items-end md:justify-between;
-	}
-
-	h2 {
-		@apply mb-1 text-[1.3rem] font-bold bp:text-2xl md:mb-3;
 	}
 
 	.table-wrap {

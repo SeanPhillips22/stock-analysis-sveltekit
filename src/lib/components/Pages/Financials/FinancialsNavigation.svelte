@@ -7,14 +7,14 @@
 	export let range: Range
 
 	$: base = `/stocks/${info.symbol}/financials`
-	$: appendStatement = statement === 'income' ? '' : `/${statement}`
+	$: appendStatement = statement === 'income-statement' ? '' : `/${statement}`
 	$: appendRange = range === 'annual' ? '' : `${range}/`
 </script>
 
 <div class="wrap">
 	<nav>
 		<ul class="navmenu submenu">
-			<li><a href="{base}/{appendRange}" class:active={statement === 'income'}>Income</a></li>
+			<li><a href="{base}/{appendRange}" class:active={statement === 'income-statement'}>Income</a></li>
 			<li>
 				<a href="{base}/balance-sheet/{appendRange}" class:active={statement === 'balance-sheet'}>Balance Sheet</a>
 			</li>

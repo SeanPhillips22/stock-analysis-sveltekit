@@ -4,7 +4,8 @@
 	export const load: Load = async ({ params, fetch, stuff }) => {
 		let symbol = params.symbol
 
-		let url = `http://stockanalysis20febr.local/wp-json/sa/financials?type=income-statement&symbol=${symbol}&range=quarterly`
+		let host = import.meta.env.VITE_PUBLIC_API_URL
+		let url = `${host}/financials?type=income-statement&symbol=${symbol}&range=quarterly`
 
 		const res = await fetch(url)
 		const data = await res.json()
@@ -34,7 +35,7 @@
 <FinancialTable
 	{info}
 	{data}
-	statement="income"
+	statement="income-statement"
 	range="quarterly"
 	title="Income Statement"
 	map={MAP_INCOME_STATEMENT}

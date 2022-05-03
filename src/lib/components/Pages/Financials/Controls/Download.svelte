@@ -1,0 +1,31 @@
+<script lang="ts">
+	/**
+	 * Export data as Excel or CSV
+	 *
+	 * TODO - Add bulk export
+	 * TODO reduce data size for financial data by reducing float precision
+	 */
+	import ExcellentExport from 'excellentexport'
+
+	export let data: any | undefined = undefined
+
+	function download(type: 'csv' | 'xlsx') {
+		return ExcellentExport.convert(
+			{
+				openAsDownload: true,
+				filename: 'export',
+				format: type
+			},
+			[
+				{
+					name: 'Export',
+					from: { array: data }
+				}
+			]
+		)
+	}
+</script>
+
+<div class="dd" on:click={() => download('xlsx')}>Export to Excel</div>
+<div class="dd" on:click={() => download('csv')}>Export to CSV</div>
+<div class="dd" on:click={() => console.log('bulk export')}>Bulk Export</div>

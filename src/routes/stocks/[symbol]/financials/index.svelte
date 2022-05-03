@@ -3,7 +3,9 @@
 
 	export const load: Load = async ({ params, fetch, stuff }) => {
 		let symbol = params.symbol
-		let url = `http://stockanalysis20febr.local/wp-json/sa/financials?type=income-statement&symbol=${symbol}&range=annual`
+
+		let host = import.meta.env.VITE_PUBLIC_API_URL
+		let url = `${host}/financials?type=income-statement&symbol=${symbol}&range=annual`
 
 		const res = await fetch(url)
 		const data = await res.json()
@@ -30,4 +32,11 @@
 	<title>{info.nameFull} ({info.ticker}) Financial Statements: Income</title>
 </svelte:head>
 
-<FinancialTable {info} {data} statement="income" range="annual" title="Income Statement" map={MAP_INCOME_STATEMENT} />
+<FinancialTable
+	{info}
+	{data}
+	statement="income-statement"
+	range="annual"
+	title="Income Statement"
+	map={MAP_INCOME_STATEMENT}
+/>
