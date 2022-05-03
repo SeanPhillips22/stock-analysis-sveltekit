@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { capitalize } from '$lib/functions/utils/capitalize'
+	/**
+	 * TODO make sure quarterly growth offset is correctly calculated for recent IPOs
+	 * TODO make sure stocks with alternative financial sources work too
+	 */
 	import { formatYear } from './functions'
 
 	import FinancialsNavigation from '$lib/components/Pages/Financials/FinancialsNavigation.svelte'
@@ -47,8 +50,19 @@
 		exportData[0] = [headerRowTitle, ...headerRow]
 		Object.keys(d).forEach((key) => {
 			if (key === 'datekey') return
-			let title = map.find((m) => m.id === key)?.title
-			exportData.push([title, ...d[key]])
+			if (statement === 'income-statement' && key === 'fcf') return // Can remove later
+
+			// Get the map object, data array and title
+			let mapObject = map.find((m) => m.id === key)
+			let dataArray = d[key]
+			let title = mapObject?.title
+
+			// If no valid items in array, skip it
+			let valid = dataArray.filter((a) => a !== null && a !== 0)
+			if (!valid.length) return
+
+			// Push the array into the export data
+			exportData.push([title, ...dataArray])
 		})
 	}
 	$: {
