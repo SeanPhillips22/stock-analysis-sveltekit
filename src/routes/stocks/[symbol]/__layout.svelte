@@ -22,14 +22,10 @@
 
 <script lang="ts">
 	import type { Info } from '$lib/types/Info'
-
 	export let info: Info
 </script>
 
 <main class="contain">
 	<StockHead {info} />
-
-	<div class="stock-content">
-		<slot />
-	</div>
+	<slot />
 </main>

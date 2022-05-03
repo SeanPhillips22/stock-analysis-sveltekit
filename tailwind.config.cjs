@@ -35,6 +35,9 @@ const config = {
 					brand_light: 'rgba(60, 116, 212)',
 					link: 'rgb(30, 115, 186, 1)',
 					row_hover: 'rgba(242, 249, 255, 1)'
+				},
+				gray: {
+					light: 'rgba(246, 247, 248, 1)'
 				}
 			}
 		}

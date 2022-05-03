@@ -4,8 +4,6 @@
 	import News from '$lib/components/Pages/HomePage/News.svelte'
 	import IPOwidgets from '$lib/components/Pages/HomePage/IPOwidgets.svelte'
 
-	import { marketOpen } from '$lib/functions/datetime/marketOpen'
-
 	type Data = {
 		date: string
 		marketStatus: string
@@ -32,8 +30,6 @@
 
 <div class="hero">
 	<div class="inner">
-		<div class="text-center py-10">{marketOpen()}</div>
-
 		<h1>Search for a stock to start your analysis</h1>
 
 		<p class="tagline">

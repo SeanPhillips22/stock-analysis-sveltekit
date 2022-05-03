@@ -4,6 +4,15 @@
 	export let data: { url: string; title: string; category: 'tag' | 'popular' }[]
 </script>
 
+<svelte:head>
+	<title>Stock Lists</title>
+	<meta
+		name="description"
+		content="Lists of stocks that share common characteristics. See companies ranked by market cap, employee count, sales or others."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/list/" />
+</svelte:head>
+
 <main class="contain">
 	<h1>Stock Lists</h1>
 
