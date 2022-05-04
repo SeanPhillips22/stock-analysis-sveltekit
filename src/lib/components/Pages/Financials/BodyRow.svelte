@@ -1,11 +1,19 @@
 <script lang="ts">
+	import Popover from '$lib/components/Popover/_Popover.svelte'
 	import HoverChart from '$lib/icons/HoverChart.svelte'
+	import Tooltip from './Tooltip.svelte'
 	import { formatCell } from './functions'
 
-	import type { FinancialsMap } from './types'
+	import type { FinancialsMap, Range } from './types'
+	import HoverCharts from './HoverCharts/ChartContainer.svelte'
+	import type { Info } from '$lib/types/Info'
+	import { capitalize } from '$lib/functions/utils/capitalize'
 
+	export let dates: string[]
+	export let data: number[]
 	export let row: FinancialsMap
-	export let data: number[] | undefined
+	export let info: Info
+	export let range: Range
 
 	// Count how many valid items in order to skip rows with only zeros
 	let valid = data?.filter((d) => d !== null && d !== 0)
@@ -14,10 +22,11 @@
 {#if data && valid && valid.length}
 	<tr class={row.class}>
 		<td>
-			<span>{row.title}</span>
-			<div class="icon">
-				<HoverChart />
-			</div>
+			<Popover>
+				<Tooltip slot="content" {row} />
+				{row.title}
+			</Popover>
+			<HoverCharts {dates} {data} {range} {info} name={row.title} />
 		</td>
 		{#each data as point}
 			{#if row.format === 'growth' || row.format === 'inverted-growth'}
@@ -64,26 +73,6 @@
 	*/
 	tr td:first-child {
 		@apply flex flex-row justify-between items-center;
-	}
-
-	.icon {
-		@apply relative z-10 border border-t-0 border-transparent p-[3px] delay-200;
-	}
-
-	.icon:global svg {
-		@apply my-0 mx-1 h-[22px] w-[22px] stroke-[#777];
-	}
-
-	.icon:hover:global {
-		@apply z-50 border-gray-200 bg-white;
-	}
-
-	.icon:hover:global svg {
-		@apply stroke-[#2c6288];
-	}
-
-	.icon:global svg:focus {
-		@apply stroke-[#2c6288];
 	}
 
 	/**

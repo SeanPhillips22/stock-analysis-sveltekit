@@ -99,7 +99,7 @@
 		</thead>
 		<tbody>
 			{#each map as row}
-				<BodyRow {row} data={d[row.id]} />
+				<BodyRow {row} dates={headerRow} data={d[row.id]} {info} {range} />
 			{/each}
 		</tbody>
 	</table>
@@ -111,7 +111,7 @@
 	}
 
 	.table-wrap {
-		@apply overflow-x-auto border border-gray-300;
+		@apply overflow-x-auto overflow-y-visible border border-gray-300;
 	}
 
 	table {
