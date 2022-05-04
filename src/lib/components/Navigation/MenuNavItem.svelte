@@ -23,7 +23,7 @@
 
 <div class:collapsed>
 	<div class="nav-item" class:parent>
-		<a sveltekit:prefetch href={item.href} title={item.name} on:click={() => state.openMenu(item.name)}>
+		<a href={item.href} title={item.name} sveltekit:prefetch on:click={() => state.openMenu(item.name)}>
 			<svelte:component this={item.icon} classes="h-6 w-6 text-gray-500 xxl:h-5 xxl:w-5 xxxl:h-6 xxxl:w-6" />
 			<span class="nav-label">{item.name}</span>
 		</a>
@@ -38,7 +38,7 @@
 			<ul class="subitems" class:open in:fly={{ y: -10, duration: 75 }}>
 				{#each item.children as child (child.href)}
 					<li>
-						<a sveltekit:prefetch href={child.href} title={child.name} class:active={url === child.href}>{child.name}</a
+						<a href={child.href} title={child.name} sveltekit:prefetch class:active={url === child.href}>{child.name}</a
 						>
 					</li>
 				{/each}

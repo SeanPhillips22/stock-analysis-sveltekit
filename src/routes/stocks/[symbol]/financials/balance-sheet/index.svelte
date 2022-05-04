@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit'
 
+	export const hydrate = false
 	export const load: Load = async ({ params, fetch, stuff }) => {
 		let symbol = params.symbol
 
