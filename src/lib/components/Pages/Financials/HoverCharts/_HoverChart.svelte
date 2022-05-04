@@ -96,6 +96,6 @@
 
 <style>
 	.chart {
-		@apply h-[40vh] w-[95vw] z-50 bg-white p-2 md:h-[330px] md:w-[600px] md:py-2 md:px-3;
+		@apply h-[40vh] z-50 bg-white p-2 md:h-[330px] md:py-2 md:px-3;
 	}
 </style>

@@ -72,8 +72,6 @@
 			}
 		}
 	}
-
-	let mouseActive = false
 </script>
 
 <FinancialsNavigation {info} {statement} range={range || 'annual'} />
@@ -99,9 +97,9 @@
 				{/each}
 			</tr>
 		</thead>
-		<tbody on:mouseenter={() => (mouseActive = true)}>
+		<tbody>
 			{#each map as row}
-				<BodyRow {row} dates={headerRow} data={d[row.id]} {info} {range} {mouseActive} />
+				<BodyRow {row} dates={headerRow} data={d[row.id]} {info} {range} />
 			{/each}
 		</tbody>
 	</table>

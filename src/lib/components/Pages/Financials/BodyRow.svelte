@@ -12,7 +12,6 @@
 	export let row: FinancialsMap
 	export let info: Info
 	export let range: Range
-	export let mouseActive: boolean
 
 	// Count how many valid items in order to skip rows with only zeros
 	let valid = data?.filter((d) => d !== null && d !== 0)
@@ -25,7 +24,7 @@
 				<Tooltip slot="content" {row} />
 				{row.title}
 			</Popover>
-			<HoverCharts {dates} {data} {range} {info} name={row.title} {mouseActive} />
+			<HoverCharts {dates} {data} {range} {info} name={row.title} />
 		</td>
 		{#each data as point}
 			{#if row.format === 'growth' || row.format === 'inverted-growth'}

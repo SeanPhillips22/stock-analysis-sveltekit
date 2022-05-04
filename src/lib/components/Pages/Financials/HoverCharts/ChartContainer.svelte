@@ -2,7 +2,7 @@
 	/**
 	 * The container for the hover chart. Handles the display logic.
 	 *
-	 * TODO add lazy loading so that the chart library is only loaded when a user hovers over the table cell
+	 * TODO Make the chart persistent on click?
 	 */
 	import { fade } from 'svelte/transition'
 	import Icon from '$lib/icons/HoverChart.svelte'
@@ -17,16 +17,6 @@
 	export let range: Range
 	export let info: Info
 	export let name: string
-	export let mouseActive: boolean
-
-	// Only load hover chart if the mouse is active
-	// over the financials table
-	let HoverChart: any
-	const lazyLoadChart = async () => {
-		let loaded = await import('./_HoverChart.svelte')
-		HoverChart = loaded.default
-	}
-	$: mouseActive && lazyLoadChart()
 
 	/**
 	 * Display and position the hover chart
@@ -34,34 +24,32 @@
 	let iconRef: any
 	let chartRef: any = ''
 
-	let hasLeft = false // If the mouse has been moved away from the icon
+	// let hasLeft = false // If the mouse has been moved away from the icon
 	let hovering = false // If the mouse is hovering over the icon
 	let x: number
 	let yPos: number
+	let w: number
 
 	function entering(event: MouseEvent) {
-		hasLeft = false
-		setTimeout(() => {
-			if (!hasLeft) {
-				hovering = true
-				x = event.pageX
-				let y = event.pageY
-				let rect = iconRef.getBoundingClientRect()
-				yPos = y - (event.clientY - rect.top) + 1
-			}
-		}, 100)
+		hovering = true
+		if (window?.innerWidth < 768) {
+			x = 5
+			w = window.innerWidth - 10
+		} else {
+			x = event.pageX - 50
+			w = 600
+		}
+		let y = event.pageY
+		let rect = iconRef.getBoundingClientRect()
+		yPos = y - (event.clientY - rect.top) + 1.5
 	}
 
 	function leaving(event: MouseEvent) {
-		hasLeft = true
-
-		setTimeout(() => {
-			// If mouse moved into chart, don't close
-			if (event.relatedTarget === chartRef) {
-				return
-			}
-			hovering = false
-		}, 100)
+		// @ts-ignore
+		if (event.relatedTarget === chartRef || event.relatedTarget?.classList.toString().includes('highcharts')) {
+			return
+		}
+		hovering = false
 	}
 </script>
 
@@ -69,9 +57,25 @@
 	<Icon />
 </div>
 {#if hovering}
-	<div class="wrap" style="bottom: calc(100% - {yPos}px); left: {x - 50}px;" in:fade={{ delay: 200, duration: 75 }}>
-		<HoverChart bind:ref={chartRef} {dates} {data} bind:hovering seriesName={name} {range} {info} />
-	</div>
+	<!-- Lazy load HoverChart -->
+	{#await import('./_HoverChart.svelte') then value}
+		<div
+			class="wrap"
+			style="bottom: calc(100% - {yPos}px); left: {x}px; width: {w}px"
+			in:fade={{ delay: 200, duration: 75 }}
+		>
+			<svelte:component
+				this={value.default}
+				bind:ref={chartRef}
+				{dates}
+				{data}
+				bind:hovering
+				seriesName={name}
+				{range}
+				{info}
+			/>
+		</div>
+	{/await}
 {/if}
 
 <style>
@@ -87,7 +91,7 @@
 	}
 
 	.icon.active {
-		@apply z-50 border-gray-200 bg-white delay-200;
+		@apply z-50 border-gray-300 bg-white delay-200;
 	}
 
 	.icon.active:global svg {
@@ -102,6 +106,6 @@
     * Hover chart styles
     */
 	.wrap {
-		@apply absolute border border-gray-200 bg-white z-20;
+		@apply absolute border border-gray-300 bg-white z-20;
 	}
 </style>
