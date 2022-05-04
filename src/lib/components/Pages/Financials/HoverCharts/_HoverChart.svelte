@@ -6,17 +6,13 @@
 	import type { Info } from '$lib/types/Info'
 	import { capitalize } from '$lib/functions/utils/capitalize'
 
-	export let ref: any
-	export let hovering: boolean
+	export let ref: any // container for chart
+	export let hovering: boolean // if hovering over icon or chart
 	export let dates: string[]
 	export let data: number[]
 	export let seriesName: string
 	export let range: Range
 	export let info: Info
-	let x = dates // dates.reverse()
-	let y = data // data.reverse()
-
-	let container: any
 
 	onMount(() => {
 		let chartDates: any[] = dates?.slice(1).reverse()
@@ -49,7 +45,11 @@
 				}
 			},
 			title: {
-				text: title
+				text: title,
+				style: {
+					fontSize: '1.2rem',
+					fontWeight: '600'
+				}
 			},
 			xAxis: {
 				categories: chartDates,

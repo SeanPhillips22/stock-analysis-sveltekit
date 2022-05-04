@@ -36,7 +36,7 @@
 			x = 5
 			w = window.innerWidth - 10
 		} else {
-			x = event.pageX - 50
+			x = event.pageX - 60
 			w = 600
 		}
 		let y = event.pageY

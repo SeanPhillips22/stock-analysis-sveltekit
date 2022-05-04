@@ -15,15 +15,15 @@
 
 <style>
 	.wrap {
-		@apply min-w-[300px] max-w-md whitespace-normal;
+		@apply whitespace-normal;
 	}
 
 	h4 {
-		@apply mb-2 text-xl font-semibold;
+		@apply mb-2 text-lg font-semibold;
 	}
 
 	.description {
-		@apply border-t border-gray-300 pt-2 wrap font-normal;
+		@apply border-t border-gray-300 pt-2 wrap font-normal text-sm;
 	}
 
 	.formula {
