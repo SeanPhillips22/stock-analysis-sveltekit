@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores'
-	import { quote, setQuote } from '$lib/stores/quoteStore'
-
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
 	import InfoTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableQuote.svelte'
@@ -19,16 +16,6 @@
 	export let info: Info
 	export let data: Overview
 	export let news: NewsObject
-
-	// Set the initial quote value
-
-	$: console.log($page)
-
-	// $: s = $quote.symbol
-	$: if (!$quote || $page.params.symbol !== $quote.symbol) {
-		console.log($page.params.symbol, $quote.symbol)
-		setQuote(info.quote)
-	}
 
 	// The meta description
 	let description = `Get a real-time ${info.nameFull} (${info.ticker}) stock price quote with breaking news, financials, statistics, charts and more.`
