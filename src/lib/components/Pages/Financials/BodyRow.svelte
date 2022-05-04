@@ -1,19 +1,18 @@
 <script lang="ts">
 	import Popover from '$lib/components/Popover/_Popover.svelte'
-	import HoverChart from '$lib/icons/HoverChart.svelte'
 	import Tooltip from './Tooltip.svelte'
 	import { formatCell } from './functions'
 
 	import type { FinancialsMap, Range } from './types'
 	import HoverCharts from './HoverCharts/ChartContainer.svelte'
 	import type { Info } from '$lib/types/Info'
-	import { capitalize } from '$lib/functions/utils/capitalize'
 
 	export let dates: string[]
 	export let data: number[]
 	export let row: FinancialsMap
 	export let info: Info
 	export let range: Range
+	export let mouseActive: boolean
 
 	// Count how many valid items in order to skip rows with only zeros
 	let valid = data?.filter((d) => d !== null && d !== 0)
@@ -26,7 +25,7 @@
 				<Tooltip slot="content" {row} />
 				{row.title}
 			</Popover>
-			<HoverCharts {dates} {data} {range} {info} name={row.title} />
+			<HoverCharts {dates} {data} {range} {info} name={row.title} {mouseActive} />
 		</td>
 		{#each data as point}
 			{#if row.format === 'growth' || row.format === 'inverted-growth'}

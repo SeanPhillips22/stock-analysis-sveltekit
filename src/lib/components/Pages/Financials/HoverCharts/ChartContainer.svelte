@@ -6,38 +6,37 @@
 	 */
 	import { fade } from 'svelte/transition'
 	import Icon from '$lib/icons/HoverChart.svelte'
-	import HoverChart from './_HoverChart.svelte'
-	import { formatYear } from '../functions'
+
+	// Types
 	import type { Range } from '../types'
 	import type { Info } from '$lib/types/Info'
-	import { capitalize } from '$lib/functions/utils/capitalize'
 
+	// Props
 	export let dates: string[]
 	export let data: number[]
 	export let range: Range
 	export let info: Info
 	export let name: string
+	export let mouseActive: boolean
 
-	let title = `${info.symbol.toUpperCase()} ${name} (${capitalize(range)})`
-
-	let chartDates: any[]
-	let chartData: number[]
-	$: {
-		chartDates = dates?.slice(1).reverse()
-		chartData = data?.slice(1).reverse()
-
-		if (range === 'annual') {
-			chartDates = chartDates.map((m) => formatYear(m))
-		}
+	// Only load hover chart if the mouse is active
+	// over the financials table
+	let HoverChart: any
+	const lazyLoadChart = async () => {
+		let loaded = await import('./_HoverChart.svelte')
+		HoverChart = loaded.default
 	}
+	$: mouseActive && lazyLoadChart()
 
+	/**
+	 * Display and position the hover chart
+	 */
 	let iconRef: any
 	let chartRef: any = ''
 
 	let hasLeft = false // If the mouse has been moved away from the icon
 	let hovering = false // If the mouse is hovering over the icon
 	let x: number
-	let y: number
 	let yPos: number
 
 	function entering(event: MouseEvent) {
@@ -46,17 +45,18 @@
 			if (!hasLeft) {
 				hovering = true
 				x = event.pageX
-				y = event.pageY
+				let y = event.pageY
 				let rect = iconRef.getBoundingClientRect()
-				yPos = event.clientY - rect.top
+				yPos = y - (event.clientY - rect.top) + 1
 			}
 		}, 100)
 	}
 
 	function leaving(event: MouseEvent) {
 		hasLeft = true
-		// If mouse moved into chart, don't close
+
 		setTimeout(() => {
+			// If mouse moved into chart, don't close
 			if (event.relatedTarget === chartRef) {
 				return
 			}
@@ -69,12 +69,8 @@
 	<Icon />
 </div>
 {#if hovering}
-	<div
-		class="wrap"
-		style="bottom: calc(100% - {y - yPos + 1}px); left: {x - 50}px;"
-		in:fade={{ delay: 200, duration: 75 }}
-	>
-		<HoverChart bind:ref={chartRef} dates={chartDates} data={chartData} bind:hovering seriesName={name} {title} />
+	<div class="wrap" style="bottom: calc(100% - {yPos}px); left: {x - 50}px;" in:fade={{ delay: 200, duration: 75 }}>
+		<HoverChart bind:ref={chartRef} {dates} {data} bind:hovering seriesName={name} {range} {info} />
 	</div>
 {/if}
 

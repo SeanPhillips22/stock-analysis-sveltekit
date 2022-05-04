@@ -1,19 +1,33 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import Highcharts from 'highcharts'
+	import type { Range } from '../types'
+	import { formatYear } from '../functions'
+	import type { Info } from '$lib/types/Info'
+	import { capitalize } from '$lib/functions/utils/capitalize'
 
 	export let ref: any
 	export let hovering: boolean
 	export let dates: string[]
 	export let data: number[]
 	export let seriesName: string
-	export let title: string
+	export let range: Range
+	export let info: Info
 	let x = dates // dates.reverse()
 	let y = data // data.reverse()
 
 	let container: any
 
 	onMount(() => {
+		let chartDates: any[] = dates?.slice(1).reverse()
+		let chartData = data?.slice(1).reverse()
+
+		if (range === 'annual') {
+			chartDates = chartDates.map((m) => formatYear(m))
+		}
+
+		let title = `${info.symbol.toUpperCase()} ${seriesName} (${capitalize(range)})`
+
 		Highcharts.setOptions({
 			lang: {
 				numericSymbols: ['K', 'M', 'B', 'T', 'P', 'E']
@@ -38,7 +52,7 @@
 				text: title
 			},
 			xAxis: {
-				categories: x,
+				categories: chartDates,
 				labels: {
 					style: {
 						fontSize: '12px',
@@ -66,7 +80,7 @@
 					name: seriesName,
 					color: '#2C6288',
 					type: 'column',
-					data: y,
+					data: chartData,
 					groupPadding: 0.05,
 					animation: false
 				}
