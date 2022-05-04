@@ -5,14 +5,13 @@
 	import { onMount, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 
-	import { setQuote } from '$lib/stores/quoteStore'
+	import { quote, setQuote } from '$lib/stores/quoteStore'
 	import { marketOpen } from '$lib/functions/datetime/marketOpen'
 
 	import SunIcon from '$lib/icons/Sun.svelte'
 	import MoonIcon from '$lib/icons/Moon.svelte'
 
 	import type { Info } from '$lib/types/Info'
-	import type { Quote } from '$lib/types/Quote'
 
 	export let info: Info
 
@@ -21,14 +20,16 @@
 	 * On first page load, fetch once
 	 * If market is not closed, fetch every 5 seconds
 	 */
-	let freshQuote: Quote
 	let refetch: ReturnType<typeof setInterval>
 
 	async function fetchQuote() {
 		try {
-			const res = await fetch(`https://api.stockanalysis.com/wp-json/sa/p?s=${info.symbol}&t=${info.type}`)
+			let host = import.meta.env.VITE_PUBLIC_API_URL
+			let url = `${host}/p?s=${info.symbol}&t=${info.type}`
+
+			const res = await fetch(url)
 			const data = await res.json()
-			freshQuote = data
+			setQuote(data) // freshQuote = data
 		} catch (e) {
 			console.error(e)
 			clearInterval(refetch)
@@ -36,7 +37,6 @@
 	}
 
 	onMount(() => {
-		fetchQuote()
 		if (marketOpen() !== 'closed') {
 			refetch = setInterval(async () => {
 				// If navigated away from the page, stop the interval
@@ -54,52 +54,48 @@
 		clearInterval(refetch)
 	})
 
-	// info.quote is used as the initialdata until freshQuote has been set
-	$: quote = freshQuote ? freshQuote : info.quote
-	$: setQuote(quote)
-
 	// Set the change color based on the change in price
 	let color: string
-	$: if (Number(quote.c) > 0) color = 'qg'
-	else if (Number(quote.c) < 0) color = 'qr'
+	$: if (Number($quote.c) > 0) color = 'qg'
+	else if (Number($quote.c) < 0) color = 'qr'
 	else color = 'qgr'
 
 	let extendedColor: string
-	$: if (Number(quote.ec) > 0) extendedColor = 'qg'
-	else if (Number(quote.ec) < 0) extendedColor = 'qr'
+	$: if (Number($quote.ec) > 0) extendedColor = 'qg'
+	else if (Number($quote.ec) < 0) extendedColor = 'qr'
 	else extendedColor = 'qgr'
 </script>
 
 <div class="container">
-	<div class:extended={quote.e}>
-		<div class="p">{quote.pd}</div>
-		{#key quote.c}
-			<div class="pc {color}">{quote.c} ({quote.cp}%)</div>
+	<div class:extended={$quote.e}>
+		<div class="p">{$quote.pd}</div>
+		{#key $quote.c}
+			<div class="pc {color}">{$quote.c} ({$quote.cp}%)</div>
 		{/key}
 
 		<!-- Change timestamp slightly if there is an extended hours quote -->
-		{#if quote.e}
-			<div class="und"><span>At close:</span> {quote.u}</div>
+		{#if $quote.e}
+			<div class="und"><span>At close:</span> {$quote.u}</div>
 		{:else}
-			<div class="u">{quote.u} - Market {quote.ms}</div>
+			<div class="u">{$quote.u} - Market {$quote.ms}</div>
 		{/if}
 	</div>
 
 	<!-- Extended quote shown to the right -->
-	{#if quote.e}
+	{#if $quote.e}
 		<div class="ext split">
-			<div class="p-ext">{quote.epd}</div>
-			<div class="pc-ext {extendedColor}">{quote.ec} ({quote.ecp}%)</div>
+			<div class="p-ext">{$quote.epd}</div>
+			<div class="pc-ext {extendedColor}">{$quote.ec} ({$quote.ecp}%)</div>
 			<div class="und">
 				<span class="sp1">
-					{#if quote.es === 'Pre-market'}
+					{#if $quote.es === 'Pre-market'}
 						<SunIcon />
 					{:else}
 						<MoonIcon />
 					{/if}
-					<span class="sp2">{quote.es}:</span>
+					<span class="sp2">{$quote.es}:</span>
 				</span>
-				<span class="sp3">{quote.eu}</span>
+				<span class="sp3">{$quote.eu}</span>
 			</div>
 		</div>
 	{/if}
