@@ -8,33 +8,36 @@
 	let q = $quote || info.quote
 
 	let previous = 'Previous Close'
-	if (info.ipoDate && $quote.td === info.ipoDate) previous = 'IPO Price'
+	if (info.ipoDate && $quote?.td === info.ipoDate) previous = 'IPO Price'
 </script>
 
 <table>
 	<tbody>
 		<tr>
 			<td>Volume</td>
-			<td>{$quote.v && $quote.v !== '0' ? $quote.v : 'n/a'}</td>
+			<td>{$quote?.v && $quote?.v !== '0' ? $quote?.v : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Open</td>
-			<td>{$quote.o && $quote.o !== '0.00' ? $quote.o : 'n/a'}</td>
+			<td>{$quote?.o && $quote?.o !== '0.00' ? $quote?.o : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>{previous}</td>
-			<td>{$quote.cl && $quote.cl !== '0.00' ? $quote.cl : 'n/a'}</td>
+			<td>{$quote?.cl && $quote?.cl !== '0.00' ? $quote?.cl : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Day&apos;s Range</td>
-			<td>{$quote.l && $quote.h && $quote.l !== '0.00' && $quote.h !== '0.00' ? $quote.l + ' - ' + $quote.h : 'n/a'}</td
+			<td
+				>{$quote?.l && $quote?.h && $quote?.l !== '0.00' && $quote?.h !== '0.00'
+					? $quote?.l + ' - ' + $quote?.h
+					: 'n/a'}</td
 			>
 		</tr>
 		<tr>
 			<td>52-Week Range</td>
 			<td
-				>{$quote.l52 && $quote.h52 && $quote.l52 !== '0.00' && $quote.h52 !== '0.00'
-					? $quote.l52 + ' - ' + $quote.h52
+				>{$quote?.l52 && $quote?.h52 && $quote?.l52 !== '0.00' && $quote?.h52 !== '0.00'
+					? $quote?.l52 + ' - ' + $quote?.h52
 					: 'n/a'}</td
 			>
 		</tr>

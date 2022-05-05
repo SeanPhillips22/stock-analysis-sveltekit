@@ -5,7 +5,6 @@
 	 * TODO fix infinite loop bug
 	 * TODO change "real-time price" to "delayed price" when applicable
 	 */
-	import { page } from '$app/stores'
 	import { quote } from '$lib/stores/quoteStore'
 
 	import type { Info } from '$lib/types/Info'
@@ -14,23 +13,15 @@
 	import InformationCircle from '$lib/icons/InformationCircle.svelte'
 	import QuoteIpo from './QuoteIPO.svelte'
 	import ETFNav from './Nav/ETFNav.svelte'
-	export let info: Info
-	let isIpo = info.state === 'upcomingipo'
 
-	// TODO try listening to the navigation events here
-	// Set the quote value in the quote store when the page has changed
-	$: console.log($page.params.symbol, $quote?.symbol)
-	$: if (!$quote || $page.params.symbol !== $quote?.symbol) {
-		console.log('setting quote')
-		$quote = info.quote
-		// setQuote(info.quote)
-	}
+	export let info: Info
+	$: $quote = info.quote
 </script>
 
 <div class="container">
 	<div class="stock-head">
 		<h1>{info.nameFull || info.name} ({info.ticker})</h1>
-		{#if info.quote && !isIpo && !info.archived}
+		{#if info.quote && info.state !== 'upcomingipo' && !info.archived}
 			<div class="details">{info.exchange}: {info.ticker} · IEX Real-Time Price · USD</div>
 		{/if}
 
@@ -44,7 +35,7 @@
 
 	<!-- Stock Quote -->
 	{#key info.symbol}
-		{#if isIpo}
+		{#if info.state === 'upcomingipo'}
 			<QuoteIpo {info} />
 		{:else}
 			<Quote {info} />
