@@ -15,9 +15,25 @@
 	export let info: Info
 
 	onMount(() => {
-		let chartDates: any[] = dates?.slice(1).reverse()
-		let chartData = data?.slice(1).reverse()
+		// Copy the arrays to prevent mutation
+		// of the original
+		let chartDates: any[] = [...dates]
+		let chartData = [...data]
 
+		// If the first item is "TTM" then remove it
+		// TODO later, if TTM is set then don't do this
+		if (chartDates[0] === 'TTM') {
+			chartDates.shift()
+			chartData.shift()
+		}
+
+		// Reverse the array order
+		// TODO later, if reverse order is set then don't do this
+		chartDates.reverse()
+		chartData.reverse()
+
+		// Format the x-axis values to be years
+		// if range is annual
 		if (range === 'annual') {
 			chartDates = chartDates.map((m) => formatYear(m))
 		}

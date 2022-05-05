@@ -79,7 +79,7 @@
 
 <div class="title-area">
 	<TableTitle {info} {title} {range} {statement} />
-	<FinancialControls data={exportData} />
+	<FinancialControls data={exportData} {range} {statement} />
 </div>
 
 <div class="table-wrap">

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { quote, setQuote } from '$lib/stores/quoteStore'
+	import { quote } from '$lib/stores/quoteStore'
 
 	import type { Info } from '$lib/types/Info'
 	import Quote from './PriceQuote.svelte'
@@ -14,7 +14,9 @@
 	// Set the quote value in the quote store when the page has changed
 	$: console.log($page.params.symbol, $quote?.symbol)
 	$: if (!$quote || $page.params.symbol !== $quote?.symbol) {
-		setQuote(info.quote)
+		console.log('setting quote')
+		$quote = info.quote
+		// setQuote(info.quote)
 	}
 </script>
 

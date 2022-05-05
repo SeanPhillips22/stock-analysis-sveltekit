@@ -1,11 +1,15 @@
 <script lang="ts">
-	// Display the stock price quote, for either a stock or ETF
-	// It's either one or two blocks depending on whether extended hour
-	// trading info is available
+	/**
+	 * Display the stock price quote, for either a stock or ETF
+	 * It's either one or two blocks depending on whether extended hour
+	 * trading info is available
+	 *
+	 * TODO add a check whether quote is outdated before fetching immediately when market is closed
+	 */
 	import { onMount, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 
-	import { quote, setQuote } from '$lib/stores/quoteStore'
+	import { quote } from '$lib/stores/quoteStore'
 	import { marketOpen } from '$lib/functions/datetime/marketOpen'
 
 	import SunIcon from '$lib/icons/Sun.svelte'
@@ -29,7 +33,9 @@
 
 			const res = await fetch(url)
 			const data = await res.json()
-			setQuote(data) // freshQuote = data
+			$quote = data
+			// setQuote(data) // freshQuote = data
+			console.log(data)
 		} catch (e) {
 			console.error(e)
 			clearInterval(refetch)
