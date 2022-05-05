@@ -37,6 +37,7 @@
 	}
 
 	onMount(() => {
+		fetchQuote()
 		if (marketOpen() !== 'closed') {
 			refetch = setInterval(async () => {
 				// If navigated away from the page, stop the interval

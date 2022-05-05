@@ -11,6 +11,7 @@
 	export let info: Info
 	let isIpo = info.state === 'upcomingipo'
 
+	// Set the quote value in the quote store when the page has changed
 	$: console.log($page.params.symbol, $quote?.symbol)
 	$: if (!$quote || $page.params.symbol !== $quote?.symbol) {
 		setQuote(info.quote)
