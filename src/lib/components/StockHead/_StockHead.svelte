@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores'
+	import { quote, setQuote } from '$lib/stores/quoteStore'
+
 	import type { Info } from '$lib/types/Info'
 	import Quote from './PriceQuote.svelte'
 	import StockNav from './Nav/StockNav.svelte'
@@ -7,6 +10,12 @@
 	import ETFNav from './Nav/ETFNav.svelte'
 	export let info: Info
 	let isIpo = info.state === 'upcomingipo'
+
+	// Set the quote value in the quote store when the page has changed
+	$: console.log($page.params.symbol, $quote?.symbol)
+	$: if (!$quote || $page.params.symbol !== $quote?.symbol) {
+		setQuote(info.quote)
+	}
 </script>
 
 <div class="container">

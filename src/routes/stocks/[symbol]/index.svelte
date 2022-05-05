@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores'
-
 	import PriceChart from '$lib/components/Pages/Overview/PriceChart/_PriceChart.svelte'
 	import InfoTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableInfo.svelte'
 	import QuoteTable from '$lib/components/Pages/Overview/TopTables/Stocks/TopTableQuote.svelte'
@@ -13,20 +11,18 @@
 	import type { NewsObject } from '$lib/components/News/types'
 	import ProfileWidget from '$lib/components/Pages/Overview/ProfileWidget.svelte'
 	import AnalystWidget from '$lib/components/Pages/Overview/AnalystWidget/AnalystWidget.svelte'
+	import StockLayout from '$lib/components/StockLayout.svelte'
 
-	export let initialData: { data: Overview; news: NewsObject }
-
-	$: info = $page.stuff.info // from layout
-	$: data = initialData.data
-	$: news = initialData.news.data
-	$: updated = initialData.news.updated
+	export let info: Info
+	export let data: Overview
+	export let news: NewsObject
 
 	// The meta description
-	let description = `Get a real-time ${$page.stuff.info.nameFull} (${$page.stuff.info.ticker}) stock price quote with breaking news, financials, statistics, charts and more.`
-	if ($page.stuff.info.state == 'upcomingipo') {
-		description = `Get the latest ${$page.stuff.info.nameFull} (${$page.stuff.info.ticker}) stock price quote with news, financials, IPO details and other important investing information.`
-	} else if ($page.stuff.info.archived) {
-		description = `Get the latest ${$page.stuff.info.nameFull} (${$page.stuff.info.ticker}) stock price quote with news, financials and other important investing information.`
+	let description = `Get a real-time ${info.nameFull} (${info.ticker}) stock price quote with breaking news, financials, statistics, charts and more.`
+	if (info.state == 'upcomingipo') {
+		description = `Get the latest ${info.nameFull} (${info.ticker}) stock price quote with news, financials, IPO details and other important investing information.`
+	} else if (info.archived) {
+		description = `Get the latest ${info.nameFull} (${info.ticker}) stock price quote with news, financials and other important investing information.`
 	}
 </script>
 
@@ -36,33 +32,35 @@
 	<link rel="canonical" href="https://stockanalysis.com/stocks/{info.symbol}/" />
 </svelte:head>
 
-<div class="overview">
-	<PriceChart {info} />
-	<div class="top-tables">
-		<InfoTable {data} />
-		<QuoteTable {info} {data} />
-	</div>
-</div>
-
-<div class="details-news-wrap">
-	<div class="details-wrap">
-		{#if news.length > 5}
-			<Sidebar1All />
-		{/if}
-		<ProfileWidget {info} {data} />
-		{#if data.financialChart}
-			<FinancialsWidget {info} {data} />
-		{/if}
-		{#if data.analystChart}
-			<AnalystWidget {info} {data} />
-		{/if}
-	</div>
-	{#key info.symbol}
-		<div class="news-wrap">
-			<NewsArea {info} {news} {updated} />
+<StockLayout {info}>
+	<div class="overview">
+		<PriceChart {info} />
+		<div class="top-tables">
+			<InfoTable {data} />
+			<QuoteTable {info} {data} />
 		</div>
-	{/key}
-</div>
+	</div>
+
+	<div class="details-news-wrap">
+		<div class="details-wrap">
+			{#if news.data.length > 5}
+				<Sidebar1All />
+			{/if}
+			<ProfileWidget {info} {data} />
+			{#if data.financialChart}
+				<FinancialsWidget {info} {data} />
+			{/if}
+			{#if data.analystChart}
+				<AnalystWidget {info} {data} />
+			{/if}
+		</div>
+		{#key info.symbol}
+			<div class="news-wrap">
+				<NewsArea {info} news={news.data} updated={news.updated} />
+			</div>
+		{/key}
+	</div>
+</StockLayout>
 
 <style type="text/postcss">
 	.overview {

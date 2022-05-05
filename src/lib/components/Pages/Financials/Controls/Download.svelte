@@ -3,7 +3,6 @@
 	 * Export data as Excel or CSV
 	 *
 	 * TODO - Add bulk export
-	 * TODO reduce data size for financial data by reducing float precision
 	 */
 	import ExcellentExport from 'excellentexport'
 

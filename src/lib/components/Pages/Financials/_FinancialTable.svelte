@@ -14,6 +14,7 @@
 	import { user } from '$lib/auth/userStore'
 	import FinancialControls from './FinancialControls.svelte'
 	import TableTitle from './TableTitle.svelte'
+	import FinancialSource from './FinancialSource.svelte'
 
 	export let info: Info
 	export let data: { data: FinancialData; count: number; range: Range }
@@ -104,6 +105,8 @@
 		</tbody>
 	</table>
 </div>
+
+<FinancialSource {info} />
 
 <style>
 	.title-area {
