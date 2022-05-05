@@ -163,6 +163,10 @@
 		@apply noring inline-flex w-full items-center justify-center whitespace-nowrap rounded-md border border-gray-300 bg-white px-2 py-1.5 text-xs font-semibold shadow-sm hover:bg-gray-50 xs:px-2.5 bp:px-3 bp:text-sm sm:px-4 sm:py-2;
 	}
 
+	.controls-btn.active {
+		@apply bg-gray-200 shadow;
+	}
+
 	table a {
 		@apply p-px;
 	}

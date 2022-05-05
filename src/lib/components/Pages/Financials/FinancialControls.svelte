@@ -1,8 +1,6 @@
 <script lang="ts">
 	/**
 	 * The controls buttons above the financial table
-	 *
-	 * TODO toggle hide/show on mobile
 	 */
 	import LeftRight from './Controls/LeftRight.svelte'
 	import ShowTrailing from './Controls/ShowTrailing.svelte'
@@ -14,13 +12,14 @@
 
 	import type { Range, Statement } from './types'
 	import Divider from './Controls/Divider.svelte'
+	import { state } from '$lib/stores/financialsStore'
 
 	export let range: Range
 	export let statement: Statement
 	export let data: any
 </script>
 
-<div class="controls">
+<div class="controls" class:active={$state.showOnMobile}>
 	<LeftRight />
 	<ShowTrailing {range} {statement} />
 	<Divider />
@@ -34,6 +33,10 @@
 
 <style>
 	.controls {
-		@apply pb-2 flex gap-x-2;
+		@apply hidden md:pb-2 md:flex md:gap-x-2;
+	}
+
+	.controls.active {
+		@apply pb-2 flex gap-x-1 xs:gap-x-2;
 	}
 </style>

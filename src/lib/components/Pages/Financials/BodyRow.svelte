@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { state } from '$lib/stores/financialsStore'
 	import Popover from '$lib/components/Popover/_Popover.svelte'
 	import Tooltip from './Tooltip.svelte'
+	import HoverCharts from './HoverCharts/ChartContainer.svelte'
+	import BodyCell from './Paywall/BodyCell.svelte'
 	import { formatCell } from './functions'
 
 	import type { FinancialsMap, Range } from './types'
-	import HoverCharts from './HoverCharts/ChartContainer.svelte'
 	import type { Info } from '$lib/types/Info'
 
 	export let dates: string[]
@@ -12,12 +14,24 @@
 	export let row: FinancialsMap
 	export let info: Info
 	export let range: Range
+	export let paywalled: boolean
+	export let count: number
+
+	// Reverse order of leftToRight is set
+	$: displayData = $state.leftToRight ? [...data].reverse() : [...data]
 
 	// Count how many valid items in order to skip rows with only zeros
 	let valid = data?.filter((d) => d !== null && d !== 0)
+
+	const dividers = {
+		Billions: 1000000000,
+		Millions: 1000000,
+		Thousands: 1000,
+		Raw: 1
+	}
 </script>
 
-{#if data && valid && valid.length}
+{#if displayData && valid && valid.length}
 	<tr class={row.class}>
 		<td>
 			<Popover>
@@ -26,13 +40,18 @@
 			</Popover>
 			<HoverCharts {dates} {data} {range} {info} name={row.title} />
 		</td>
-		{#each data as point}
+		{#each displayData as point}
 			{#if row.format === 'growth' || row.format === 'inverted-growth'}
-				<td>{@html formatCell(row.format, point, 1000000)}</td>
+				<td>{@html formatCell(row.format, point, dividers[$state.divider])}</td>
 			{:else}
-				<td>{formatCell(row.format, point, 1000000)}</td>
+				{#key $state.divider}
+					<td>{formatCell(row.format, point, dividers[$state.divider])}</td>
+				{/key}
 			{/if}
 		{/each}
+		{#if paywalled}
+			<BodyCell {range} {count} />
+		{/if}
 	</tr>
 {/if}
 
@@ -62,6 +81,9 @@
 
 	@media screen and (min-width: 1025px) {
 		tr:hover td {
+			@apply bg-blue-row_hover;
+		}
+		tr:hover:global td {
 			@apply bg-blue-row_hover;
 		}
 	}

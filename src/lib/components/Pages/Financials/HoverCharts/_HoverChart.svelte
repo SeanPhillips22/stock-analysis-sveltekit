@@ -5,6 +5,7 @@
 	import { formatYear } from '../functions'
 	import type { Info } from '$lib/types/Info'
 	import { capitalize } from '$lib/functions/utils/capitalize'
+	import { state } from '$lib/stores/financialsStore'
 
 	export let ref: any // container for chart
 	export let hovering: boolean // if hovering over icon or chart
@@ -20,17 +21,12 @@
 		let chartDates: any[] = [...dates]
 		let chartData = [...data]
 
-		// If the first item is "TTM" then remove it
-		// TODO later, if TTM is set then don't do this
-		if (chartDates[0] === 'TTM') {
-			chartDates.shift()
-			chartData.shift()
-		}
-
 		// Reverse the array order
 		// TODO later, if reverse order is set then don't do this
-		chartDates.reverse()
 		chartData.reverse()
+		if (!$state.leftToRight) {
+			chartDates.reverse()
+		}
 
 		// Format the x-axis values to be years
 		// if range is annual

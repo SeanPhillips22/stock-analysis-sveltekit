@@ -1,4 +1,10 @@
 <script lang="ts">
+	/**
+	 * The stock header area
+	 *
+	 * TODO fix infinite loop bug
+	 * TODO change "real-time price" to "delayed price" when applicable
+	 */
 	import { page } from '$app/stores'
 	import { quote } from '$lib/stores/quoteStore'
 
@@ -11,6 +17,7 @@
 	export let info: Info
 	let isIpo = info.state === 'upcomingipo'
 
+	// TODO try listening to the navigation events here
 	// Set the quote value in the quote store when the page has changed
 	$: console.log($page.params.symbol, $quote?.symbol)
 	$: if (!$quote || $page.params.symbol !== $quote?.symbol) {
