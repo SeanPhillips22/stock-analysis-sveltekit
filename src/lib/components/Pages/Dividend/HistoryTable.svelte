@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { data } from '$lib/stores/dataStore'
 	import Table from '$lib/components/Tables/SimpleTable.svelte'
+	export let disclaimer: boolean
 </script>
 
 <div class="wrap">
@@ -37,10 +38,17 @@
 			}
 		}}
 	/>
+	{#if disclaimer}
+		<div class="disclaimer">* Dividend amounts are adjusted for stock splits when applicable.</div>
+	{/if}
 </div>
 
 <style type="text/postcss">
 	.wrap {
 		@apply overflow-x-auto mt-4 bp:mt-7;
+	}
+
+	.disclaimer {
+		@apply mt-1 text-sm text-gray-600;
 	}
 </style>

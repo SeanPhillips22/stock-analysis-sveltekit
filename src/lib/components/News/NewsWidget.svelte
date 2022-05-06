@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Button from '../Buttons/Button.svelte'
 
-	import type { NewsArray } from './types'
+	import type { NewsMinimal } from './types'
 
 	export let title: string
-	export let news: NewsArray
+	export let news: NewsMinimal[]
 	export let button: {
 		href: string
 		title: string

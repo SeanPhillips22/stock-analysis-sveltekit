@@ -17,3 +17,10 @@ export type NewsObject = {
 	updated: number
 	data: NewsArray
 }
+
+export type NewsMinimal = {
+	title: string
+	url: string
+	source: string
+	time: string
+}

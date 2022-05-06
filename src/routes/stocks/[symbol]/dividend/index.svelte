@@ -1,7 +1,14 @@
 <script lang="ts">
+	/**
+	 * Dividend pages for stocks
+	 *
+	 * TODO add charts
+	 */
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 
 	import InfoBox from '$lib/components/Alerts/InfoBox.svelte'
+	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
+	import type { NewsMinimal } from '$lib/components/News/types'
 	import HistoryTable from '$lib/components/Pages/Dividend/HistoryTable.svelte'
 	import InfoTable from '$lib/components/Pages/Dividend/InfoTable.svelte'
 
@@ -11,6 +18,7 @@
 
 	export let data: any
 	export let info: Info
+	export let news: NewsMinimal[]
 
 	let title = info.name.length < 12 ? info.name : info.ticker
 </script>
@@ -27,7 +35,7 @@
 			<InfoTable />
 
 			{#if data.history.length}
-				<HistoryTable />
+				<HistoryTable disclaimer={true} />
 			{/if}
 		</div>
 
@@ -35,6 +43,14 @@
 			{#if data.history.length > 0}
 				<Sidebar1 />
 			{/if}
+			<NewsWidget
+				title={`${info.ticker} News`}
+				{news}
+				button={{
+					title: 'More News',
+					href: `/stocks/${info.symbol}/`
+				}}
+			/>
 		</aside>
 	</div>
 </StockLayout>
