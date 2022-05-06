@@ -23,7 +23,7 @@
 	<Button href={button.href} title={button.title} classes="w-full mt-4" />
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply rounded border border-gray-200 p-4 text-sm;
 	}

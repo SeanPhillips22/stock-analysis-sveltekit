@@ -22,7 +22,7 @@
 	<th>+{diff} Quarters</th>
 {/if}
 
-<style>
+<style type="text/postcss">
 	th {
 		@apply py-[7px] font-semibold flex justify-center px-2;
 	}

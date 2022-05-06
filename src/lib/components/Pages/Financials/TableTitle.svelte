@@ -1,13 +1,12 @@
 <script lang="ts">
+	import { info } from '$lib/stores/infoStore'
 	import { state } from '$lib/stores/financialsStore'
 	import { capitalize } from '$lib/functions/utils/capitalize'
 
-	import type { Info } from '$lib/types/Info'
 	import type { Range, Statement } from './types'
 	import ChevronUp from '$lib/icons/ChevronUp.svelte'
 	import ChevronDown from '$lib/icons/ChevronDown.svelte'
 
-	export let info: Info
 	export let title: string
 	export let range: Range
 	export let statement: Statement
@@ -16,7 +15,7 @@
 	const dividerTextDesktop = dividerText ? dividerText + ' ' : ''
 	const dividerTextMobile = dividerText ? capitalize(dividerText) + ' ' : ''
 	const firstWord = statement === 'ratios' ? 'Market cap' : 'Financials'
-	const currency = statement === 'ratios' ? 'USD' : info.currency
+	const currency = statement === 'ratios' ? 'USD' : $info.currency
 </script>
 
 <div>
@@ -24,10 +23,10 @@
 
 	<div class="info">
 		<div class="info-long">
-			{`${firstWord} in ${dividerTextDesktop}${currency}. Fiscal year is ${info.fiscalYear}.`}
+			{`${firstWord} in ${dividerTextDesktop}${currency}. Fiscal year is ${$info.fiscalYear}.`}
 		</div>
 		<div class="info-short">
-			{`${dividerTextMobile}${currency}. Fiscal year is ${info.fiscalYearShort}.`}
+			{`${dividerTextMobile}${currency}. Fiscal year is ${$info.fiscalYearShort}.`}
 		</div>
 
 		<button class="text-gray-600 md:hidden" on:click={() => ($state.showOnMobile = !$state.showOnMobile)}>
@@ -40,7 +39,7 @@
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	h2 {
 		@apply mb-1 text-[1.3rem] font-bold bp:text-2xl md:mb-3;
 	}

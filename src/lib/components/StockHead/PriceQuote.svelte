@@ -8,16 +8,13 @@
 	 */
 	import { onMount, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
+	import { info } from '$lib/stores/infoStore'
 
 	import { quote } from '$lib/stores/quoteStore'
 	import { marketOpen } from '$lib/functions/datetime/marketOpen'
 
 	import SunIcon from '$lib/icons/Sun.svelte'
 	import MoonIcon from '$lib/icons/Moon.svelte'
-
-	import type { Info } from '$lib/types/Info'
-
-	export let info: Info
 
 	/**
 	 * Fetch quote data
@@ -29,7 +26,7 @@
 	async function fetchQuote() {
 		try {
 			let host = import.meta.env.VITE_PUBLIC_API_URL
-			let url = `${host}/p?s=${info.symbol}&t=${info.type}`
+			let url = `${host}/p?s=${$info.symbol}&t=${$info.type}`
 
 			const res = await fetch(url)
 			const data = await res.json()
@@ -45,7 +42,7 @@
 		if (marketOpen() !== 'closed') {
 			refetch = setInterval(async () => {
 				// If navigated away from the page, stop the interval
-				if (!$page.url.pathname.includes(info.symbol)) {
+				if (!$page.url.pathname.includes($info.symbol)) {
 					clearInterval(refetch)
 				} else {
 					fetchQuote()

@@ -1,11 +1,9 @@
 <script lang="ts">
-	import type { Info } from '$lib/types/Info'
-
-	export let info: Info
+	import { info } from '$lib/stores/infoStore'
 	export let title = 'Chart not available yet'
 	export let description: string | undefined = undefined
-	let message = info?.ipoInfo?.ipoDate
-		? `Data will show when the stock starts trading on ${info.ipoInfo.ipoDateFormatted}.`
+	let message = $info.ipoInfo?.ipoDate
+		? `Data will show when the stock starts trading on ${$info.ipoInfo.ipoDateFormatted}.`
 		: 'Data will show when the stock starts trading.'
 
 	export let borders = false

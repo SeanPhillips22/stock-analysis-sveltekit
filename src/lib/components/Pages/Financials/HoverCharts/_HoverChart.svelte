@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { info } from '$lib/stores/infoStore'
 	import { onMount } from 'svelte'
 	import Highcharts from 'highcharts'
 	import type { Range } from '../types'
 	import { formatYear } from '../functions'
-	import type { Info } from '$lib/types/Info'
 	import { capitalize } from '$lib/functions/utils/capitalize'
 	import { state } from '$lib/stores/financialsStore'
 
@@ -13,7 +13,6 @@
 	export let data: number[]
 	export let seriesName: string
 	export let range: Range
-	export let info: Info
 
 	onMount(() => {
 		// Copy the arrays to prevent mutation
@@ -34,7 +33,7 @@
 			chartDates = chartDates.map((m) => formatYear(m))
 		}
 
-		let title = `${info.symbol.toUpperCase()} ${seriesName} (${capitalize(range)})`
+		let title = `${$info.symbol.toUpperCase()} ${seriesName} (${capitalize(range)})`
 
 		Highcharts.setOptions({
 			lang: {
@@ -106,7 +105,7 @@
 
 <div class="chart" bind:this={ref} on:mouseleave={() => (hovering = false)} />
 
-<style>
+<style type="text/postcss">
 	.chart {
 		@apply h-[40vh] z-50 bg-white p-2 md:h-[330px] md:py-2 md:px-3;
 	}

@@ -3,19 +3,17 @@
 	 * Container for the news feed on stock overview pages. Has a news menu
 	 * above the news feed with buttons and search functionality.
 	 */
-
+	import { info } from '$lib/stores/infoStore'
 	import NewsFeed from '$lib/components/News/_NewsFeed.svelte'
 	import NewsMenu from './NewsMenu.svelte'
 
 	import { loadStockTwits } from '$lib/components/News/loadStockTwits'
 
 	import type { NewsArray } from '$lib/components/News/types'
-	import type { Info } from '$lib/types/Info'
 	import { user } from '$lib/auth/userStore'
 	import Paywall from './Paywall.svelte'
 	import Information from '$lib/components/Alerts/Information.svelte'
 
-	export let info: Info
 	export let news: NewsArray
 	export let updated: number
 
@@ -28,18 +26,18 @@
 	let failed: string | undefined = undefined // Display this as an error message if fetching fails
 	let fetchedNews: NewsArray | undefined
 	async function fetchNews(type: 'alternative' | 'fresh' | 'infinite' | 'search', append?: string) {
-		let url = `https://api.stockanalysis.com/wp-json/sa/news?s=${info.symbol}&t=${info.type}`
+		let url = `https://api.stockanalysis.com/wp-json/sa/news?s=${$info.symbol}&t=${$info.type}`
 		switch (type) {
 			// Fetch news videos or press releases
 			case 'alternative':
-				url = `https://api.stockanalysis.com/wp-json/sa/news?s=${info.symbol}&t=${info.type}`
+				url = `https://api.stockanalysis.com/wp-json/sa/news?s=${$info.symbol}&t=${$info.type}`
 				failed =
 					append === 'v' ? 'No videos found for this stock.' : 'No additional press releases found for this stock.'
 				break
 
 			// Check for fresh news if more than one hour since news check
 			case 'fresh':
-				url = `https://api.stockanalysis.com/wp-json/sa/news-fresh?s=${info.symbol}&t=${info.type}`
+				url = `https://api.stockanalysis.com/wp-json/sa/news-fresh?s=${$info.symbol}&t=${$info.type}`
 				break
 
 			// Fetch more news after clicking "Load More"
@@ -47,9 +45,9 @@
 				// If currently showing 25 items, fetch the other 25 (stored is 50)
 				// Else, do a paginated search
 				if (displayNews.length === 25) {
-					url = `https://api.stockanalysis.com/wp-json/sa/news?s=${info.symbol}&t=${info.type}&full=true`
+					url = `https://api.stockanalysis.com/wp-json/sa/news?s=${$info.symbol}&t=${$info.type}&full=true`
 				} else if (displayNews.length >= 50 && $user?.isPro) {
-					url = `https://api.stockanalysis.com/wp-json/sa/news-infinite?s=${info.symbol}&t=${info.type}&p=${dataPage}`
+					url = `https://api.stockanalysis.com/wp-json/sa/news-infinite?s=${$info.symbol}&t=${$info.type}&p=${dataPage}`
 					url += '&k=' + import.meta.env.VITE_PUBLIC_PRO_KEY
 					dataPage = dataPage + 1
 				}
@@ -59,7 +57,7 @@
 			// Fetch news search results
 			case 'search':
 				searching = true
-				url = `https://api.stockanalysis.com/wp-json/sa/news-search?s=${info.symbol}&t=${info.type}&q=${search}`
+				url = `https://api.stockanalysis.com/wp-json/sa/news-search?s=${$info.symbol}&t=${$info.type}&q=${search}`
 				failed = 'No news found for that search query.'
 				break
 		}
@@ -98,7 +96,7 @@
 			fetchNews('alternative', active)
 		} else if (active === 'chat') {
 			setTimeout(() => {
-				loadStockTwits(info.symbol)
+				loadStockTwits($info.symbol)
 			}, 50)
 		} else if (updated && updated * 1000 < Date.now() - 60 * 60 * 1000) {
 			fetchNews('fresh')

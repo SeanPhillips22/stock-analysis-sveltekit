@@ -48,7 +48,7 @@
 	</div>
 </main>
 
-<style>
+<style type="text/postcss">
 	h1 {
 		@apply border-b-[3px] border-blue-brand_sharp pb-3 mb-3 sm:mb-4 lg:mb-5;
 	}

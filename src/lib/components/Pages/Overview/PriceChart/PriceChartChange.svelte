@@ -4,12 +4,11 @@
 	 * Calculate the change and decide which color to show.
 	 */
 	import { quote } from '$lib/stores/quoteStore'
+	import { info } from '$lib/stores/infoStore'
 	import { format } from '$lib/components/Tables/formatCell'
 
-	import type { Info } from '$lib/types/Info'
 	import type { ChartData, Time } from './types'
 
-	export let info: Info
 	export let chartTime: Time
 	export let chartData: ChartData
 	export let fetching: boolean
@@ -26,12 +25,12 @@
 	}
 
 	$: if (chartTime === '1D') {
-		raw = Number($quote.cp || info.quote.cp)
-		change = $quote.cp || info.quote.cp
+		raw = Number($quote.cp || $info.quote.cp)
+		change = $quote.cp || $info.quote.cp
 		css = setColor(raw)
 	} else {
 		let first = chartData[0].o
-		let last = $quote.ep || $quote.p || info.quote.ep || info.quote.p
+		let last = $quote.ep || $quote.p || $info.quote.ep || $info.quote.p
 
 		if (first && last) {
 			raw = (last / first - 1) * 100

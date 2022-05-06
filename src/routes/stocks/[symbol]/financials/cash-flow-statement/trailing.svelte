@@ -7,17 +7,14 @@
 	import type { FinancialData, Range } from '$lib/components/Pages/Financials/types'
 
 	export let data: { info: Info; data: FinancialData; count: number; range: Range }
-	$: info = data.info
 </script>
 
 <svelte:head>
-	<title>{info.nameFull} ({info.ticker}) Cash Flow Statement</title>
+	<title>{data.info.nameFull} ({data.info.ticker}) Cash Flow Statement</title>
 </svelte:head>
 
-<StockLayout {info}>
+<StockLayout state={{ info: data.info, data }}>
 	<FinancialTable
-		{info}
-		{data}
 		statement="cash-flow-statement"
 		range="trailing"
 		title="Cash Flow Statement"

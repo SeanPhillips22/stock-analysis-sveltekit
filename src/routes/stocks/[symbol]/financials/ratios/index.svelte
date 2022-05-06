@@ -7,13 +7,12 @@
 	import StockLayout from '$lib/components/StockLayout.svelte'
 
 	export let data: { info: Info; data: FinancialData; count: number; range: Range }
-	$: info = data.info
 </script>
 
 <svelte:head>
-	<title>{info.nameFull} ({info.ticker}) Financial Ratios and Metrics</title>
+	<title>{data.info.nameFull} ({data.info.ticker}) Financial Ratios and Metrics</title>
 </svelte:head>
 
-<StockLayout {info}>
-	<FinancialTable {info} {data} statement="ratios" range="annual" title="Ratios and Metrics" map={MAP_RATIOS} />
+<StockLayout state={{ info: data.info, data }}>
+	<FinancialTable statement="ratios" range="annual" title="Ratios and Metrics" map={MAP_RATIOS} />
 </StockLayout>

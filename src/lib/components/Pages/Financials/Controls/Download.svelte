@@ -2,16 +2,14 @@
 	/**
 	 * Export data as Excel or CSV
 	 *
-	 * TODO - Add bulk export
+	 * TODO fix file names and tab names
 	 */
-	import { getContext, onMount } from 'svelte'
+	import { info } from '$lib/stores/infoStore'
+	import { onMount } from 'svelte'
 	import ExcellentExport from 'excellentexport'
-	export let data: any | undefined = undefined
-
-	import type { Info } from '$lib/types/Info'
 	import { buildReturnArray } from '../functions'
-	let info: Info = getContext('info')
 
+	export let data: any | undefined = undefined
 	/**
 	 * Fetch the data for the bulk export
 	 */
@@ -19,7 +17,7 @@
 	onMount(async () => {
 		let host = import.meta.env.VITE_PUBLIC_API_URL
 		let PRO_KEY = import.meta.env.VITE_PUBLIC_PRO_KEY
-		let url = `${host}/financials-export?s=${info.symbol}&f=${PRO_KEY}`
+		let url = `${host}/financials-export?s=${$info.symbol}&f=${PRO_KEY}`
 
 		const res = await fetch(url)
 		const bulkFetch = await res.json()
@@ -36,7 +34,7 @@
 		return ExcellentExport.convert(
 			{
 				openAsDownload: true,
-				filename: `${info.symbol}-financials`,
+				filename: `${$info.symbol}-financials`,
 				format: 'xlsx'
 			},
 			bulkData

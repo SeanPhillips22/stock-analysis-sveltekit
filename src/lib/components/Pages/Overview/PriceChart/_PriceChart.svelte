@@ -1,39 +1,40 @@
 <script lang="ts">
 	import { browser } from '$app/env'
 	import { fade } from 'svelte/transition'
-	import type { Time, ChartData } from './types'
+	import { info } from '$lib/stores/infoStore'
+
 	import { fetchChartData } from './PriceChart.functions'
 	import Controls from './PriceChartControls.svelte'
 	import Change from './PriceChartChange.svelte'
 	import Chart from './PriceChartChart.svelte'
-	import type { Info } from '$lib/types/Info'
 	import Unavailable from './Unavailable.svelte'
 	import LargeSpinner from '$lib/components/Loading/LargeSpinner.svelte'
-	export let info: Info
+
+	import type { Time, ChartData } from './types'
 
 	let chartTime: Time = '1D'
 	let chartData: ChartData
 	let fetching = false
 
 	async function fetchData(time: Time, symbol: string) {
-		if (info.state === 'upcomingipo') return
+		if ($info.state === 'upcomingipo') return
 
 		fetching = true
-		chartData = await fetchChartData(info.symbol, info.type, time)
+		chartData = await fetchChartData($info.symbol, $info.type, time)
 		fetching = false
 	}
 
 	// Fetch new chart data if chartTime changes
-	$: fetchData(chartTime, info.symbol)
+	$: fetchData(chartTime, $info.symbol)
 </script>
 
-{#if info.state === 'upcomingipo'}
-	<Unavailable {info} borders={true} />
+{#if $info.state === 'upcomingipo'}
+	<Unavailable borders={true} />
 {:else}
 	<div class="container">
 		<div class="controls">
 			<Controls bind:time={chartTime} />
-			<Change {info} {chartTime} {chartData} {fetching} />
+			<Change {chartTime} {chartData} {fetching} />
 		</div>
 		<div class="chart-wrap">
 			{#if fetching}
@@ -41,14 +42,10 @@
 					<LargeSpinner />
 				</div>
 			{:else if browser && chartData}
-				<Chart {chartData} time={chartTime} change={info.quote.c} close={info.quote.cl} />
+				<Chart {chartData} time={chartTime} />
 			{:else if browser && !chartData?.length}
 				<div class="h-full flex">
-					<Unavailable
-						{info}
-						title="No data available"
-						description="We did not receive valid data from our data providers"
-					/>
+					<Unavailable title="No data available" description="We did not receive valid data from our data providers" />
 				</div>
 			{/if}
 		</div>

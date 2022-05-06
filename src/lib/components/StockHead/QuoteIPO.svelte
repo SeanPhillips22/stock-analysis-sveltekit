@@ -3,10 +3,14 @@
 	 * If stock is an upcoming IPO, then this is what shows instead of the
 	 * live stock price quote.
 	 */
-	import type { Info } from '$lib/types/Info'
+	import { getContext } from 'svelte'
 
-	export let info: Info
-	let ipo = info.ipoInfo
+	import type { Info } from '$lib/types/Info'
+	import type { Writable } from 'svelte/store'
+
+	let info: Writable<Info> = getContext('info')
+
+	$: ipo = $info.ipoInfo
 
 	let price = ''
 	if (ipo) {

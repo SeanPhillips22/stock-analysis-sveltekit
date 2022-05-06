@@ -9,13 +9,11 @@
 
 	// Types
 	import type { Range } from '../types'
-	import type { Info } from '$lib/types/Info'
 
 	// Props
 	export let dates: string[]
 	export let data: number[]
 	export let range: Range
-	export let info: Info
 	export let name: string
 
 	/**
@@ -82,13 +80,12 @@
 				bind:hovering
 				seriesName={name}
 				{range}
-				{info}
 			/>
 		</div>
 	{/await}
 {/if}
 
-<style>
+<style type="text/postcss">
 	/**
 	* Icon styles
 	*/

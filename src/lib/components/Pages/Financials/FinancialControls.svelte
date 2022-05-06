@@ -31,7 +31,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.controls {
 		@apply hidden md:pb-2 md:flex md:gap-x-2;
 	}

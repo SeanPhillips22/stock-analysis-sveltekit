@@ -32,12 +32,12 @@
 	<link rel="canonical" href="https://stockanalysis.com/stocks/{info.symbol}/" />
 </svelte:head>
 
-<StockLayout {info}>
+<StockLayout state={{ info, data }}>
 	<div class="overview">
-		<PriceChart {info} />
+		<PriceChart />
 		<div class="top-tables">
-			<InfoTable {data} />
-			<QuoteTable {info} {data} />
+			<InfoTable />
+			<QuoteTable />
 		</div>
 	</div>
 
@@ -46,17 +46,17 @@
 			{#if news.data.length > 5}
 				<Sidebar1All />
 			{/if}
-			<ProfileWidget {info} {data} />
+			<ProfileWidget />
 			{#if data.financialChart}
-				<FinancialsWidget {info} {data} />
+				<FinancialsWidget />
 			{/if}
 			{#if data.analystChart}
-				<AnalystWidget {info} {data} />
+				<AnalystWidget />
 			{/if}
 		</div>
 		{#key info.symbol}
 			<div class="news-wrap">
-				<NewsArea {info} news={news.data} updated={news.updated} />
+				<NewsArea news={news.data} updated={news.updated} />
 			</div>
 		{/key}
 	</div>

@@ -64,7 +64,7 @@
 	</div>
 </aside>
 
-<style>
+<style type="text/postcss">
 	.sidebar:global {
 		@apply space-y-8;
 	}

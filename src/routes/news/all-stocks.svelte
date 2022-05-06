@@ -55,7 +55,7 @@
 	</div>
 </main>
 
-<style>
+<style type="text/postcss">
 	nav {
 		@apply mb-0.5 border-b-[3px] border-blue-brand_sharp;
 	}

@@ -19,7 +19,7 @@
 	</div>
 </td>
 
-<style>
+<style type="text/postcss">
 	td {
 		@apply px-2;
 	}

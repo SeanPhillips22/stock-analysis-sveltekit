@@ -3,14 +3,15 @@
 	 * TODO make sure quarterly growth offset is correctly calculated for recent IPOs
 	 * TODO make sure stocks with alternative financial sources work too
 	 */
+	import { info } from '$lib/stores/infoStore'
+	import { data } from '$lib/stores/dataStore'
 	import { state } from '$lib/stores/financialsStore'
 	import { formatYear } from './functions'
 
 	import FinancialsNavigation from '$lib/components/Pages/Financials/FinancialsNavigation.svelte'
 	import BodyRow from './BodyRow.svelte'
 
-	import type { Info } from '$lib/types/Info'
-	import type { FinancialData, Statement, Range, FinancialsMap } from './types'
+	import type { Statement, Range, FinancialsMap } from './types'
 
 	import { user } from '$lib/auth/userStore'
 	import FinancialControls from './FinancialControls.svelte'
@@ -18,8 +19,6 @@
 	import FinancialSource from './FinancialSource.svelte'
 	import HeaderCell from './Paywall/HeaderCell.svelte'
 
-	export let info: Info
-	export let data: { data: FinancialData; count: number; range: Range }
 	export let statement: Statement
 	export let range: Range
 	export let title: string
@@ -33,15 +32,15 @@
 	let headerRow: any[]
 	$: {
 		if (
-			data.data.datekey[0] === 'TTM' &&
+			$data.data?.datekey[0] === 'TTM' &&
 			((statement !== 'ratios' && !$state.showTTM) || (statement === 'ratios' && !$state.showCurrent))
 		) {
-			Object.keys({ ...data.data }).forEach((key) => {
-				let [first, ...rest] = data.data[key]
+			Object.keys({ ...$data.data }).forEach((key) => {
+				let [first, ...rest] = $data.data[key]
 				d[key] = rest
 			})
 		} else {
-			d = { ...data.data }
+			d = { ...$data.data }
 		}
 		headerRow = $state.leftToRight ? [...d.datekey].reverse() : [...d.datekey]
 	}
@@ -60,13 +59,13 @@
 		if (fetchedFullData) return
 		fetchedFullData = true
 		let host = import.meta.env.VITE_PUBLIC_API_URL
-		let url = `${host}/financials?type=${statement}&symbol=${info.symbol}&range=${range}`
+		let url = `${host}/financials?type=${statement}&symbol=${$info.symbol}&range=${range}`
 		url += '&f=' + import.meta.env.VITE_PUBLIC_PRO_KEY
 
 		const res = await fetch(url)
 		const fullData = await res.json()
 
-		data.data = fullData.data
+		$data.data = fullData.data
 		let fullHeaderRow = fullData.data.datekey
 
 		// Rewrite the financial data to make it ready for export
@@ -90,20 +89,20 @@
 		})
 	}
 	$: {
-		if ((range === 'annual' && data.count > 10) || data.count > 40) {
+		if ((range === 'annual' && $data.count > 10) || $data.count > 40) {
 			if ($user?.isPro) {
 				fetchFullData()
 			}
 		}
 	}
 
-	$: paywalled = !$user?.isPro && ((range === 'annual' && data.count > 10) || data.count > 40)
+	$: paywalled = !$user?.isPro && ((range === 'annual' && $data.count > 10) || $data.count > 40)
 </script>
 
-<FinancialsNavigation {info} {statement} range={range || 'annual'} />
+<FinancialsNavigation {statement} range={range || 'annual'} />
 
 <div class="title-area">
-	<TableTitle {info} {title} {range} {statement} />
+	<TableTitle {title} {range} {statement} />
 	<FinancialControls data={exportData} {range} {statement} />
 </div>
 
@@ -122,23 +121,23 @@
 					{/if}
 				{/each}
 				{#if paywalled}
-					<HeaderCell {range} count={data.count} last={headerRow[headerRow.length - 1]} />
+					<HeaderCell {range} count={$data.count} last={headerRow[headerRow.length - 1]} />
 				{/if}
 			</tr>
 		</thead>
 		<tbody>
 			{#each map as row}
 				{#if d[row.id]}
-					<BodyRow {row} dates={headerRow} data={d[row.id]} {info} {range} {paywalled} count={data.count} />
+					<BodyRow {row} dates={headerRow} data={d[row.id]} {range} {paywalled} count={$data.count} />
 				{/if}
 			{/each}
 		</tbody>
 	</table>
 </div>
 
-<FinancialSource {info} />
+<FinancialSource />
 
-<style>
+<style type="text/postcss">
 	.title-area {
 		@apply md:flex md:flex-row md:items-end md:justify-between;
 	}

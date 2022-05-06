@@ -7,12 +7,10 @@
 	import { formatCell } from './functions'
 
 	import type { FinancialsMap, Range } from './types'
-	import type { Info } from '$lib/types/Info'
 
 	export let dates: string[]
 	export let data: number[]
 	export let row: FinancialsMap
-	export let info: Info
 	export let range: Range
 	export let paywalled: boolean
 	export let count: number
@@ -38,7 +36,7 @@
 				<Tooltip slot="content" {row} />
 				{row.title}
 			</Popover>
-			<HoverCharts {dates} {data} {range} {info} name={row.title} />
+			<HoverCharts {dates} {data} {range} name={row.title} />
 		</td>
 		{#each displayData as point}
 			{#if row.format === 'growth' || row.format === 'inverted-growth'}
@@ -55,7 +53,7 @@
 	</tr>
 {/if}
 
-<style>
+<style type="text/postcss">
 	/**
 	* Table cell styles
 	*/

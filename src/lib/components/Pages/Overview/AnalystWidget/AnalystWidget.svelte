@@ -3,20 +3,18 @@
 	 * The analyst rating and price target widget shown on the stock overview pages
 	 * Has a text snippet and a chart.
 	 */
-	import type { Info } from '$lib/types/Info'
-	import type { Overview } from '$lib/types/OverviewPageData'
+	import { info } from '$lib/stores/infoStore'
+	import { data } from '$lib/stores/dataStore'
+
 	import Button from '$lib/components/Buttons/Button.svelte'
 	import AnalystWidgetChart from './AnalystWidgetChart.svelte'
-
-	export let info: Info
-	export let data: Overview
 
 	let targetColor: string = 'text-gray-800'
 	let consensusColor: string = 'text-gray-800'
 
-	$: priceTarget = data.analystTarget[0]
-	$: difference = data.analystTarget[1]
-	$: updown = data.analystTarget[2]
+	$: priceTarget = $data.analystTarget[0]
+	$: difference = $data.analystTarget[1]
+	$: updown = $data.analystTarget[2]
 
 	$: if (updown === 'upside') {
 		targetColor = 'text-green-700'
@@ -26,11 +24,11 @@
 	}
 </script>
 
-{#if data.analystTarget && data.analysts !== 'n/a'}
+{#if $data.analystTarget && $data.analysts !== 'n/a'}
 	<div>
 		<h2 class="mb-2">Analyst Forecast</h2>
-		{#if data.analystIntro}
-			<p class="mb-4">{data.analystIntro}</p>
+		{#if $data.analystIntro}
+			<p class="mb-4">{$data.analystIntro}</p>
 		{/if}
 
 		<div class="wrap">
@@ -41,16 +39,16 @@
 			{/if}
 
 			<div class="consensus">
-				Analyst Consensus: <span class="font-bold {consensusColor}">{data.analysts}</span>
+				Analyst Consensus: <span class="font-bold {consensusColor}">{$data.analysts}</span>
 			</div>
 
-			{#key info.symbol}
-				<AnalystWidgetChart ratings={data.analystChart} />
+			{#key $info.symbol}
+				<AnalystWidgetChart ratings={$data.analystChart} />
 			{/key}
 		</div>
 
-		{#if !info.exceptions.hideForecast}
-			<Button href={`/stocks/${info.symbol}/forecast/`} title="Stock Forecasts" classes="w-full mt-4" />
+		{#if !$info.exceptions.hideForecast}
+			<Button href={`/stocks/${$info.symbol}/forecast/`} title="Stock Forecasts" classes="w-full mt-4" />
 		{/if}
 	</div>
 {/if}
