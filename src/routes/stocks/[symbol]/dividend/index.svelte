@@ -23,6 +23,15 @@
 	let title = info.name.length < 12 ? info.name : info.ticker
 </script>
 
+<svelte:head>
+	<title>{info.nameFull} ({info.ticker}) Dividend History, Dates & Yield</title>
+	<meta
+		name="description"
+		content="Get the latest dividend data for {info.nameFull} ({info.ticker}), including dividend history, yield, key dates, growth and other metrics."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/stocks/{info.symbol}/dividend/" />
+</svelte:head>
+
 <StockLayout state={{ info, data }}>
 	<div class="wrap">
 		<div>
