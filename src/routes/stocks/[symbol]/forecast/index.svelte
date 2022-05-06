@@ -7,7 +7,7 @@
 	export let info: Info
 </script>
 
-<StockLayout {info}>
+<StockLayout state={{ info, data }}>
 	<h1>Forecast</h1>
 	<div>Forecast: {JSON.stringify(data)}</div>
 </StockLayout>

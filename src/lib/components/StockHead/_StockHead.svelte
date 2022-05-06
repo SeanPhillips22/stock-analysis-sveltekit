@@ -13,7 +13,9 @@
 	import QuoteIpo from './QuoteIPO.svelte'
 	import ETFNav from './Nav/ETFNav.svelte'
 
-	$: $quote = $info.quote
+	$: if (!$quote || $quote.symbol !== $info.symbol) {
+		$quote = $info.quote
+	}
 </script>
 
 <div class="container">

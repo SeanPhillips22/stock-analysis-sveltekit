@@ -2,7 +2,7 @@
 	import StockHead from './StockHead/_StockHead.svelte'
 	import type { Info } from '$lib/types/Info'
 
-	export let state: { info: Info; data: any }
+	export let state: { info: Info; data?: any }
 
 	// Pass the page info into context
 	import { info } from '$lib/stores/infoStore'
