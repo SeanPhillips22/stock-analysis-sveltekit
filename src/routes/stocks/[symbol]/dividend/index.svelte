@@ -28,9 +28,11 @@
 		<div>
 			<h2>{title} Dividend Information</h2>
 
-			<div class="info-box">
-				<InfoBox text={data.infoBox} />
-			</div>
+			{#if data.infoBox}
+				<div class="info-box">
+					<InfoBox text={data.infoBox} />
+				</div>
+			{/if}
 
 			<InfoTable />
 

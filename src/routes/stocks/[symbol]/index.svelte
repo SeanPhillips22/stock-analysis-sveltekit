@@ -51,7 +51,7 @@
 				<FinancialsWidget />
 			{/if}
 			{#if data.analystChart}
-				<AnalystWidget />
+				<AnalystWidget {data} />
 			{/if}
 		</div>
 		{#key info.symbol}

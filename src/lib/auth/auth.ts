@@ -4,7 +4,6 @@ import { user, setIsPro } from '$lib/auth/userStore'
 // Subscribe to changes in authentication state
 // Also sets the user on initial load and checks for Pro status
 supabase.auth.onAuthStateChange((event, session) => {
-	console.log(event)
 	user.set(session?.user)
 	if (event === 'SIGNED_IN') {
 		checkPro()
@@ -24,7 +23,6 @@ async function checkPro() {
 
 		if (['trialing', 'active', 'past_due'].includes(userdata.status)) {
 			setIsPro(true)
-			console.log('user is pro')
 		} else if (userdata.status === 'deleted' || userdata.status === 'paused') {
 			let stopDate = userdata.cancelled_date ?? userdata.paused_date ?? null
 

@@ -1,10 +1,7 @@
 <script lang="ts">
 	/**
 	 * Stock price charts on the stock overview pages
-	 *
-	 * TODO fix the chart color so that it changes also for other than 1D
 	 */
-	import { quote } from '$lib/stores/quoteStore'
 	import { onMount, afterUpdate, onDestroy } from 'svelte'
 	import type { Time, ChartData } from './types'
 	import { formatPriceChartTicks, formatPriceChartTime, setPriceChartColor } from './PriceChart.functions'
@@ -12,15 +9,16 @@
 
 	export let time: Time
 	export let chartData: ChartData
+	export let change: string
+	export let close: string
+	export let last: number
 
 	let priceChange: number
 	$: data = chartData
 	$: {
-		if (time === '1D') priceChange = Number($quote.c)
+		if (time === '1D') priceChange = Number(change)
 		else {
-			let first = chartData[0].o!
-			let last = $quote.ep || $quote.p
-			priceChange = last - first
+			priceChange = last - chartData[0].o!
 		}
 	}
 

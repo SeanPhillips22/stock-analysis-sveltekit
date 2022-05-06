@@ -42,7 +42,7 @@
 					<LargeSpinner />
 				</div>
 			{:else if browser && chartData}
-				<Chart {chartData} time={chartTime} />
+				<Chart {chartData} time={chartTime} change={$info.quote.c} close={$info.quote.cl} last={$info.quote.p} />
 			{:else if browser && !chartData?.length}
 				<div class="h-full flex">
 					<Unavailable title="No data available" description="We did not receive valid data from our data providers" />

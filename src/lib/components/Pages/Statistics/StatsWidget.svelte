@@ -18,18 +18,20 @@
 {/if}
 <table>
 	<tbody>
-		{#each $data[key]?.data as item}
-			{@const tooltip = map[item[0]]}
-			<tr>
-				<td>
-					<Popover>
-						<StatsTooltip slot="content" {tooltip} />
-						{item[1]}
-					</Popover>
-				</td>
-				<td title={item[3]}>{item[2]}</td>
-			</tr>
-		{/each}
+		{#if $data[key]?.data.length}
+			{#each $data[key]?.data as item}
+				{@const tooltip = map[item[0]]}
+				<tr>
+					<td>
+						<Popover>
+							<StatsTooltip slot="content" {tooltip} />
+							{item[1]}
+						</Popover>
+					</td>
+					<td title={item[3]}>{item[2]}</td>
+				</tr>
+			{/each}
+		{/if}
 	</tbody>
 </table>
 
