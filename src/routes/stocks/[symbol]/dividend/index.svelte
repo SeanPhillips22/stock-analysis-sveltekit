@@ -2,6 +2,7 @@
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 
 	import InfoBox from '$lib/components/Alerts/InfoBox.svelte'
+	import HistoryTable from '$lib/components/Pages/Dividend/HistoryTable.svelte'
 	import InfoTable from '$lib/components/Pages/Dividend/InfoTable.svelte'
 
 	import StockLayout from '$lib/components/StockLayout.svelte'
@@ -24,6 +25,10 @@
 			</div>
 
 			<InfoTable />
+
+			{#if data.history.length}
+				<HistoryTable />
+			{/if}
 		</div>
 
 		<aside>

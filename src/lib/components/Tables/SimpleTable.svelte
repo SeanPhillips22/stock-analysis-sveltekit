@@ -74,17 +74,19 @@
 
 		// The columns
 		newData[0] = columns.map((column) => column.title)
+		let columnIds = columns.map((column) => column.id)
 
 		// The data rows
 		data.forEach((item: { [x: string]: any }) => {
-			newData.push([item.s, item.n, item.i, item.m])
+			let arr = columnIds.map((id) => item[id])
+			newData.push(arr)
 		})
 		exportData = newData
 	}
 </script>
 
 <div>
-	<div class="controls">
+	<div class="controls" class:no-border={config.styling?.noBorder}>
 		<div class="title-group">
 			<h2>{title}</h2>
 		</div>
@@ -97,9 +99,9 @@
 			<tr>
 				{#each columns as item (item.id)}
 					{#if config.sortable}
-						<th on:click={() => sort(item.id)} class="cursor-pointer">{item.title}</th>
+						<th on:click={() => sort(item.id)} class="cursor-pointer {item.class}">{item.title}</th>
 					{:else}
-						<th>{item.title}</th>
+						<th class={item.class}>{item.title}</th>
 					{/if}
 				{/each}
 			</tr>
@@ -111,9 +113,9 @@
 						<tr>
 							{#each columns as item}
 								{#if item.format}
-									<td>{@html formatCell(item.format, row[item.id])}</td>
+									<td class={item.class}>{@html formatCell(item.format, row[item.id])}</td>
 								{:else}
-									<td>{row[item.id]}</td>
+									<td class={item.class}>{row[item.id]}</td>
 								{/if}
 							{/each}
 						</tr>
@@ -122,9 +124,9 @@
 					<tr>
 						{#each columns as item}
 							{#if item.format}
-								<td>{@html formatCell(item.format, row[item.id])}</td>
+								<td class={item.class}>{@html formatCell(item.format, row[item.id])}</td>
 							{:else}
-								<td>{row[item.id]}</td>
+								<td class={item.class}>{row[item.id]}</td>
 							{/if}
 						{/each}
 					</tr>
@@ -143,11 +145,19 @@
 
 <style type="text/postcss">
 	.controls {
-		@apply flex items-center border-t border-gray-200 py-1.5 px-0 bp:py-2 md:px-1;
+		@apply flex items-center border-gray-200 pb-1.5 px-0 bp:pb-2 md:px-1 border-t py-1.5 bp:py-2;
+	}
+
+	.controls.no-border {
+		@apply border-t-0 pt-0;
 	}
 
 	.controls h2 {
 		@apply whitespace-nowrap pl-0.5 text-lg font-semibold tiny:text-xl bp:text-2xl md:pl-0 mb-0;
+	}
+
+	.controls.no-border h2 {
+		@apply font-bold;
 	}
 
 	.button-group {
@@ -188,5 +198,9 @@
 
 	table tr:hover td {
 		background-color: #f2f9ff !important;
+	}
+
+	.hide-column-mobile {
+		@apply hidden sm:block;
 	}
 </style>

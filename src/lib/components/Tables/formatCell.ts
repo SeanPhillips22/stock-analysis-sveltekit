@@ -6,6 +6,9 @@ export function formatCell(formatFunction: string, cellContent: any) {
 		case 'abbreviate':
 			return abbreviate(cellContent)
 
+		case 'dividend':
+			return dividend(cellContent)
+
 		default:
 			break
 	}
@@ -31,6 +34,11 @@ export const dec3 = new Intl.NumberFormat('en-US', {
 	maximumFractionDigits: 3
 })
 
+export const dec3to5 = new Intl.NumberFormat('en-US', {
+	minimumFractionDigits: 3,
+	maximumFractionDigits: 5
+})
+
 export function format(value: number, decimals: 0 | 2 | 3) {
 	if (!value) return '-'
 	if (decimals === 0) return dec0.format(value)
@@ -54,4 +62,8 @@ export function abbreviate(value: number, noDec?: boolean) {
 	else num = formatter.format(value)
 
 	return num
+}
+
+export function dividend(value: number) {
+	return '$' + dec3to5.format(value)
 }
