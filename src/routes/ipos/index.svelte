@@ -1,14 +1,16 @@
 <script lang="ts">
 	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
 	import RecentNavigation from '$lib/components/IPOs/Navigation/RecentNavigation.svelte'
+	import StockTable from '$lib/components/StockTables/StockTable.svelte'
 	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
 
 	import type { NewsMinimal } from '$lib/components/News/types'
-	import type { TableData } from '$lib/components/StockTables/types'
+	import type { TableData, TableQuery } from '$lib/components/StockTables/types'
 	import type { SidebarTableProps } from '$lib/components/IPOs/ipo.types'
 
+	export let query: TableQuery
 	export let initialData: TableData
 	export let getIpoCalendarDataMin: SidebarTableProps
 	export let getIpoNewsMin: NewsMinimal[]
@@ -32,9 +34,7 @@
 	<div>
 		<RecentNavigation />
 
-		<pre class="whitespace-pre-wrap">
-			{JSON.stringify(data)}
-		</pre>
+		<StockTable initialQuery={query} initialData={data} />
 	</div>
 
 	<aside>

@@ -1,8 +1,8 @@
-import { getSelect } from '$lib/components/StockTables/getSelect'
-import type { TableDynamic } from '$lib/components/StockTables/types'
+import { fetchSelect } from '$lib/components/StockTables/fetchSelect'
+import type { TableQuery } from '$lib/components/StockTables/types'
 import type { RequestHandler } from '@sveltejs/kit'
 
-const query: TableDynamic = {
+const query: TableQuery = {
 	index: 'histip',
 	main: 'ipoDate',
 	count: 200,
@@ -15,14 +15,16 @@ export const get: RequestHandler = async () => {
 	console.log('in index endpoint')
 
 	let extras = ['getIpoCalendarDataMin', 'getIpoNewsMin']
-	const data = await getSelect(query, extras)
+	const json = await fetchSelect(query, extras)
+	const { data, getIpoCalendarDataMin, getIpoNewsMin } = json
 
 	if (data) {
 		return {
 			body: {
-				initialData: data.data,
-				getIpoCalendarDataMin: data.getIpoCalendarDataMin,
-				getIpoNewsMin: data.getIpoNewsMin
+				query,
+				initialData: data,
+				getIpoCalendarDataMin,
+				getIpoNewsMin
 			}
 		}
 	}

@@ -1,10 +1,10 @@
-import type { TableDynamic } from '$lib/components/StockTables/types'
+import type { TableQuery } from '$lib/components/StockTables/types'
 import { fetchData } from '$lib/functions/fetchData'
 
 /**
  * Fetch data from the select endpoint on the backend
  */
-export async function getSelect(config: TableDynamic, extras?: string[]) {
+export async function fetchSelect(config: TableQuery, extras?: string[]) {
 	// destructure the props
 	let { main, count, sortDirection, columns, index, page, dedupe } = config
 

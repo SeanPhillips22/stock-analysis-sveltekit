@@ -179,6 +179,7 @@
 		@apply bg-gray-100;
 	}
 
+	/* * Text formatting, for articles and company descriptions */
 	.text-page {
 		@apply text-base md:text-lg;
 	}
@@ -255,6 +256,63 @@
 
 	.text-page .summary {
 		@apply mb-6 rounded border border-gray-300 bg-gray-50 p-4 md:mb-8;
+	}
+
+	/* * Symbol Tables, used widely */
+	.symbol-table {
+		@apply w-full;
+	}
+
+	.symbol-table a {
+		@apply bll py-1 pr-px;
+	}
+
+	.symbol-table tr > * {
+		@apply p-2 border-b border-gray-200;
+	}
+
+	.symbol-table tr > *:first-child {
+		padding-left: 0.8rem;
+	}
+
+	.symbol-table tr > *:last-child {
+		padding-right: 0.8rem;
+	}
+
+	.symbol-table tr th {
+		background-color: #ffffff;
+		text-align: left;
+		border-top: 1px solid #ddd;
+		white-space: nowrap;
+	}
+
+	.symbol-table tr:nth-child(odd) {
+		background-color: #f6f7f8;
+	}
+
+	.symbol-table tr:hover td {
+		background-color: #f2f9ff !important;
+	}
+
+	/* * Shorthand classes to add to tables */
+	.sl {
+		@apply max-w-[130px] truncate text-left xs:max-w-[150px] lg:max-w-[240px];
+	}
+
+	.tr {
+		@apply text-right;
+	}
+
+	.rg {
+		@apply text-right text-[green];
+	}
+
+	.rr {
+		@apply text-right text-[red];
+	}
+
+	.rgr {
+		@apply text-right text-gray-800;
 	}
 
 }

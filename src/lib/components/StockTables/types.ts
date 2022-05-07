@@ -4,6 +4,14 @@ import type { DataId } from '$lib/types/DataId'
 // Create a type that is an array of objects with keys as DataID
 export type TableData = { [key in DataId]: any }[]
 
+export type InitialTableProps = {
+	title?: string // The title of the table
+	description?: string // The description of the table, shown in an info box
+	tableId: string // The unique ID for the table
+	fixed: TableFixed // Table data that does not change
+	dynamic: TableQuery // Table data that becomes state and changes
+}
+
 // The table's fixed properties
 export type TableFixed = {
 	defaultSort?: SortObject[] // The default sort order
@@ -40,8 +48,11 @@ export type TableFixed = {
 	}
 }
 
-// Dynamic data that becomes state and is used to modify the table
-export type TableDynamic = {
+/**
+ * Query that becomes state and is used to modify the table by fetching new data
+ * from the back-end
+ */
+export type TableQuery = {
 	index: IndexTypes // The index type, more specific is faster
 
 	main: DataId // The main column to sort by
@@ -66,3 +77,25 @@ export type TableDynamic = {
 
 // The stock index type (more specific is faster)
 export type IndexTypes = 'allstocks' | 'stocks' | 'etf' | 'histip' | 'futip'
+
+// A single table column
+export type Column = {
+	id: string // The unique identifier for the column
+	title: string // The title of the column
+	format?: string // How to format the cell content
+	class?: string // Classes to add to the cells
+}
+
+// The available formatting functions
+export type FormatFunction =
+	| 'symbol'
+	| 'abbreviate'
+	| 'format2dec'
+	| 'integer'
+	| 'formatPercentage'
+	| 'colorPercentage'
+	| 'string'
+	| 'date'
+	| 'price'
+	| 'stringright'
+	| 'array'

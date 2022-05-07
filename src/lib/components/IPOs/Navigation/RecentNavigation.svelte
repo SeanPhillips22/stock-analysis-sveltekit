@@ -11,3 +11,9 @@
 		<li><a href="/ipos/2019/" sveltekit:prefetch data-title="2019" class:active={year === '2019'}>2019</a></li>
 	</ul>
 </nav>
+
+<style>
+	nav {
+		@apply mb-1 sm:mb-2 lg:mb-3;
+	}
+</style>

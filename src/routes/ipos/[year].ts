@@ -1,9 +1,9 @@
-import { getSelect } from '$lib/components/StockTables/getSelect'
-import type { TableDynamic } from '$lib/components/StockTables/types'
+import { fetchSelect } from '$lib/components/StockTables/fetchSelect'
+import type { TableQuery } from '$lib/components/StockTables/types'
 import type { RequestHandler } from '@sveltejs/kit'
 
 // the initial config for the select endpoint to fetch data
-const query: TableDynamic = {
+const query: TableQuery = {
 	index: 'histip',
 	main: 'ipoDate',
 	sort: [{ id: 'ipoDate', desc: true }],
@@ -21,16 +21,18 @@ export const get: RequestHandler = async ({ params }) => {
 		let filters = [`ipoDate-year-${year}`]
 		let queryObject = { ...query, filters }
 
-		const data = await getSelect(queryObject, extras)
+		const json = await fetchSelect(queryObject, extras)
+		const { data, getIpoCalendarDataMin, getIpoNewsMin } = json
 
 		if (data) {
 			return {
 				body: {
-					initialData: data.data,
-					getIpoCalendarDataMin: data.getIpoCalendarDataMin,
-					getIpoNewsMin: data.getIpoNewsMin,
+					query,
+					initialData: data,
+					getIpoCalendarDataMin,
+					getIpoNewsMin,
 					year,
-					info: data[extraFn]
+					info: json[extraFn]
 				}
 			}
 		}
