@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { info } from '$lib/stores/infoStore'
 	import { data } from '$lib/stores/dataStore'
-	$: filings = $data.secFilings?.filings
-	$: updated = $data.secFilings?.updated
+	$: filings = $data?.secFilings?.filings
+	$: updated = $data?.secFilings?.updated
 
 	async function fetchNewSecFilings() {
 		let host = import.meta.env.VITE_PUBLIC_API_URL
@@ -13,7 +13,7 @@
 			let json = await res.json()
 
 			if (json) {
-				if (!filings.length || json.filings[0].time !== filings[0].time) {
+				if (!filings?.length || json.filings[0].time !== filings[0]?.time) {
 					filings = json.filings
 				}
 			}

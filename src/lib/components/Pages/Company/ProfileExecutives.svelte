@@ -2,7 +2,7 @@
 	import { data } from '$lib/stores/dataStore'
 </script>
 
-{#if $data.executives}
+{#if $data?.executives}
 	<h2>Key Executives</h2>
 	<table>
 		<thead>

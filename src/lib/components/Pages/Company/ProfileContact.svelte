@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { data } from '$lib/stores/dataStore'
-	$: contact = $data.contact
+	$: contact = $data?.contact
 </script>
 
 <h2>Contact Details</h2>

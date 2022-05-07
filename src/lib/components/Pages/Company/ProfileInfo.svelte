@@ -5,7 +5,7 @@
 
 <div class="wrap">
 	<div class="name">{$info.nameFull}</div>
-	{#if $data.logo?.src}
+	{#if $data?.logo?.src}
 		<div class="mb-2">
 			<img
 				src={$data.logo.src}
@@ -18,43 +18,43 @@
 	{/if}
 	<table>
 		<tbody>
-			{#if $data.info?.country}
+			{#if $data?.info?.country}
 				<tr>
 					<td>Country</td>
 					<td>{$data.info.country}</td>
 				</tr>
 			{/if}
-			{#if $data.info?.founded}
+			{#if $data?.info?.founded}
 				<tr>
 					<td>Founded</td>
 					<td>{$data.info.founded}</td>
 				</tr>
 			{/if}
-			{#if $data.info?.ipoDate}
+			{#if $data?.info?.ipoDate}
 				<tr>
 					<td>Ipo Date</td>
 					<td>{$data.info.ipoDate}</td>
 				</tr>
 			{/if}
-			{#if $data.info?.industry}
+			{#if $data?.info?.industry}
 				<tr>
 					<td>Industry</td>
 					<td>{$data.info.industry}</td>
 				</tr>
 			{/if}
-			{#if $data.info?.sector && $data.info.sector !== 'Blank Check / SPAC'}
+			{#if $data?.info?.sector && $data?.info.sector !== 'Blank Check / SPAC'}
 				<tr>
 					<td>Sector</td>
 					<td>{$data.info.sector}</td>
 				</tr>
 			{/if}
-			{#if $data.info?.employees}
+			{#if $data?.info?.employees}
 				<tr>
 					<td>Employees</td>
 					<td>{$data.info.employees}</td>
 				</tr>
 			{/if}
-			{#if $data.info?.ceo}
+			{#if $data?.info?.ceo}
 				<tr>
 					<td>CEO</td>
 					<td>{$data.info.ceo}</td>
