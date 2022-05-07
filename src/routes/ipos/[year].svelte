@@ -1,6 +1,7 @@
 <script lang="ts">
 	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
 	import RecentNavigation from '$lib/components/IPOs/Navigation/RecentNavigation.svelte'
+	import InfoBox from '$lib/components/Alerts/InfoBox.svelte'
 	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
@@ -12,25 +13,33 @@
 	export let initialData: TableData
 	export let getIpoCalendarDataMin: SidebarTableProps
 	export let getIpoNewsMin: NewsMinimal[]
+	export let year: '2022' | '2021' | '2020' | '2019'
+	export let info: string
 
 	$: data = initialData
+
+	const description =
+		year === '2022'
+			? 'A list of all the stocks that have gone public with an IPO on the US stock market in the year 2022, so far.'
+			: `A list of all the initial public offerings (IPOs) on the US stock market in the year ${year}. Includes detailed information about each stock.`
 </script>
 
 <svelte:head>
-	<title>200 Most Recent IPOs</title>
-	<meta
-		name="description"
-		content="Detailed information the last 200 IPOs (initial public offerings) on the stock market. Includes IPO prices, dates, total returns and more."
-	/>
-	<link rel="canonical" href="https://stockanalysis.com/ipos/" />
+	<title>{year === '2022' ? 'All 2022 IPOs (so far)' : `All ${year} IPOs - A Complete List`}</title>
+	<meta name="description" content={description} />
+	<link rel="canonical" href="https://stockanalysis.com/ipos/{year}/" />
 </svelte:head>
 
-<h1>Recent IPOs</h1>
+<h1>All {year} IPOs</h1>
 
 <IPONavigation page="recent" />
 <div class="page">
 	<div>
-		<RecentNavigation />
+		<RecentNavigation {year} />
+
+		<div class="info-wrap">
+			<InfoBox text={info} />
+		</div>
 
 		<pre class="whitespace-pre-wrap">
 			{JSON.stringify(data)}
@@ -61,6 +70,10 @@
 <style type="text/postcss">
 	.page {
 		@apply lg:grid lg:grid-cols-sidebar lg:gap-x-10;
+	}
+
+	.info-wrap {
+		@apply mt-4 mb-2 lg:mb-3;
 	}
 
 	aside:global {

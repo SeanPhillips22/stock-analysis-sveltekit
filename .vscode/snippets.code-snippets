@@ -59,4 +59,12 @@
 		],
 		"description": "svelte component"
 	},
+	"fetch from api": {
+		"prefix": "fet",
+		"body": [
+			"let host = import.meta.env.VITE_PUBLIC_API_URL",
+			"let url = host + `/$1`",
+		],
+		"description": "fetch from api"
+	},
 }

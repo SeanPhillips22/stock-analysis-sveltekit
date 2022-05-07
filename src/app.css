@@ -83,7 +83,7 @@
 	.navmenu li span::before {
 		display: block;
 		content: attr(data-title);
-		font-weight: 600;
+		font-weight: 700;
 		height: 0;
 		overflow: hidden;
 		visibility: hidden;
