@@ -1,23 +1,42 @@
 <script lang="ts">
+	import StockTableControls from './__StockTableControls.svelte'
 	import { formatTableCell } from '$lib/functions/formatTableCell'
-
 	import { getColumns } from './getColumns'
 
 	import type { StockTableConfig, TableData, TableQuery } from './types'
-	import StockTableControls from './__StockTableControls.svelte'
+	import { writable } from 'svelte/store'
+	import { setContext } from 'svelte'
 
 	export let config: StockTableConfig
 	export let initialQuery: TableQuery
+	export let initialData: TableData
+
 	$: query = initialQuery // When this changes, fetch new data -- maybe a function fetchNewTableData that returns loading, error, data
 
-	export let initialData: TableData
-	$: data = initialData
-
 	$: columns = getColumns(query.columns, query.main)
+
+	/**
+	 * Filter
+	 */
+	let filter = ''
+	// let filter = writable('')
+	// setContext('filter', filter)
+	let filteredData = [...initialData]
+	$: {
+		if (filter.length) {
+			filteredData = initialData.filter((row) => {
+				return Object.values(row).some((value) => {
+					return value.toString().toLowerCase().includes(filter.toLowerCase())
+				})
+			})
+		}
+	}
+
+	$: data = filter.length ? filteredData : initialData
 </script>
 
 <div class="wrap">
-	<StockTableControls {config} />
+	<StockTableControls {config} bind:filter />
 	<table class="symbol-table">
 		<thead>
 			<tr>
