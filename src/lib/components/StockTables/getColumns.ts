@@ -27,7 +27,5 @@ export function getColumns(cols: DataId[], main: DataId) {
 		}
 	})
 
-	console.log(columns)
-
 	return columns
 }

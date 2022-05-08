@@ -1,5 +1,5 @@
 import type { DataId } from '$lib/types/DataId'
-import type { FormatFunction } from './types'
+import type { FormatFunction, IndexTypes } from './types'
 
 type TableType = 'stocks' | 'ipo' | 'etf' | 'screener'
 
@@ -15,6 +15,22 @@ export type DataPointType = {
 
 type Props = {
 	[key in DataId]: DataPointType
+}
+
+// Get a list of data point IDs to use for a table
+export function getDataPointsArray(type: IndexTypes, exclude?: DataId[]) {
+	// get all the matching IDs from the DataPoints array of objects
+	let ids = Object.values(DataPoints)
+		.filter((f) => !f.only || f.only === type)
+		.map((f) => f.id)
+
+	// remove any IDs that are in the exclude array
+	if (exclude) {
+		ids = ids.filter((id) => !exclude.includes(id))
+	}
+
+	// return the IDs
+	return ids
 }
 
 /**

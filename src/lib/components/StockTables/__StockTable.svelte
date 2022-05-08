@@ -1,47 +1,133 @@
 <script lang="ts">
-	import StockTableControls from './__StockTableControls.svelte'
-	import { formatTableCell } from '$lib/functions/formatTableCell'
-	import { getColumns } from './getColumns'
-
-	import type { StockTableConfig, TableData, TableQuery } from './types'
+	import { browser } from '$app/env'
 	import { writable } from 'svelte/store'
 	import { setContext } from 'svelte'
+
+	// Get the active user, if any
+	import { user } from '$lib/auth/userStore'
+
+	import { fetchSelect } from './fetchSelect'
+	import { formatTableCell } from '$lib/functions/formatTableCell'
+	import { getColumns } from './getColumns'
+	import { stringifyObject } from '$lib/functions/utils/stringifyObject'
+	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
+	import { sortColumn } from '../Tables/sort'
+	import StockTableControls from './__StockTableControls.svelte'
+
+	import type { StockTableConfig, TableData, TableQuery, TableState } from './types'
+	import type { DataId } from '$lib/types/DataId'
+	import { parseExportData } from '$lib/functions/parseExportData'
 
 	export let config: StockTableConfig
 	export let initialQuery: TableQuery
 	export let initialData: TableData
 
-	$: query = initialQuery // When this changes, fetch new data -- maybe a function fetchNewTableData that returns loading, error, data
+	export const state = writable<TableState>({
+		sorted: {},
+		filter: '',
+		page: 1
+	})
 
-	$: columns = getColumns(query.columns, query.main)
+	setContext('state', state)
+
+	/**
+	 * Handle the dynamic query, which will be synced to localStorage
+	 *
+	 * TODO when this changes, fetch new data -- maybe a function fetchNewTableData that returns loading, error, data
+	 */
+	let query = writable({ ...initialQuery })
+	setContext('query', query)
+
+	$: {
+		if (browser) {
+			let storedQuery = localStorage.getItem(config.tableId)
+			if (storedQuery) {
+				let parsedQuery = JSON.parse(storedQuery)
+				$query = parsedQuery
+			}
+		}
+	}
+
+	let fetchedData: TableData
+	async function fetchNewTableData() {
+		fetchedData = await fetchSelect($query)
+		// data = fetchedData
+	}
+
+	query.subscribe((value) => {
+		if (browser) {
+			// If same as default, delete the stored value
+			if (stringifyObject(value) === stringifyObject(initialQuery)) {
+				localStorage.removeItem(config.tableId)
+			} else {
+				// If not same as default, fetch new data and store the new query
+				console.log('should fetch new data')
+				fetchNewTableData()
+				localStorage.setItem(config.tableId, stringifyObject(value))
+			}
+		}
+	})
+
+	$: columns = getColumns($query.columns, $query.main)
 
 	/**
 	 * Filter
 	 */
-	let filter = ''
-	// let filter = writable('')
-	// setContext('filter', filter)
-	let filteredData = [...initialData]
+	let filteredData: TableData = [...initialData]
 	$: {
-		if (filter.length) {
+		if ($state.filter.length) {
 			filteredData = initialData.filter((row) => {
 				return Object.values(row).some((value) => {
-					return value.toString().toLowerCase().includes(filter.toLowerCase())
+					return value ? value.toString().toLowerCase().includes($state.filter.toLowerCase()) : false
 				})
 			})
 		}
 	}
 
-	$: data = filter.length ? filteredData : initialData
+	/**
+	 * Sort
+	 */
+	let sortedData: TableData = [...filteredData]
+	$: {
+		if (!isObjectEmpty($state.sorted)) {
+			let returnedData = sortColumn(sortedData, filteredData, $state.sorted)
+			// @ts-ignore
+			sortedData = returnedData
+		}
+	}
+
+	// Respond to clicks on the column headers by setting a sort state
+	function sort(id: DataId) {
+		if (isObjectEmpty($state.sorted) || Object.keys($state.sorted)[0] !== id) {
+			$state.sorted[id] = 'desc'
+		} else if ($state.sorted[id] === 'desc') {
+			$state.sorted[id] = 'asc'
+		} else {
+			$state.sorted = {}
+			sortedData = [...filteredData]
+		}
+	}
+
+	// If data is filtered, show that. Else, show the sorted data.
+	$: data = $state.filter.length ? filteredData : sortedData
+
+	/**
+	 * Export
+	 */
+	let exportData: any[][]
+	$: if ($user?.isPro) {
+		exportData = parseExportData(columns, data)
+	}
 </script>
 
+<!-- on:click={() => sort(id)} -->
 <div class="wrap">
-	<StockTableControls {config} bind:filter />
+	<StockTableControls {config} data={exportData} />
 	<table class="symbol-table">
 		<thead>
 			<tr>
 				{#each columns as { id, title, classes } (id)}
-					<th class={classes}>{title}</th>
+					<th class="cursor-pointer {classes}" on:click={() => sort(id)}>{title}</th>
 				{/each}
 			</tr>
 		</thead>

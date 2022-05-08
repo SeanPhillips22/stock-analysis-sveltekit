@@ -1,10 +1,15 @@
 <script lang="ts">
-	export let filter: string
+	import { getContext } from 'svelte'
+	import type { Writable } from 'svelte/store'
+	import type { TableState } from '../types'
+
+	let state: Writable<TableState> = getContext('state')
+	// export let filter: string
 </script>
 
 <div class="filter">
 	<label for="filter" class="sr-only">Filter results</label>
-	<input type="text" name="filter" autocomplete="off" placeholder="Filter..." bind:value={filter} />
+	<input type="text" name="filter" autocomplete="off" placeholder="Filter..." bind:value={$state.filter} />
 </div>
 
 <style type="text/postcss">

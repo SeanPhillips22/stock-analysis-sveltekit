@@ -17,6 +17,7 @@
 
 	// Get the active user, if any
 	import { user } from '$lib/auth/userStore'
+	import { parseExportData } from '$lib/functions/parseExportData'
 
 	/**
 	 * Sort
@@ -63,25 +64,11 @@
 	$: perPage = $state.perPage || config.pagination?.perPage || 50
 
 	/**
-	 * Rewrite the data to make it ready for export (if Pro user)
-	 * Each row in the table is an array of items
-	 * The first row is an array of the column names
-	 * The other rows are the data
+	 * Export
 	 */
-	let exportData: any
+	let exportData: any[][]
 	$: if ($user?.isPro) {
-		let newData = []
-
-		// The columns
-		newData[0] = columns.map((column) => column.title)
-		let columnIds = columns.map((column) => column.id)
-
-		// The data rows
-		data.forEach((item: { [x: string]: any }) => {
-			let arr = columnIds.map((id) => item[id])
-			newData.push(arr)
-		})
-		exportData = newData
+		exportData = parseExportData(columns, data)
 	}
 </script>
 

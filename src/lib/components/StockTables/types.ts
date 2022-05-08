@@ -1,6 +1,18 @@
 import type { FilterValue, ScreenerTypes, SortObject } from '$lib/components/Screener/types'
 import type { DataId } from '$lib/types/DataId'
 
+export type Sorted = {
+	[key: string]: 'desc' | 'asc'
+}
+
+// TableState
+export type TableState = {
+	sorted: Sorted
+	filter: string
+	page: number
+	perPage?: number
+}
+
 // Create a type that is an array of objects with keys as DataID
 export type TableData = { [key in DataId]: any }[]
 
@@ -58,7 +70,7 @@ export type TableQuery = {
 
 	count?: number | null // The number of symbols to show -- if empty, show all
 
-	sort?: SortObject[] // What is currently sorted by
+	sort: SortObject[] // What is currently sorted by
 	sortDirection: 'desc' | 'asc' // The sort order
 
 	columns: DataId[] // The columns to show

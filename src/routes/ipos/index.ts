@@ -12,8 +12,6 @@ const query: TableQuery = {
 }
 
 export const get: RequestHandler = async () => {
-	console.log('in index endpoint')
-
 	let extras = ['getIpoCalendarDataMin', 'getIpoNewsMin']
 	const json = await fetchSelect(query, extras)
 	const { data, getIpoCalendarDataMin, getIpoNewsMin } = json
