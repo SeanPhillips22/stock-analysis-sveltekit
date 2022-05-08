@@ -15,9 +15,9 @@
 <script lang="ts">
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
-	import type { NewsArray } from '$lib/components/News/types'
+	import type { NewsArray, NewsMinimal } from '$lib/components/News/types'
 
-	export let initialData: { data: NewsArray; other: NewsArray }
+	export let initialData: { data: NewsArray; other: NewsMinimal[] }
 	$: news = initialData.data
 	$: other = initialData.other
 </script>

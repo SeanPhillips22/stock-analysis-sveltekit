@@ -90,11 +90,11 @@
 		<div class="title-group">
 			<h2>{title}</h2>
 		</div>
-		<div class="button-group">
+		<div class="btn-group">
 			<Controls {config} bind:filter={$state.filter} data={exportData} />
 		</div>
 	</div>
-	<table id="simple-table">
+	<table class="symbol-table">
 		<thead>
 			<tr>
 				{#each columns as item (item.id)}
@@ -144,48 +144,12 @@
 </div>
 
 <style type="text/postcss">
-	.controls {
-		@apply flex items-center border-gray-200 pb-1.5 px-0 bp:pb-2 md:px-1 border-t py-1.5 bp:py-2;
-	}
-
 	.controls.no-border {
 		@apply border-t-0 pt-0;
 	}
 
-	.controls h2 {
-		@apply whitespace-nowrap pl-0.5 text-lg font-semibold tiny:text-xl bp:text-2xl md:pl-0 mb-0;
-	}
-
 	.controls.no-border h2 {
 		@apply font-bold;
-	}
-
-	.button-group {
-		@apply ml-auto;
-	}
-
-	table {
-		@apply w-full;
-	}
-
-	table tr th {
-		@apply bg-white text-left border-t border-gray-200 whitespace-nowrap;
-	}
-
-	table tr > * {
-		@apply p-2 border-b border-gray-200;
-	}
-
-	table tr > *:first-child {
-		@apply pl-3;
-	}
-
-	table tr > *:last-child {
-		@apply pr-3;
-	}
-
-	table tr:nth-child(odd) {
-		background-color: #f6f7f8;
 	}
 
 	table tr > *:nth-child(n + 4) {
@@ -196,11 +160,7 @@
 		@apply max-w-[260px] truncate whitespace-nowrap;
 	}
 
-	table tr:hover td {
-		background-color: #f2f9ff !important;
-	}
-
 	.hide-column-mobile {
-		@apply hidden sm:block;
+		@apply hidden sm:table-cell;
 	}
 </style>

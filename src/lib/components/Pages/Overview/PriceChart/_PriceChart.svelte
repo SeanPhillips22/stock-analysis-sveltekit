@@ -32,7 +32,7 @@
 	<Unavailable borders={true} />
 {:else}
 	<div class="container">
-		<div class="controls">
+		<div class="chart-controls">
 			<Controls bind:time={chartTime} />
 			<Change {chartTime} {chartData} {fetching} />
 		</div>
@@ -57,7 +57,7 @@
 		@apply order-3 grow overflow-hidden mb-4 border-t border-b border-gray-200 py-0.5 xs:py-1 sm:py-3 sm:px-2 lg:mb-0 lg:border-0 lg:border-l lg:border-gray-300 lg:py-0 lg:px-0 lg:pl-3;
 	}
 
-	.controls {
+	.chart-controls {
 		@apply flex items-center justify-between py-1 sm:pt-0.5;
 	}
 

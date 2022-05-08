@@ -3,8 +3,10 @@
 
 	import { getColumns } from './getColumns'
 
-	import type { TableData, TableQuery } from './types'
+	import type { StockTableConfig, TableData, TableQuery } from './types'
+	import StockTableControls from './__StockTableControls.svelte'
 
+	export let config: StockTableConfig
 	export let initialQuery: TableQuery
 	$: query = initialQuery // When this changes, fetch new data -- maybe a function fetchNewTableData that returns loading, error, data
 
@@ -15,6 +17,7 @@
 </script>
 
 <div class="wrap">
+	<StockTableControls {config} />
 	<table class="symbol-table">
 		<thead>
 			<tr>

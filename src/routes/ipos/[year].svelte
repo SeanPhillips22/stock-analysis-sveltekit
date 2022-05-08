@@ -2,10 +2,11 @@
 	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
 	import RecentNavigation from '$lib/components/IPOs/Navigation/RecentNavigation.svelte'
 	import InfoBox from '$lib/components/Alerts/InfoBox.svelte'
-	import StockTable from '$lib/components/StockTables/StockTable.svelte'
+	import StockTable from '$lib/components/StockTables/__StockTable.svelte'
 	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
+	import { RecentIpoDataPoints } from '$lib/components/IPOs/DataPoints/RecentIpoDataPoints'
 
 	import type { NewsMinimal } from '$lib/components/News/types'
 	import type { TableData, TableQuery } from '$lib/components/StockTables/types'
@@ -43,7 +44,30 @@
 			<InfoBox text={info} />
 		</div>
 
-		<StockTable initialQuery={query} initialData={data} />
+		<StockTable
+			config={{
+				tableId: 'ipos-' + year,
+				title: data.length + ' IPOs',
+				fixed: {
+					defaultSort: query.sort,
+					controls: {
+						filter: true,
+						export: true,
+						columns: true,
+						options: true
+					},
+					columnOptions: RecentIpoDataPoints,
+					columnOrder: ['ipoDate', 's', 'n', 'ipp', 'ippc', 'ipr'],
+					fixedColumns: ['ipoDate', 's'],
+					screener: {
+						type: 'stocks',
+						filters: [{ id: 'ipoDate', name: `Year ${year}`, value: `year-${year}`, filterType: 'date' }]
+					}
+				}
+			}}
+			initialQuery={query}
+			initialData={data}
+		/>
 	</div>
 
 	<aside>

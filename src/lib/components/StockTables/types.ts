@@ -4,12 +4,11 @@ import type { DataId } from '$lib/types/DataId'
 // Create a type that is an array of objects with keys as DataID
 export type TableData = { [key in DataId]: any }[]
 
-export type InitialTableProps = {
+export type StockTableConfig = {
 	title?: string // The title of the table
 	description?: string // The description of the table, shown in an info box
 	tableId: string // The unique ID for the table
 	fixed: TableFixed // Table data that does not change
-	dynamic: TableQuery // Table data that becomes state and changes
 }
 
 // The table's fixed properties

@@ -2,7 +2,8 @@
 	import StockHead from './StockHead/_StockHead.svelte'
 	import type { Info } from '$lib/types/Info'
 
-	export let state: { info: Info; data?: any }
+	type T = $$Generic
+	export let state: { info: Info; data?: T }
 
 	// Pass the page info into context
 	import { info } from '$lib/stores/infoStore'

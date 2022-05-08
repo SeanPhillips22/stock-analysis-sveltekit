@@ -20,23 +20,21 @@
 </script>
 
 {#if config.controls}
-	<div class="wrap">
-		{#if config.controls.export}
-			{#if !$user?.isPro}
-				<Export />
-			{:else}
-				<ExportPro {data} />
-			{/if}
+	{#if config.controls.export}
+		{#if !$user?.isPro}
+			<Export />
+		{:else}
+			<ExportPro {data} />
 		{/if}
+	{/if}
 
-		{#if config.controls.filter}
-			<Filter bind:filter />
-		{/if}
-	</div>
+	{#if config.controls.filter}
+		<Filter bind:filter />
+	{/if}
 {/if}
 
 <style type="text/postcss">
-	.wrap {
+	/* .wrap {
 		@apply flex gap-x-2;
-	}
+	} */
 </style>
