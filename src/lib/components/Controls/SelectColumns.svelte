@@ -8,6 +8,7 @@
 	export let active: DataId[]
 	export let options: DataId[]
 	export let fixedColumns: DataId[] | undefined
+	export let toggleColumn: (id: DataId) => void
 
 	let search = ''
 	let _fixed: DataPointType[] = []
@@ -34,18 +35,18 @@
 	}
 </script>
 
-<Dropdown title="Columns">
+<Dropdown title="Columns" interactive={true}>
 	<!-- svelte-ignore a11y-autofocus -->
 	<input type="text" class="search" autofocus bind:value={search} />
 	<div class="column-list">
 		{#each _fixed as { id, name }}
-			<SelectItem {id} {name} checked={true} fixed={true} />
+			<SelectItem {id} {name} checked={true} fixed={true} {toggleColumn} />
 		{/each}
 		{#each activeItems as { id, name }}
-			<SelectItem {id} {name} checked={true} />
+			<SelectItem {id} {name} checked={true} {toggleColumn} />
 		{/each}
 		{#each inactiveItems as { id, name }}
-			<SelectItem {id} {name} checked={false} />
+			<SelectItem {id} {name} checked={false} {toggleColumn} />
 		{/each}
 	</div>
 </Dropdown>

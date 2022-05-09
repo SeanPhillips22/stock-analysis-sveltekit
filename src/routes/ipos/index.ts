@@ -6,7 +6,7 @@ const query: TableQuery = {
 	index: 'histip',
 	main: 'ipoDate',
 	count: 200,
-	sort: [{ id: 'ipoDate', desc: true }],
+	// sort: [{ id: 'ipoDate', desc: true }],
 	sortDirection: 'desc',
 	columns: ['s', 'n', 'ipp', 'ippc', 'ipr']
 }

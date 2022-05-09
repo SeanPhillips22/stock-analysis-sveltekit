@@ -8,12 +8,21 @@
 	export let name: string
 	export let checked: boolean
 	export let fixed = false
+	export let toggleColumn: (id: DataId) => void
 
 	let check = checked
 </script>
 
 <div class="column-items" class:fixed-option={fixed} title={fixed ? 'This column cannot be unchecked' : ''}>
-	<input type="checkbox" checked={check} on:change={() => (check = !check)} disabled={fixed} />
+	<input
+		type="checkbox"
+		checked={check}
+		on:change={() => {
+			toggleColumn(id)
+			check = !check
+		}}
+		disabled={fixed}
+	/>
 	<label for={id}>{name}</label>
 </div>
 

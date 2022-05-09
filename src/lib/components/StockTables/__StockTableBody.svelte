@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/env'
 	import { writable } from 'svelte/store'
-	import { setContext } from 'svelte'
+	import { onDestroy, setContext } from 'svelte'
 
 	// Get the active user, if any
 	import { user } from '$lib/auth/userStore'
@@ -12,9 +12,9 @@
 	import { stringifyObject } from '$lib/functions/utils/stringifyObject'
 	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
 	import { sortColumn } from '../Tables/sort'
-	import StockTableControls from './__StockTableControls.svelte'
+	import StockTableControls from './_StockTableControls.svelte'
 
-	import type { StockTableConfig, TableData, TableQuery, TableState } from './types'
+	import type { Sorted, StockTableConfig, TableData, TableQuery, TableState } from './types'
 	import type { DataId } from '$lib/types/DataId'
 	import { parseExportData } from '$lib/functions/parseExportData'
 
@@ -22,58 +22,71 @@
 	export let initialQuery: TableQuery
 	export let initialData: TableData
 
-	export const state = writable<TableState>({
+	const initialState = {
+		query: initialQuery,
 		sorted: {},
 		filter: '',
 		page: 1
-	})
+	}
 
-	setContext('state', state)
+	const initialStringified = stringifyObject(initialState)
 
 	/**
-	 * Handle the dynamic query, which will be synced to localStorage
-	 *
-	 * TODO when this changes, fetch new data -- maybe a function fetchNewTableData that returns loading, error, data
+	 * The table state, which persists on page refresh
+	 * by storing the state in localStorage.
 	 */
-	let query = writable({ ...initialQuery })
-	setContext('query', query)
-
-	$: {
+	function getStoredState() {
 		if (browser) {
-			let storedQuery = localStorage.getItem(config.tableId)
-			if (storedQuery) {
-				let parsedQuery = JSON.parse(storedQuery)
-				$query = parsedQuery
+			try {
+				let stored = localStorage.getItem(config.tableId)
+				if (stored) {
+					let parsed = JSON.parse(stored)
+					return parsed
+				}
+			} catch {
+				// Fail silently and return the initial state
 			}
 		}
+		return { ...initialState }
 	}
 
-	let fetchedData: TableData
-	async function fetchNewTableData() {
-		fetchedData = await fetchSelect($query)
-		// data = fetchedData
-	}
+	// Set the initial state
+	let state = writable<TableState>(getStoredState())
+	setContext('state', state)
 
-	query.subscribe((value) => {
+	// Subscribe to state updates and save them to localStorage
+	let unsubscribe = state.subscribe((value) => {
 		if (browser) {
-			// If same as default, delete the stored value
-			if (stringifyObject(value) === stringifyObject(initialQuery)) {
+			let stringified = stringifyObject(value)
+			if (stringified === initialStringified) {
 				localStorage.removeItem(config.tableId)
 			} else {
 				// If not same as default, fetch new data and store the new query
-				console.log('should fetch new data')
-				fetchNewTableData()
-				localStorage.setItem(config.tableId, stringifyObject(value))
+				if (JSON.stringify(value.query.columns) !== JSON.stringify(initialQuery.columns)) {
+					console.log('should maybe fetch new data')
+					fetchNewTableData()
+				}
+				localStorage.setItem(config.tableId, stringified)
 			}
 		}
 	})
+	onDestroy(unsubscribe)
 
-	$: columns = getColumns($query.columns, $query.main)
+	// Fetch new data when necessary
+	let fetchedData: TableData
+	async function fetchNewTableData() {
+		let res = await fetchSelect($state.query)
+		fetchedData = res.data
+		console.log(fetchedData[0])
+		initialData = fetchedData
+	}
+
+	$: columns = getColumns($state.query.columns, $state.query.main)
 
 	/**
 	 * Filter
 	 */
-	let filteredData: TableData = [...initialData]
+	$: filteredData = [...initialData]
 	$: {
 		if ($state.filter.length) {
 			filteredData = initialData.filter((row) => {
@@ -87,7 +100,7 @@
 	/**
 	 * Sort
 	 */
-	let sortedData: TableData = [...filteredData]
+	$: sortedData = [...filteredData]
 	$: {
 		if (!isObjectEmpty($state.sorted)) {
 			let returnedData = sortColumn(sortedData, filteredData, $state.sorted)
@@ -99,7 +112,8 @@
 	// Respond to clicks on the column headers by setting a sort state
 	function sort(id: DataId) {
 		if (isObjectEmpty($state.sorted) || Object.keys($state.sorted)[0] !== id) {
-			$state.sorted[id] = 'desc'
+			let newObj: Sorted = { [id]: 'desc' }
+			$state.sorted = newObj
 		} else if ($state.sorted[id] === 'desc') {
 			$state.sorted[id] = 'asc'
 		} else {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
 	import RecentNavigation from '$lib/components/IPOs/Navigation/RecentNavigation.svelte'
-	import StockTable from '$lib/components/StockTables/__StockTable.svelte'
+	import StockTable from '$lib/components/StockTables/__StockTableBody.svelte'
 	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
@@ -39,7 +39,6 @@
 				title: 'Last 200 IPOs',
 				tableId: 'ipos-recent',
 				fixed: {
-					defaultSort: query.sort,
 					controls: {
 						filter: true,
 						export: true,

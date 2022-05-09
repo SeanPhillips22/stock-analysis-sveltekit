@@ -7,6 +7,7 @@ export type Sorted = {
 
 // TableState
 export type TableState = {
+	query: TableQuery
 	sorted: Sorted
 	filter: string
 	page: number
@@ -70,7 +71,7 @@ export type TableQuery = {
 
 	count?: number | null // The number of symbols to show -- if empty, show all
 
-	sort: SortObject[] // What is currently sorted by
+	// sort: SortObject[] // What is currently sorted by
 	sortDirection: 'desc' | 'asc' // The sort order
 
 	columns: DataId[] // The columns to show
