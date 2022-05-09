@@ -3,17 +3,16 @@
 	 * The analyst rating and price target widget shown on the stock overview pages
 	 * Has a text snippet and a chart.
 	 */
-	import type { Info } from '$lib/types/Info'
-	import type { Overview } from '$lib/types/OverviewPageData'
+	import { info } from '$lib/stores/infoStore'
+
 	import Button from '$lib/components/Buttons/Button.svelte'
 	import AnalystWidgetChart from './AnalystWidgetChart.svelte'
-
-	export let info: Info
-	export let data: Overview
+	import type { Overview } from '$lib/types/OverviewPageData'
 
 	let targetColor: string = 'text-gray-800'
 	let consensusColor: string = 'text-gray-800'
 
+	export let data: Overview
 	$: priceTarget = data.analystTarget[0]
 	$: difference = data.analystTarget[1]
 	$: updown = data.analystTarget[2]
@@ -44,13 +43,13 @@
 				Analyst Consensus: <span class="font-bold {consensusColor}">{data.analysts}</span>
 			</div>
 
-			{#key info.symbol}
+			{#key $info.symbol}
 				<AnalystWidgetChart ratings={data.analystChart} />
 			{/key}
 		</div>
 
-		{#if !info.exceptions.hideForecast}
-			<Button href={`/stocks/${info.symbol}/forecast/`} title="Stock Forecasts" classes="w-full mt-4" />
+		{#if !$info.exceptions.hideForecast}
+			<Button href={`/stocks/${$info.symbol}/forecast/`} title="Stock Forecasts" classes="w-full mt-4" />
 		{/if}
 	</div>
 {/if}

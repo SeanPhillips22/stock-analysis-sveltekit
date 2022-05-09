@@ -22,6 +22,9 @@ export type TableConfig = {
 		filter?: boolean
 		export?: boolean
 	}
+	styling?: {
+		noBorder?: boolean
+	}
 }
 
 export type PaginationOptions = {

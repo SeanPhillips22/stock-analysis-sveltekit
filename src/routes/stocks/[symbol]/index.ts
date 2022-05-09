@@ -9,7 +9,7 @@ export async function get({ params }: any) {
 
 	if (data) {
 		return {
-			body: { initialData: data.data }
+			body: { info: data.data.info, data: data.data.data, news: data.data.news }
 		}
 	}
 

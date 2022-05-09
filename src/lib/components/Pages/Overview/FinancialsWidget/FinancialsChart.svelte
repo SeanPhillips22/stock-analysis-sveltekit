@@ -4,15 +4,14 @@
 	 *
 	 * TODO make lazy loaded and only render client-side
 	 */
+	import { data } from '$lib/stores/dataStore'
 	import { onMount } from 'svelte'
 	import Highcharts from 'highcharts'
 	import { format } from '$lib/components/Tables/formatCell'
 
-	export let data: any
-
-	let xAxis = data[0]
-	let revenue = data[1]
-	let earnings = data[2]
+	let xAxis = $data.financialChart[0]
+	let revenue = $data.financialChart[1]
+	let earnings = $data.financialChart[2]
 	let colors = earnings.map((i: number) => {
 		if (i > 0) {
 			return '#00853E'

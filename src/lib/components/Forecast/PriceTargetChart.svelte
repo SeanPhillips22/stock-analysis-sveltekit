@@ -358,11 +358,7 @@
 						ctx.closePath()
 
 						ctx.fillStyle = 'rgba(55, 65, 81)'
-						ctx.fillText(
-							str,
-							xPos + width - width / 2,
-							yPos - sideHeight + (sideHeight * 2 + pointerHeight) / 2 + 13
-						)
+						ctx.fillText(str, xPos + width - width / 2, yPos - sideHeight + (sideHeight * 2 + pointerHeight) / 2 + 13)
 						ctx.fillText(
 							'Average',
 							xPos + width - width / 2,

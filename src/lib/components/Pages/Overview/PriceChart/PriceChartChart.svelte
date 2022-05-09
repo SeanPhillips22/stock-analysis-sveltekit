@@ -1,21 +1,30 @@
-<!-- Import and render the stock price charts -->
-<!-- TODO make it so that the axes don't update until the data has updated -->
-<!-- TODO fix the chart color so that it changes also for other than 1D -->
 <script lang="ts">
+	/**
+	 * Stock price charts on the stock overview pages
+	 */
 	import { onMount, afterUpdate, onDestroy } from 'svelte'
 	import type { Time, ChartData } from './types'
 	import { formatPriceChartTicks, formatPriceChartTime, setPriceChartColor } from './PriceChart.functions'
-	import type { IChartApi } from 'lightweight-charts';
+	import type { IChartApi } from 'lightweight-charts'
 
 	export let time: Time
+	export let chartData: ChartData
 	export let change: string
 	export let close: string
-	export let chartData: ChartData
+	export let last: number
+
+	let priceChange: number
 	$: data = chartData
+	$: {
+		if (time === '1D') priceChange = Number(change)
+		else {
+			priceChange = last - chartData[0].o!
+		}
+	}
 
 	let chartDiv: HTMLElement
 
-	//
+	// handle resizing of the chart container
 	const handleResize = () => {
 		let width = chartDiv.clientWidth
 		let height = chartDiv.clientHeight
@@ -68,7 +77,7 @@
 			handleScale: false
 		})
 
-		let [topColor, bottomColor, lineColor] = setPriceChartColor(Number(change))
+		let [topColor, bottomColor, lineColor] = setPriceChartColor(priceChange)
 
 		const max = Math.max(
 			...data.map((d) => {
@@ -97,15 +106,16 @@
 			lineWidth: 2
 		})
 
-		time === '1D' && areaSeries.createPriceLine({
-			price: Number(close),
-			axisLabelVisible: false, // showPriceLineTitle,
-			color: 'rgb(100, 100, 100, 1)',
-			lineStyle: LineStyle.SparseDotted,
-			lineWidth: 1,
-			lineVisible: true,
-			title: ''
-		})
+		time === '1D' &&
+			areaSeries.createPriceLine({
+				price: Number(close),
+				axisLabelVisible: false, // showPriceLineTitle,
+				color: 'rgb(100, 100, 100, 1)',
+				lineStyle: LineStyle.SparseDotted,
+				lineWidth: 1,
+				lineVisible: true,
+				title: ''
+			})
 
 		// Hide the line that shows the current price
 		areaSeries.applyOptions({

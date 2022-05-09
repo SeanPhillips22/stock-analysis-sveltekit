@@ -7,9 +7,9 @@
 	import { user } from '$lib/auth/userStore'
 
 	// Components
-	import Filter from './Controls/Filter.svelte'
-	import Export from './Controls/Export.svelte'
-	import ExportPro from './Controls/ExportPro.svelte'
+	import Filter from '$lib/components/Controls/Filter.svelte'
+	import Export from '$lib/components/Controls/Export.svelte'
+	import ExportPro from '$lib/components/Controls/ExportPro.svelte'
 
 	// Types
 	import type { TableConfig } from './types'
@@ -20,23 +20,21 @@
 </script>
 
 {#if config.controls}
-	<div class="wrap">
-		{#if config.controls.export}
-			{#if !$user?.isPro}
-				<Export />
-			{:else}
-				<ExportPro {data} />
-			{/if}
+	{#if config.controls.export}
+		{#if !$user?.isPro}
+			<Export />
+		{:else}
+			<ExportPro {data} />
 		{/if}
+	{/if}
 
-		{#if config.controls.filter}
-			<Filter bind:filter />
-		{/if}
-	</div>
+	{#if config.controls.filter}
+		<Filter bind:filter />
+	{/if}
 {/if}
 
 <style type="text/postcss">
-	.wrap {
+	/* .wrap {
 		@apply flex gap-x-2;
-	}
+	} */
 </style>

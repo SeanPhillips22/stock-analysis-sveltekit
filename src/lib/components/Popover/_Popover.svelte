@@ -42,9 +42,9 @@
 	</div>
 {/if}
 
-<style>
+<style type="text/postcss">
 	.popover {
-		@apply absolute bg-white p-3 z-50 border border-gray-200 rounded-md shadow-md;
+		@apply absolute bg-white p-3 z-50 border border-gray-200 rounded-md shadow-lg cursor-text;
 	}
 
 	.popover:after {

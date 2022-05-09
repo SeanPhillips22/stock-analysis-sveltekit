@@ -40,4 +40,31 @@
 		],
 		"description": "svelte IF ELSE"
 	},
+	"svelte component": {
+		"prefix": "sve",
+		"body": [
+			"<script lang='ts'>",
+			"\t",
+			"</script>",
+			"\t",
+			"<div class='wrap'>",
+			"\t<div>yo</div>",
+			"</div>",
+			"\t",
+			"<style type='text/postcss'>",
+			".wrap {",
+			"\t@apply m-0 p-0;",
+			"}",
+			"</style>",
+		],
+		"description": "svelte component"
+	},
+	"fetch from api": {
+		"prefix": "fet",
+		"body": [
+			"let host = import.meta.env.VITE_PUBLIC_API_URL",
+			"let url = host + `/$1`",
+		],
+		"description": "fetch from api"
+	},
 }

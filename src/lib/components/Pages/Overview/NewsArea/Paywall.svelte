@@ -18,7 +18,7 @@
 	</div>
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply relative -mt-8 flex h-[180px] justify-center bg-white sm:mt-3 sm:h-auto;
 	}

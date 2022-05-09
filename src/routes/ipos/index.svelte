@@ -1,63 +1,91 @@
+<script lang="ts">
+	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
+	import RecentNavigation from '$lib/components/IPOs/Navigation/RecentNavigation.svelte'
+	import StockTable from '$lib/components/StockTables/___StockTable.svelte'
+	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
+	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
+	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
+	import { RecentIpoDataPoints } from '$lib/components/IPOs/DataPoints/RecentIpoDataPoints'
+
+	import type { NewsMinimal } from '$lib/components/News/types'
+	import type { TableData, TableQuery } from '$lib/components/StockTables/types'
+	import type { SidebarTableProps } from '$lib/components/IPOs/ipo.types'
+
+	export let query: TableQuery
+	export let initialData: TableData
+	export let getIpoCalendarDataMin: SidebarTableProps
+	export let getIpoNewsMin: NewsMinimal[]
+
+	$: data = initialData
+</script>
+
+<svelte:head>
+	<title>200 Most Recent IPOs</title>
+	<meta
+		name="description"
+		content="Detailed information the last 200 IPOs (initial public offerings) on the stock market. Includes IPO prices, dates, total returns and more."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/ipos/" />
+</svelte:head>
+
 <h1>Recent IPOs</h1>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+<IPONavigation page="recent" />
+<div class="page">
+	<div>
+		<RecentNavigation />
+		<StockTable
+			config={{
+				title: 'Last 200 IPOs',
+				tableId: 'ipos-recent',
+				fixed: {
+					controls: {
+						filter: true,
+						export: true,
+						columns: true,
+						options: true
+					},
+					columnOptions: RecentIpoDataPoints,
+					columnOrder: ['ipoDate', 's', 'n', 'ipp', 'ippc', 'ipr'],
+					fixedColumns: ['ipoDate', 's'],
+					screener: {
+						type: 'stocks',
+						filters: [{ id: 'ipoDate', name: 'Past 12 Months', value: 'under-12M', filterType: 'date' }]
+					}
+				}
+			}}
+			initialQuery={query}
+			initialData={data}
+		/>
+	</div>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+	<aside>
+		<SidebarTable
+			title="Upcoming IPOs"
+			btnTitle="Full IPO Calendar"
+			btnUrl="/ipos/calendar/"
+			data={getIpoCalendarDataMin}
+		/>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+		<Sidebar1 />
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+		<NewsWidget
+			title="IPO News"
+			news={getIpoNewsMin}
+			button={{
+				href: '/ipos/news/',
+				title: 'More IPO News'
+			}}
+		/>
+	</aside>
+</div>
 
 <style type="text/postcss">
-	p {
-		@apply text-lg mb-4;
+	.page {
+		@apply lg:grid lg:grid-cols-sidebar lg:gap-x-10;
+	}
+
+	aside:global {
+		@apply flex flex-col space-y-10 pt-6;
 	}
 </style>

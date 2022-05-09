@@ -1,43 +1,52 @@
 <script lang="ts">
-	import type { Info } from '$lib/types/Info'
+	/**
+	 * The stock header area
+	 *
+	 * TODO change "real-time price" to "delayed price" when applicable
+	 */
+	import { quote } from '$lib/stores/quoteStore'
+	import { info } from '$lib/stores/infoStore'
+
 	import Quote from './PriceQuote.svelte'
 	import StockNav from './Nav/StockNav.svelte'
 	import InformationCircle from '$lib/icons/InformationCircle.svelte'
 	import QuoteIpo from './QuoteIPO.svelte'
 	import ETFNav from './Nav/ETFNav.svelte'
-	export let info: Info
-	let isIpo = info.state === 'upcomingipo'
+
+	$: if (!$quote || $quote.symbol !== $info.symbol) {
+		$quote = $info.quote
+	}
 </script>
 
 <div class="container">
 	<div class="stock-head">
-		<h1>{info.nameFull || info.name} ({info.ticker})</h1>
-		{#if info.quote && !isIpo && !info.archived}
-			<div class="details">{info.exchange}: {info.ticker} · IEX Real-Time Price · USD</div>
+		<h1>{$info.nameFull || $info.name} ({$info.ticker})</h1>
+		{#if $info.quote && $info.state !== 'upcomingipo' && !$info.archived}
+			<div class="details">{$info.exchange}: {$info.ticker} · IEX Real-Time Price · USD</div>
 		{/if}
 
-		{#if info.notice}
+		{#if $info.notice}
 			<div class="notice">
 				<InformationCircle classes="mb-1 mr-1 inline h-4 w-4 text-blue-400 xs:h-5 xs:w-5 sm:h-6 sm:w-6" />
-				<span>{info.notice}</span>
+				<span>{$info.notice}</span>
 			</div>
 		{/if}
 	</div>
 
 	<!-- Stock Quote -->
-	{#key info.symbol}
-		{#if isIpo}
-			<QuoteIpo {info} />
+	{#key $info.symbol}
+		{#if $info.state === 'upcomingipo'}
+			<QuoteIpo />
 		{:else}
-			<Quote {info} />
+			<Quote />
 		{/if}
 	{/key}
 
 	<!-- Navigation -->
-	{#if info.type === 'stocks'}
-		<StockNav {info} />
+	{#if $info.type === 'stocks'}
+		<StockNav />
 	{:else}
-		<ETFNav {info} />
+		<ETFNav />
 	{/if}
 </div>
 

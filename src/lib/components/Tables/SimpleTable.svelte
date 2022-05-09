@@ -17,6 +17,7 @@
 
 	// Get the active user, if any
 	import { user } from '$lib/auth/userStore'
+	import { parseExportData } from '$lib/functions/parseExportData'
 
 	/**
 	 * Sort
@@ -63,43 +64,31 @@
 	$: perPage = $state.perPage || config.pagination?.perPage || 50
 
 	/**
-	 * Rewrite the data to make it ready for export (if Pro user)
-	 * Each row in the table is an array of items
-	 * The first row is an array of the column names
-	 * The other rows are the data
+	 * Export
 	 */
-	let exportData: any
+	let exportData: any[][]
 	$: if ($user?.isPro) {
-		let newData = []
-
-		// The columns
-		newData[0] = columns.map((column) => column.title)
-
-		// The data rows
-		data.forEach((item: { [x: string]: any }) => {
-			newData.push([item.s, item.n, item.i, item.m])
-		})
-		exportData = newData
+		exportData = parseExportData(columns, data)
 	}
 </script>
 
 <div>
-	<div class="controls">
+	<div class="controls" class:no-border={config.styling?.noBorder}>
 		<div class="title-group">
 			<h2>{title}</h2>
 		</div>
-		<div class="button-group">
+		<div class="btn-group">
 			<Controls {config} bind:filter={$state.filter} data={exportData} />
 		</div>
 	</div>
-	<table id="simple-table">
+	<table class="symbol-table">
 		<thead>
 			<tr>
 				{#each columns as item (item.id)}
 					{#if config.sortable}
-						<th on:click={() => sort(item.id)} class="cursor-pointer">{item.title}</th>
+						<th on:click={() => sort(item.id)} class="cursor-pointer {item.class}">{item.title}</th>
 					{:else}
-						<th>{item.title}</th>
+						<th class={item.class}>{item.title}</th>
 					{/if}
 				{/each}
 			</tr>
@@ -111,9 +100,9 @@
 						<tr>
 							{#each columns as item}
 								{#if item.format}
-									<td>{@html formatCell(item.format, row[item.id])}</td>
+									<td class={item.class}>{@html formatCell(item.format, row[item.id])}</td>
 								{:else}
-									<td>{row[item.id]}</td>
+									<td class={item.class}>{row[item.id]}</td>
 								{/if}
 							{/each}
 						</tr>
@@ -122,9 +111,9 @@
 					<tr>
 						{#each columns as item}
 							{#if item.format}
-								<td>{@html formatCell(item.format, row[item.id])}</td>
+								<td class={item.class}>{@html formatCell(item.format, row[item.id])}</td>
 							{:else}
-								<td>{row[item.id]}</td>
+								<td class={item.class}>{row[item.id]}</td>
 							{/if}
 						{/each}
 					</tr>
@@ -142,40 +131,12 @@
 </div>
 
 <style type="text/postcss">
-	.controls {
-		@apply flex items-center border-t border-gray-200 py-1.5 px-0 bp:py-2 md:px-1;
+	.controls.no-border {
+		@apply border-t-0 pt-0;
 	}
 
-	.controls h2 {
-		@apply whitespace-nowrap pl-0.5 text-lg font-semibold tiny:text-xl bp:text-2xl md:pl-0 mb-0;
-	}
-
-	.button-group {
-		@apply ml-auto;
-	}
-
-	table {
-		@apply w-full;
-	}
-
-	table tr th {
-		@apply bg-white text-left border-t border-gray-200 whitespace-nowrap;
-	}
-
-	table tr > * {
-		@apply p-2 border-b border-gray-200;
-	}
-
-	table tr > *:first-child {
-		@apply pl-3;
-	}
-
-	table tr > *:last-child {
-		@apply pr-3;
-	}
-
-	table tr:nth-child(odd) {
-		background-color: #f6f7f8;
+	.controls.no-border h2 {
+		@apply font-bold;
 	}
 
 	table tr > *:nth-child(n + 4) {
@@ -186,7 +147,7 @@
 		@apply max-w-[260px] truncate whitespace-nowrap;
 	}
 
-	table tr:hover td {
-		background-color: #f2f9ff !important;
+	.hide-column-mobile {
+		@apply hidden sm:table-cell;
 	}
 </style>

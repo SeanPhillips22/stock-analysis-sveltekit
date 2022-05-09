@@ -13,7 +13,7 @@
 	{/if}
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply whitespace-normal;
 	}

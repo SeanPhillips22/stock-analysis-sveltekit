@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { Info } from '$lib/types/Info'
+	import { info } from '$lib/stores/infoStore'
 	import type { Statement, Range } from './types'
 
-	export let info: Info
 	export let statement: Statement
 	export let range: Range
 
-	$: base = `/stocks/${info.symbol}/financials`
+	$: base = `/stocks/${$info.symbol}/financials`
 	$: appendStatement = statement === 'income-statement' ? '' : `/${statement}`
 	$: appendRange = range === 'annual' ? '' : `${range}/`
 </script>
@@ -49,7 +48,7 @@
 
 <slot />
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply mb-2 flex flex-col space-y-2 md:mb-3 md:flex-row md:justify-between md:space-y-0;
 	}

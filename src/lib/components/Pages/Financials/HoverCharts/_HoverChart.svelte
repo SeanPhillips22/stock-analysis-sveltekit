@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { info } from '$lib/stores/infoStore'
 	import { onMount } from 'svelte'
 	import Highcharts from 'highcharts'
 	import type { Range } from '../types'
 	import { formatYear } from '../functions'
-	import type { Info } from '$lib/types/Info'
 	import { capitalize } from '$lib/functions/utils/capitalize'
+	import { state } from '$lib/stores/financialsStore'
 
 	export let ref: any // container for chart
 	export let hovering: boolean // if hovering over icon or chart
@@ -12,17 +13,27 @@
 	export let data: number[]
 	export let seriesName: string
 	export let range: Range
-	export let info: Info
 
 	onMount(() => {
-		let chartDates: any[] = dates?.slice(1).reverse()
-		let chartData = data?.slice(1).reverse()
+		// Copy the arrays to prevent mutation
+		// of the original
+		let chartDates: any[] = [...dates]
+		let chartData = [...data]
 
+		// Reverse the array order
+		// TODO later, if reverse order is set then don't do this
+		chartData.reverse()
+		if (!$state.leftToRight) {
+			chartDates.reverse()
+		}
+
+		// Format the x-axis values to be years
+		// if range is annual
 		if (range === 'annual') {
 			chartDates = chartDates.map((m) => formatYear(m))
 		}
 
-		let title = `${info.symbol.toUpperCase()} ${seriesName} (${capitalize(range)})`
+		let title = `${$info.symbol.toUpperCase()} ${seriesName} (${capitalize(range)})`
 
 		Highcharts.setOptions({
 			lang: {
@@ -94,7 +105,7 @@
 
 <div class="chart" bind:this={ref} on:mouseleave={() => (hovering = false)} />
 
-<style>
+<style type="text/postcss">
 	.chart {
 		@apply h-[40vh] z-50 bg-white p-2 md:h-[330px] md:py-2 md:px-3;
 	}

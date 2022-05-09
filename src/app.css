@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* TODO search for all the classes before launch and remove those that are not used */
 @layer components {
 	body {
 		@apply m-0 p-0 text-gray-900;
@@ -83,7 +84,7 @@
 	.navmenu li span::before {
 		display: block;
 		content: attr(data-title);
-		font-weight: 600;
+		font-weight: 700;
 		height: 0;
 		overflow: hidden;
 		visibility: hidden;
@@ -145,22 +146,103 @@
 	}
 
 	/* Hide scrollbar for Chrome, Safari and Opera */
-	.hide-scroll::-webkit-scrollbar {
+	.navmenu::-webkit-scrollbar, .hide-scroll::-webkit-scrollbar {
 		display: none;
 	}
 
 	/* Hide scrollbar for IE, Edge and Firefox */
-	.hide-scroll {
+	.navmenu::-webkit-scrollbar, .hide-scroll {
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
 	}
 
-	.text-shadow {
-		text-shadow: 0 0 0.5px #555555;
+	/* * *
+	* *
+	* Text formatting, for articles and company descriptions
+	* *
+	* * */
+
+	.controls {
+		@apply flex items-center space-x-4 border-t border-gray-200 py-1.5 px-0 bp:space-x-6 bp:py-2 md:px-1;
+	}
+
+	/* when the controls are is split into groups -- title group and button group */
+	.controls.groups {
+		@apply block space-x-0 border-0 py-0 md:flex md:space-x-6 md:border-t md:py-2;
+	}
+
+	.controls div.head,
+	.controls h1,
+	.controls h2 {
+		@apply mb-0 whitespace-nowrap pl-0.5 text-lg font-semibold tiny:text-xl bp:text-2xl md:pl-0;
+	}
+
+	/* The div that contains the title and timestamp */
+	.controls .title-group {
+		@apply mr-auto flex items-end justify-between pb-1 xs:pb-1.5 md:space-x-4 md:border-0 md:pb-0;
+	}
+
+	/* The timestamp in the controls area */
+	.controls .controls-timestamp {
+		@apply mb-0 ml-3 whitespace-nowrap text-sm font-semibold text-gray-600 md:ml-0 md:mb-1;
+	}
+
+	.controls-timestamp span {
+		@apply hidden lg:inline;
+	}
+
+	.controls .btn-group {
+		@apply flex justify-between space-x-1 border-t border-gray-200 py-1.5 md:ml-auto md:space-x-2 md:border-0 md:py-0 lg:space-x-4;
+	}
+
+	/* Hide, but only on mobile */
+	.controls .btn-group.hidem {
+		@apply hidden md:flex;
+	}
+
+	.controls.fallback {
+		@apply block space-x-0 border-0 py-0;
+	}
+
+	.controls.fallback h2 {
+		@apply mb-2 text-[1.4rem] font-semibold text-gray-800;
+	}
+
+	.controls.fallback p {
+		@apply text-lg text-gray-900;
+	}
+
+	.toggle {
+		@apply ml-auto block md:hidden;
+	}
+
+	.toggle-icon {
+		@apply h-7 w-7 text-gray-700 bp:h-[1.9rem] bp:w-[1.9rem];
 	}
 
 	.controls-btn {
 		@apply noring inline-flex w-full items-center justify-center whitespace-nowrap rounded-md border border-gray-300 bg-white px-2 py-1.5 text-xs font-semibold shadow-sm hover:bg-gray-50 xs:px-2.5 bp:px-3 bp:text-sm sm:px-4 sm:py-2;
+	}
+
+	/* Stretch the button to fill space */
+	.btn-stretch {
+		@apply space-x-4;
+	}
+
+	.btn-stretch .controls-btn {
+		@apply px-4;
+	}
+
+	.controls-btn.active {
+		@apply bg-gray-200;
+	}
+
+	.controls-menu {
+		@apply relative inline-block text-left;
+	}
+
+	.controls-btn.active {
+		@apply bg-gray-200 shadow;
 	}
 
 	table a {
@@ -173,6 +255,146 @@
 
 	.dd.active {
 		@apply bg-gray-100;
+	}
+
+	/* * *
+	* *
+	* Text formatting, for articles and company descriptions
+	* *
+	* * */
+	.text-page {
+		@apply text-base md:text-lg;
+	}
+
+	.text-page > * > *:not(.ad-banner) {
+		@apply md:px-4 lg:px-0;
+	}
+
+	.text-page .article-header {
+		@apply mb-4 border-b-2 border-blue-brand_sharp pb-3 md:mb-6 md:pb-3;
+	}
+
+	.text-page h1 {
+		@apply mb-3 text-3xl font-bold text-gray-800 md:text-4xl;
+	}
+
+	.text-page h2 {
+		@apply mb-5 text-2xl font-bold md:mb-6 md:text-3xl;
+	}
+
+	.text-page h3 {
+		@apply mb-3 text-xl font-bold md:mb-4 md:text-2xl;
+	}
+
+	.text-page p {
+		@apply mb-5;
+	}
+
+	.text-page a {
+		@apply bll;
+	}
+
+	.text-page .article-header a {
+		@apply text-gray-700 hover:text-black;
+	}
+
+	.text-page ul {
+		list-style: disc;
+		@apply ml-8 mb-5 md:ml-10;
+	}
+
+	.text-page ol {
+		list-style: decimal;
+		@apply ml-6 mb-5 md:ml-8;
+	}
+
+	.text-page li {
+		@apply mb-3;
+	}
+
+	.text-page table {
+		@apply mb-6 w-full;
+	}
+
+	.text-page table tr {
+		@apply border-b border-gray-200 first:border-t;
+	}
+
+	.text-page table tr th {
+		@apply py-2 sm:px-3;
+	}
+
+	.text-page table tr td {
+		@apply py-2 sm:px-3 md:px-4 lg:px-3;
+	}
+
+	.text-page img {
+		@apply my-6 mx-auto md:my-7;
+	}
+
+	.text-page img.add-border {
+		@apply border border-gray-200;
+	}
+
+	.text-page .summary {
+		@apply mb-6 rounded border border-gray-300 bg-gray-50 p-4 md:mb-8;
+	}
+
+	/* * Symbol Tables, used widely */
+	.symbol-table {
+		@apply w-full;
+	}
+
+	.symbol-table a {
+		@apply bll py-1 pr-px;
+	}
+
+	.symbol-table tr > * {
+		@apply p-2 border-b border-gray-200;
+	}
+
+	.symbol-table tr > *:first-child {
+		padding-left: 0.8rem;
+	}
+
+	.symbol-table tr > *:last-child {
+		padding-right: 0.8rem;
+	}
+
+	.symbol-table tr th {
+		background-color: #ffffff;
+		text-align: left;
+		border-top: 1px solid #ddd;
+		white-space: nowrap;
+	}
+
+	.symbol-table tr:nth-child(odd) {
+		background-color: #f6f7f8;
+	}
+
+	.symbol-table tr:hover td {
+		background-color: #f2f9ff !important;
+	}
+
+	/* * Shorthand classes to add to tables */
+	.sl {
+		@apply max-w-[130px] truncate text-left xs:max-w-[150px] lg:max-w-[240px];
+	}
+
+	.tr {
+		@apply text-right;
+	}
+
+	.rg {
+		@apply text-right text-[green];
+	}
+
+	.rr {
+		@apply text-right text-[red];
+	}
+
+	.rgr {
+		@apply text-right text-gray-800;
 	}
 
 }

@@ -4,6 +4,7 @@
 	import ChevronDown from '$lib/icons/ChevronDown.svelte'
 
 	export let title: string
+	export let interactive = false // Should the dropdown close on click inside?
 	let open = false
 
 	const handleClickOutside = () => {
@@ -22,7 +23,12 @@
 	</button>
 
 	{#if open}
-		<div class="dropdown" on:click={close} use:clickOutside={handleClickOutside} in:fly={{ y: -10, duration: 75 }}>
+		<div
+			class="dropdown"
+			on:click={() => !interactive && close()}
+			use:clickOutside={handleClickOutside}
+			in:fly={{ y: -10, duration: 75 }}
+		>
 			<slot />
 		</div>
 	{/if}

@@ -1,53 +1,56 @@
 <script lang="ts">
+	import { info } from '$lib/stores/infoStore'
+	import { data } from '$lib/stores/dataStore'
 	import { quote } from '$lib/stores/quoteStore'
-	import type { Overview } from '$lib/types/OverviewPageData'
-	import type { Info } from '$lib/types/Info'
 
-	export let info: Info
-	export let data: Overview
-	let q = $quote || info.quote
-
-	let previous = 'Previous Close'
-	if (info.ipoDate && q.td === info.ipoDate) previous = 'IPO Price'
+	let previous = $info.ipoDate && $quote?.td === $info.ipoDate ? 'IPO Price' : 'Previous Close'
 </script>
 
 <table>
 	<tbody>
 		<tr>
 			<td>Volume</td>
-			<td>{q?.v && q.v !== '0' ? q.v : 'n/a'}</td>
+			<td>{$quote?.v && $quote?.v !== '0' ? $quote?.v : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Open</td>
-			<td>{q?.o && q.o !== '0.00' ? q.o : 'n/a'}</td>
+			<td>{$quote?.o && $quote?.o !== '0.00' ? $quote?.o : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>{previous}</td>
-			<td>{q?.cl && q.cl !== '0.00' ? q.cl : 'n/a'}</td>
+			<td>{$quote?.cl && $quote?.cl !== '0.00' ? $quote?.cl : 'n/a'}</td>
 		</tr>
 		<tr>
 			<td>Day&apos;s Range</td>
-			<td>{q?.l && q?.h && q.l !== '0.00' && q.h !== '0.00' ? q.l + ' - ' + q.h : 'n/a'}</td>
+			<td
+				>{$quote?.l && $quote?.h && $quote?.l !== '0.00' && $quote?.h !== '0.00'
+					? $quote?.l + ' - ' + $quote?.h
+					: 'n/a'}</td
+			>
 		</tr>
 		<tr>
 			<td>52-Week Range</td>
-			<td>{q?.l52 && q?.h52 && q.l52 !== '0.00' && q.h52 !== '0.00' ? q.l52 + ' - ' + q.h52 : 'n/a'}</td>
+			<td
+				>{$quote?.l52 && $quote?.h52 && $quote?.l52 !== '0.00' && $quote?.h52 !== '0.00'
+					? $quote?.l52 + ' - ' + $quote?.h52
+					: 'n/a'}</td
+			>
 		</tr>
 		<tr>
 			<td>Beta</td>
-			<td>{data.beta}</td>
+			<td>{$data.beta}</td>
 		</tr>
 		<tr>
 			<td>Analysts</td>
-			<td>{data.analysts}</td>
+			<td>{$data.analysts}</td>
 		</tr>
 		<tr>
 			<td>Price Target</td>
-			<td>{data.target}</td>
+			<td>{$data.target}</td>
 		</tr>
 		<tr>
 			<td>Earnings Date</td>
-			<td>{data.earningsDate}</td>
+			<td>{$data.earningsDate}</td>
 		</tr>
 	</tbody>
 </table>

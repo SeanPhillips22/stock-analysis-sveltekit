@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Button from '../Buttons/Button.svelte'
 
-	import type { NewsArray } from './types'
+	import type { NewsMinimal } from './types'
 
 	export let title: string
-	export let news: NewsArray
+	export let news: NewsMinimal[]
 	export let button: {
 		href: string
 		title: string
@@ -23,7 +23,7 @@
 	<Button href={button.href} title={button.title} classes="w-full mt-4" />
 </div>
 
-<style>
+<style type="text/postcss">
 	.wrap {
 		@apply rounded border border-gray-200 p-4 text-sm;
 	}

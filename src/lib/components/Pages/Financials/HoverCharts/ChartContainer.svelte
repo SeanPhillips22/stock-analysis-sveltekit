@@ -9,13 +9,11 @@
 
 	// Types
 	import type { Range } from '../types'
-	import type { Info } from '$lib/types/Info'
 
 	// Props
 	export let dates: string[]
 	export let data: number[]
 	export let range: Range
-	export let info: Info
 	export let name: string
 
 	/**
@@ -30,26 +28,35 @@
 	let yPos: number
 	let w: number
 
+	let hasEntered = false // If mouse moves into chart area within 100ms
 	function entering(event: MouseEvent) {
-		hovering = true
-		if (window?.innerWidth < 768) {
-			x = 5
-			w = window.innerWidth - 10
-		} else {
-			x = event.pageX - 60
-			w = 600
-		}
-		let y = event.pageY
-		let rect = iconRef.getBoundingClientRect()
-		yPos = y - (event.clientY - rect.top) + 1.5
+		hasEntered = false
+		setTimeout(() => {
+			hovering = true
+			if (window?.innerWidth < 768) {
+				x = 5
+				w = window.innerWidth - 10
+			} else {
+				x = event.pageX - 60
+				w = 600
+			}
+			let y = event.pageY
+			let rect = iconRef.getBoundingClientRect()
+			yPos = y - (event.clientY - rect.top) + 1
+		}, 100)
 	}
 
 	function leaving(event: MouseEvent) {
-		// @ts-ignore
-		if (event.relatedTarget === chartRef || event.relatedTarget?.classList.toString().includes('highcharts')) {
-			return
-		}
-		hovering = false
+		setTimeout(() => {
+			if (!hasEntered) {
+				// @ts-ignore
+				if (event.relatedTarget === chartRef || event.relatedTarget?.classList.toString().includes('highcharts')) {
+					return
+				}
+				hovering = false
+				hasEntered = false
+			}
+		}, 100)
 	}
 </script>
 
@@ -62,7 +69,8 @@
 		<div
 			class="wrap"
 			style="bottom: calc(100% - {yPos}px); left: {x}px; width: {w}px"
-			in:fade={{ delay: 200, duration: 75 }}
+			in:fade={{ delay: 100, duration: 75 }}
+			on:mouseenter={() => (hasEntered = true)}
 		>
 			<svelte:component
 				this={value.default}
@@ -72,13 +80,12 @@
 				bind:hovering
 				seriesName={name}
 				{range}
-				{info}
 			/>
 		</div>
 	{/await}
 {/if}
 
-<style>
+<style type="text/postcss">
 	/**
 	* Icon styles
 	*/
