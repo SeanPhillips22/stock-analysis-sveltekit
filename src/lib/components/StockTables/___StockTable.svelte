@@ -1,23 +1,18 @@
 <script lang="ts">
+	/**
+	 * Send the initial state and data to the table
+	 * Fetch new data client-side when needed
+	 * Sync with localStorage
+	 */
 	import { browser } from '$app/env'
 	import { writable } from 'svelte/store'
 	import { onDestroy, setContext } from 'svelte'
 
-	// Get the active user, if any
-	import { user } from '$lib/auth/userStore'
-
 	import { fetchSelect } from './fetchSelect'
-	import { formatTableCell } from '$lib/functions/formatTableCell'
-	import { getColumns } from './getColumns'
 	import { stringifyObject } from '$lib/functions/utils/stringifyObject'
-	import { isObjectEmpty } from '$lib/functions/utils/isObjectEmpty'
-	import { sortColumn } from '../Tables/sort'
-	import StockTableControls from './_StockTableControls.svelte'
 
-	import type { Sorted, StockTableConfig, TableData, TableQuery, TableState } from './types'
-	import type { DataId } from '$lib/types/DataId'
-	import { parseExportData } from '$lib/functions/parseExportData'
 	import StockTableBody from './__StockTableBody.svelte'
+	import type { StockTableConfig, TableData, TableQuery, TableState } from './types'
 
 	export let config: StockTableConfig
 	export let initialQuery: TableQuery
@@ -54,6 +49,7 @@
 	// Set the initial state
 	let state = writable<TableState>(getStoredState())
 	setContext('state', state)
+	setContext('config', config)
 
 	// Subscribe to state updates and save them to localStorage
 	let unsubscribe = state.subscribe((value) => {
@@ -81,8 +77,6 @@
 		console.log(fetchedData[0])
 		initialData = fetchedData
 	}
-
-	$: columns = getColumns($state.query.columns, $state.query.main)
 </script>
 
-<!-- <StockTableBody /> -->
+<StockTableBody {config} {initialData} />
