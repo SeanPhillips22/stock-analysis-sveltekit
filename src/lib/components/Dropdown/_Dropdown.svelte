@@ -6,6 +6,7 @@
 	export let title: string
 	export let interactive = false // Should the dropdown close on click inside?
 	export let wide = false // Should the dropdown be wide?
+	export let onClick: () => any = () => {}
 	let open = false
 
 	const handleClickOutside = () => {
@@ -18,7 +19,13 @@
 </script>
 
 <div class="controls-menu">
-	<button class="controls-btn" on:click={() => (open = !open)}>
+	<button
+		class="controls-btn"
+		on:click={() => {
+			onClick()
+			open = !open
+		}}
+	>
 		{title}
 		<ChevronDown classes="-mr-1 ml-1 h-5 w-5 xs:ml-2" />
 	</button>

@@ -1,9 +1,13 @@
 <script lang="ts">
+	/**
+	 * Select columns to display in the StockTable
+	 */
 	import Dropdown from '../Dropdown/_Dropdown.svelte'
 	import { DataPoints } from '../StockTables/StockDataPoints'
 	import type { DataPointType } from '../StockTables/StockDataPoints'
 	import type { DataId } from '$lib/types/DataId'
 	import SelectItem from './SelectItem.svelte'
+	import { onMount } from 'svelte'
 
 	export let active: DataId[]
 	export let options: DataId[]
@@ -15,21 +19,27 @@
 	let _active: DataPointType[] = []
 	let _inactive: DataPointType[] = []
 
-	$: {
+	// Stack the columns in this order: Fixed, Active and Inactive
+	function stackColumns() {
 		_fixed = []
 		_active = []
 		_inactive = []
 
 		options.forEach((item) => {
 			let { id, name } = DataPoints[item]
-			if (fixedColumns?.includes(item)) _fixed = [..._fixed, { id, name }] // _fixed.push({ id, name })
-			else if (active.includes(item)) _active = [..._active, { id, name }] // _active.push({ id, name })
-			else _inactive = [..._inactive, { id, name }] // _inactive.push({ id, name })
+			if (fixedColumns?.includes(item)) _fixed = [..._fixed, { id, name }]
+			else if (active.includes(item)) _active = [..._active, { id, name }]
+			else _inactive = [..._inactive, { id, name }]
 		})
 	}
 
+	onMount(() => {
+		stackColumns()
+	})
+
 	let activeItems: DataPointType[]
 	let inactiveItems: DataPointType[]
+
 	$: {
 		if (search && search !== '') {
 			activeItems = _active.filter((i) => i.name.toLowerCase().includes(search.toLowerCase()))
@@ -41,7 +51,7 @@
 	}
 </script>
 
-<Dropdown title="Columns" interactive wide>
+<Dropdown title="Columns" interactive wide onClick={stackColumns}>
 	<!-- svelte-ignore a11y-autofocus -->
 	<input type="text" class="search" autofocus bind:value={search} />
 	<div class="column-list">
