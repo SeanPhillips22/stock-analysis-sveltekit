@@ -15,12 +15,18 @@
 	let _active: DataPointType[] = []
 	let _inactive: DataPointType[] = []
 
-	options.forEach((item) => {
-		let { id, name } = DataPoints[item]
-		if (fixedColumns?.includes(item)) _fixed = [..._fixed, { id, name }] // _fixed.push({ id, name })
-		else if (active.includes(item)) _active = [..._active, { id, name }] // _active.push({ id, name })
-		else _inactive = [..._inactive, { id, name }] // _inactive.push({ id, name })
-	})
+	$: {
+		_fixed = []
+		_active = []
+		_inactive = []
+
+		options.forEach((item) => {
+			let { id, name } = DataPoints[item]
+			if (fixedColumns?.includes(item)) _fixed = [..._fixed, { id, name }] // _fixed.push({ id, name })
+			else if (active.includes(item)) _active = [..._active, { id, name }] // _active.push({ id, name })
+			else _inactive = [..._inactive, { id, name }] // _inactive.push({ id, name })
+		})
+	}
 
 	let activeItems: DataPointType[]
 	let inactiveItems: DataPointType[]
@@ -39,13 +45,13 @@
 	<!-- svelte-ignore a11y-autofocus -->
 	<input type="text" class="search" autofocus bind:value={search} />
 	<div class="column-list">
-		{#each _fixed as { id, name }}
+		{#each _fixed as { id, name } (id)}
 			<SelectItem {id} {name} checked={true} fixed={true} {toggleColumn} />
 		{/each}
-		{#each activeItems as { id, name }}
+		{#each activeItems as { id, name } (id)}
 			<SelectItem {id} {name} checked={true} {toggleColumn} />
 		{/each}
-		{#each inactiveItems as { id, name }}
+		{#each inactiveItems as { id, name } (id)}
 			<SelectItem {id} {name} checked={false} {toggleColumn} />
 		{/each}
 	</div>
