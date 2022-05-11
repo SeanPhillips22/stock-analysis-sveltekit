@@ -250,7 +250,7 @@
 	}
 
 	.dd {
-		@apply flex cursor-pointer items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+		@apply flex cursor-pointer items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap;
 	}
 
 	.dd.active {

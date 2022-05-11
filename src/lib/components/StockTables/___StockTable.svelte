@@ -26,6 +26,8 @@
 	}
 
 	const initialStringified = stringifyObject(initialState)
+	const initialColumns = stringifyObject(initialQuery.columns)
+	setContext('initialState', initialStringified) // to prevent the initial state from mutating, no idea why it happens
 
 	/**
 	 * The table state, which persists on page refresh
@@ -59,8 +61,7 @@
 				localStorage.removeItem(config.tableId)
 			} else {
 				// If not same as default, fetch new data and store the new query
-				if (JSON.stringify(value.query.columns) !== JSON.stringify(initialQuery.columns)) {
-					console.log('should maybe fetch new data')
+				if (JSON.stringify(value.query.columns) !== initialColumns) {
 					fetchNewTableData()
 				}
 				localStorage.setItem(config.tableId, stringified)
@@ -74,9 +75,10 @@
 	async function fetchNewTableData() {
 		let res = await fetchSelect($state.query)
 		fetchedData = res.data
-		console.log(fetchedData[0])
 		initialData = fetchedData
 	}
+
+	// $: console.log(JSON.stringify($state, true, 2))
 </script>
 
 <StockTableBody {config} {initialData} />

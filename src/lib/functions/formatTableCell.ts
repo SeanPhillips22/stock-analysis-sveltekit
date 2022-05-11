@@ -17,6 +17,12 @@ export function formatTableCell(formatFunction: FormatFunction, cell: any) {
 		case 'colorPercentage':
 			return colorPercentage(cell)
 
+		case 'string':
+			return cell || '-'
+
+		case 'integer':
+			return cell ? format(cell, 0) : '-'
+
 		default:
 			break
 	}

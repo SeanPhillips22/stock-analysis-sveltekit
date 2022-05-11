@@ -10,7 +10,7 @@
 	export let fixed = false
 	export let toggleColumn: (id: DataId) => void
 
-	let check = checked
+	$: check = checked
 </script>
 
 <div class="column-items" class:fixed-option={fixed} title={fixed ? 'This column cannot be unchecked' : ''}>

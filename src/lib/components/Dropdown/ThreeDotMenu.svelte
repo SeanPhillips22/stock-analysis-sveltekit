@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import { clickOutside } from '$lib/functions/ui/clickOutside'
-	import ChevronDown from '$lib/icons/ChevronDown.svelte'
+	import VerticalDots from '$lib/icons/VerticalDots.svelte'
 
-	export let title: string
 	let open = false
 
 	const handleClickOutside = () => {
@@ -17,12 +16,16 @@
 
 <div class="controls-menu">
 	<button class="controls-btn" on:click={() => (open = !open)}>
-		{title}
-		<ChevronDown classes="-mr-1 ml-1 h-5 w-5 xs:ml-2" />
+		<VerticalDots classes="w-5 h-5" />
 	</button>
 
 	{#if open}
-		<div class="dropdown" on:click={close} use:clickOutside={handleClickOutside} in:fly={{ y: -10, duration: 75 }}>
+		<div
+			class="dropdown"
+			on:click={() => close()}
+			use:clickOutside={handleClickOutside}
+			in:fly={{ y: -10, duration: 75 }}
+		>
 			<slot />
 		</div>
 	{/if}

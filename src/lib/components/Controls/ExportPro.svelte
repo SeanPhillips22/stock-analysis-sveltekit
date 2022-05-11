@@ -23,11 +23,7 @@
 <div on:mouseenter={importDownload}>
 	<Dropdown title="Export">
 		{#if Download}
-			<Download {data} />
-		{:else}
-			{#await import('./Download.svelte') then value}
-				<svelte:component this={value.default} {data} />
-			{/await}
+			<svelte:component this={Download} {data} />
 		{/if}
 	</Dropdown>
 </div>

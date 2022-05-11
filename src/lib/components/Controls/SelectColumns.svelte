@@ -17,9 +17,9 @@
 
 	options.forEach((item) => {
 		let { id, name } = DataPoints[item]
-		if (fixedColumns?.includes(item)) _fixed.push({ id, name })
-		else if (active.includes(item)) _active.push({ id, name })
-		else _inactive.push({ id, name })
+		if (fixedColumns?.includes(item)) _fixed = [..._fixed, { id, name }] // _fixed.push({ id, name })
+		else if (active.includes(item)) _active = [..._active, { id, name }] // _active.push({ id, name })
+		else _inactive = [..._inactive, { id, name }] // _inactive.push({ id, name })
 	})
 
 	let activeItems: DataPointType[]
@@ -35,7 +35,7 @@
 	}
 </script>
 
-<Dropdown title="Columns" interactive={true}>
+<Dropdown title="Columns" interactive wide>
 	<!-- svelte-ignore a11y-autofocus -->
 	<input type="text" class="search" autofocus bind:value={search} />
 	<div class="column-list">

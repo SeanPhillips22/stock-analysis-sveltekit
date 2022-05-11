@@ -13,6 +13,7 @@
 	import Export from '../Controls/Export.svelte'
 	import ExportPro from '../Controls/ExportPro.svelte'
 	import StockTableColumns from './Controls/StockTableColumns.svelte'
+	import StockTableOptions from './Controls/StockTableOptions.svelte'
 </script>
 
 <div class="controls groups">
@@ -31,6 +32,10 @@
 
 		{#if config.fixed.controls?.columns}
 			<StockTableColumns {config} />
+		{/if}
+
+		{#if config.fixed.controls?.options}
+			<StockTableOptions {config} />
 		{/if}
 	</div>
 </div>

@@ -98,7 +98,7 @@ export const DataPoints: Props = {
 		colName: 'Ent. Value',
 		format: 'abbreviate'
 	},
-	industry: { id: 'industry', name: 'Industry', format: 'string' },
+	industry: { id: 'industry', name: 'Industry', format: 'string', classes: 'sl' },
 	peRatio: {
 		id: 'peRatio',
 		name: 'PE Ratio',
@@ -109,7 +109,7 @@ export const DataPoints: Props = {
 		name: 'Forward PE',
 		format: 'format2dec'
 	},
-	exchange: { id: 'exchange', name: 'Exchange', format: 'string' },
+	exchange: { id: 'exchange', name: 'Exchange', format: 'string', classes: 'sl' },
 	dividendYield: {
 		id: 'dividendYield',
 		name: 'Dividend Yield',

@@ -5,6 +5,7 @@
 
 	export let title: string
 	export let interactive = false // Should the dropdown close on click inside?
+	export let wide = false // Should the dropdown be wide?
 	let open = false
 
 	const handleClickOutside = () => {
@@ -25,6 +26,7 @@
 	{#if open}
 		<div
 			class="dropdown"
+			class:wide
 			on:click={() => !interactive && close()}
 			use:clickOutside={handleClickOutside}
 			in:fly={{ y: -10, duration: 75 }}
@@ -42,5 +44,9 @@
 	.dropdown {
 		@apply absolute right-0 z-50 mt-2 min-w-[160px] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
 		background-color: #ffffff;
+	}
+
+	.dropdown.wide {
+		@apply min-w-[210px];
 	}
 </style>

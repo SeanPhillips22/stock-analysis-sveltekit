@@ -14,6 +14,8 @@
 	import type { Sorted, StockTableConfig, TableData, TableState } from './types'
 	import type { DataId } from '$lib/types/DataId'
 	import { parseExportData } from '$lib/functions/parseExportData'
+	import ChevronDown from '$lib/icons/ChevronDown.svelte'
+	import ChevronUp from '$lib/icons/ChevronUp.svelte'
 
 	export let config: StockTableConfig
 	export let initialData: TableData
@@ -41,7 +43,7 @@
 	$: sortedData = [...filteredData]
 	$: {
 		if (!isObjectEmpty($state.sorted)) {
-			let returnedData = sortColumn(sortedData, filteredData, $state.sorted)
+			let returnedData = sortColumn(sortedData, $state.sorted)
 			// @ts-ignore
 			sortedData = returnedData
 		}
@@ -78,7 +80,17 @@
 		<thead>
 			<tr>
 				{#each columns as { id, title, classes } (id)}
-					<th class="cursor-pointer {classes}" on:click={() => sort(id)}>{title}</th>
+					{#if Object.keys($state.sorted)[0] === id}
+						{#if $state.sorted[id] === 'desc'}
+							<th class={classes} on:click={() => sort(id)}><span>{title} <ChevronDown classes="w-4 h-4" /></span></th>
+						{:else if $state.sorted[id] === 'asc'}
+							<th class={classes} on:click={() => sort(id)}><span>{title} <ChevronUp classes="w-4 h-4" /></span></th>
+						{:else}
+							<th class={classes} on:click={() => sort(id)}>{title}</th>
+						{/if}
+					{:else}
+						<th class={classes} on:click={() => sort(id)}>{title}</th>
+					{/if}
 				{/each}
 			</tr>
 		</thead>
@@ -108,11 +120,28 @@
 	}
 
 	th {
-		@apply font-semibold;
+		@apply cursor-pointer font-semibold;
+	}
+
+	th span {
+		@apply flex items-center;
 	}
 
 	th:nth-child(n + 4),
 	td:nth-child(n + 4) {
 		@apply text-right;
+	}
+
+	th:nth-child(n + 4) span {
+		@apply justify-end;
+	}
+
+	th:nth-child(n + 4).sl span {
+		@apply justify-start;
+	}
+
+	th:nth-child(n + 4).sl,
+	td:nth-child(n + 4).sl {
+		@apply text-left;
 	}
 </style>
