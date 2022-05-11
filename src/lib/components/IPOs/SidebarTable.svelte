@@ -10,6 +10,7 @@
 	export let btnTitle: string
 	export let btnUrl: string
 	export let count: number | undefined = undefined
+	export let filed = false
 </script>
 
 <div>
@@ -18,7 +19,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>Date</th>
+					<th>{filed ? 'Filed' : 'Date'}</th>
 					<th>Symbol</th>
 					<th>Name</th>
 				</tr>
@@ -47,7 +48,7 @@
 	}
 
 	table {
-		@apply w-full text-left text-[0.95rem];
+		@apply w-full text-left text-[0.95rem] whitespace-nowrap;
 	}
 
 	thead tr,
@@ -61,5 +62,9 @@
 
 	tr > *:not(:last-child) {
 		@apply border-r border-gray-200;
+	}
+
+	tr > td:last-child {
+		@apply max-w-[150px] truncate;
 	}
 </style>

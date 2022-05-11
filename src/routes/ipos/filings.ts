@@ -3,24 +3,24 @@ import type { TableQuery } from '$lib/components/StockTables/types'
 import type { RequestHandler } from '@sveltejs/kit'
 
 const query: TableQuery = {
-	index: 'histip',
-	main: 'ipoDate',
-	count: 200,
+	index: 'futip',
+	main: 'filingDateFB',
 	sortDirection: 'desc',
-	columns: ['s', 'n', 'ipp', 'ippc', 'ipr']
+	columns: ['s', 'n', 'exchange', 'ipoPriceRange', 'sharesOffered'],
+	filters: ['ipoDate-is-null', 'ipoStatus-isnot-withdrawn']
 }
 
 export const get: RequestHandler = async () => {
-	let extras = ['getIpoCalendarDataMin', 'getIpoNewsMin']
+	let extras = ['getIposRecentMin', 'getIpoNewsMin']
 	const json = await fetchSelect(query, extras)
-	const { data, getIpoCalendarDataMin, getIpoNewsMin } = json
+	const { data, getIposRecentMin, getIpoNewsMin } = json
 
 	if (data) {
 		return {
 			body: {
 				query,
 				initialData: data,
-				getIpoCalendarDataMin,
+				getIposRecentMin,
 				getIpoNewsMin
 			}
 		}

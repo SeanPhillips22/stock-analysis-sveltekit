@@ -46,7 +46,7 @@
 
 		<StockTable
 			config={{
-				tableId: 'ipos-' + year,
+				tableId: 'ipos-' + year + '-v2',
 				title: data.length + ' IPOs',
 				fixed: {
 					controls: {

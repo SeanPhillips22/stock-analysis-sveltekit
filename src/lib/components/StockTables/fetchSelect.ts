@@ -36,6 +36,7 @@ export async function fetchSelect(config: TableQuery, extras?: string[]) {
 		url += '&dedupe=true'
 	}
 
+	console.log(url)
 	// fetch the data from the back-end
 	let response = await fetchData(url)
 

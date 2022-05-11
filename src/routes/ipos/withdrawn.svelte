@@ -1,11 +1,11 @@
 <script lang="ts">
 	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
-	import RecentNavigation from '$lib/components/IPOs/Navigation/RecentNavigation.svelte'
+	import CalendarNavigation from '$lib/components/IPOs/Navigation/CalendarNavigation.svelte'
 	import StockTable from '$lib/components/StockTables/___StockTable.svelte'
 	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 	import NewsWidget from '$lib/components/News/NewsWidget.svelte'
-	import { RecentIpoDataPoints } from '$lib/components/IPOs/DataPoints/RecentIpoDataPoints'
+	import { FutureIpoDataPoints } from '$lib/components/IPOs/DataPoints/FutureIpoDataPoints'
 
 	import type { NewsMinimal } from '$lib/components/News/types'
 	import type { TableData, TableQuery } from '$lib/components/StockTables/types'
@@ -13,31 +13,31 @@
 
 	export let query: TableQuery
 	export let initialData: TableData
-	export let getIpoCalendarDataMin: SidebarTableProps
+	export let getIposRecentMin: SidebarTableProps
 	export let getIpoNewsMin: NewsMinimal[]
 
 	$: data = initialData
 </script>
 
 <svelte:head>
-	<title>200 Most Recent IPOs</title>
+	<title>Withdrawn IPOs</title>
 	<meta
 		name="description"
-		content="Detailed information the last 200 IPOs (initial public offerings) on the stock market. Includes IPO prices, dates, total returns and more."
+		content="A list of companies that have withdrawn their U.S. stock market IPO within the last year."
 	/>
-	<link rel="canonical" href="https://stockanalysis.com/ipos/" />
+	<link rel="canonical" href="https://stockanalysis.com/ipos/withdrawn/" />
 </svelte:head>
 
-<h1>Recent IPOs</h1>
+<h1>Withdrawn IPOs</h1>
 
-<IPONavigation page="recent" />
+<IPONavigation page="withdrawn" />
 <div class="page">
 	<div>
-		<RecentNavigation />
+		<CalendarNavigation page="withdrawn" />
 		<StockTable
 			config={{
-				title: 'Last 200 IPOs',
-				tableId: 'ipos-recent-v2',
+				title: `${data.length} IPOs`,
+				tableId: 'ipos-withdrawn-v2',
 				fixed: {
 					controls: {
 						filter: true,
@@ -45,13 +45,10 @@
 						columns: true,
 						options: true
 					},
-					columnOptions: RecentIpoDataPoints,
-					columnOrder: ['ipoDate', 's', 'n', 'ipp', 'ippc', 'ipr'],
-					fixedColumns: ['ipoDate', 's'],
-					screener: {
-						type: 'stocks',
-						filters: [{ id: 'ipoDate', name: 'Past 12 Months', value: 'under-12M', filterType: 'date' }]
-					}
+					columnOptions: FutureIpoDataPoints,
+					excludeColumns: ['ipoDate'],
+					columnOrder: ['withdrawnDateFB', 's', 'n', 'exchange', 'ipoPriceRange', 'sharesOffered'],
+					fixedColumns: ['withdrawnDateFB', 's']
 				}
 			}}
 			initialQuery={query}
@@ -60,12 +57,7 @@
 	</div>
 
 	<aside>
-		<SidebarTable
-			title="Upcoming IPOs"
-			btnTitle="Full IPO Calendar"
-			btnUrl="/ipos/calendar/"
-			data={getIpoCalendarDataMin}
-		/>
+		<SidebarTable title="Upcoming IPOs" btnTitle="Full IPO Calendar" btnUrl="/ipos/calendar/" data={getIposRecentMin} />
 
 		<Sidebar1 />
 

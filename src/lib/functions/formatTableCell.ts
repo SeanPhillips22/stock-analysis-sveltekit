@@ -9,7 +9,7 @@ export function formatTableCell(formatFunction: FormatFunction, cell: any) {
 			return abbreviate(cell)
 
 		case 'date':
-			return cell ? formatDate(cell) : '-'
+			return cell && cell !== 'n/a' ? formatDate(cell) : '-'
 
 		case 'price':
 			return formatPrice(cell)

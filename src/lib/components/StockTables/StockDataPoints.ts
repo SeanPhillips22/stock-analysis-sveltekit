@@ -238,7 +238,7 @@ export const DataPoints: Props = {
 		id: 'ipoPriceRange',
 		name: 'IPO Price Range',
 		colName: 'Price Range',
-		format: 'stringright',
+		format: 'string',
 		only: 'ipo'
 	},
 	isSpac: { id: 'isSpac', name: 'Is SPAC' },
