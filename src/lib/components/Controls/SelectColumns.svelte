@@ -7,7 +7,6 @@
 	import type { DataPointType } from '../StockTables/StockDataPoints'
 	import type { DataId } from '$lib/types/DataId'
 	import SelectItem from './SelectItem.svelte'
-	import { onMount } from 'svelte'
 
 	export let active: DataId[]
 	export let options: DataId[]
@@ -33,10 +32,6 @@
 		})
 	}
 
-	onMount(() => {
-		stackColumns()
-	})
-
 	let activeItems: DataPointType[]
 	let inactiveItems: DataPointType[]
 
@@ -51,7 +46,7 @@
 	}
 </script>
 
-<Dropdown title="Columns" interactive wide onClick={stackColumns}>
+<Dropdown title="Columns" interactive wide on:menuClicked={stackColumns}>
 	<!-- svelte-ignore a11y-autofocus -->
 	<input type="text" class="search" autofocus bind:value={search} />
 	<div class="column-list">

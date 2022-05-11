@@ -1,13 +1,16 @@
 <script lang="ts">
+	/**
+	 * A dropdown component
+	 */
 	import { fly } from 'svelte/transition'
+	import { createEventDispatcher } from 'svelte'
 	import { clickOutside } from '$lib/functions/ui/clickOutside'
 	import ChevronDown from '$lib/icons/ChevronDown.svelte'
 
-	export let title: string
+	export let title: string // The text on the button
 	export let interactive = false // Should the dropdown close on click inside?
 	export let wide = false // Should the dropdown be wide?
-	export let onClick: () => any = () => {}
-	let open = false
+	let open = false // Initial open state is false (dropdown closed)
 
 	const handleClickOutside = () => {
 		setTimeout(() => {
@@ -16,13 +19,17 @@
 	}
 
 	const close = () => (open = false)
+
+	// Dispatch events to parent component that created the dropdown:
+	// 1. menuClicked -- The menu button was clicked
+	const dispatch = createEventDispatcher()
 </script>
 
 <div class="controls-menu">
 	<button
 		class="controls-btn"
 		on:click={() => {
-			onClick()
+			dispatch('menuClicked')
 			open = !open
 		}}
 	>
