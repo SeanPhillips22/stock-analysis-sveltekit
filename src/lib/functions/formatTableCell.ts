@@ -3,13 +3,13 @@ import type { FormatFunction } from '$lib/components/StockTables/types'
 export function formatTableCell(formatFunction: FormatFunction, cell: any) {
 	switch (formatFunction) {
 		case 'symbol':
-			return `<a href="/stocks/${cell.toLowerCase()}/" sveltekit:prefetch>${cell}</a>`
+			return formatSymbol(cell)
 
 		case 'abbreviate':
 			return abbreviate(cell)
 
 		case 'date':
-			return formatDate(cell)
+			return cell ? formatDate(cell) : '-'
 
 		case 'price':
 			return formatPrice(cell)
@@ -22,6 +22,12 @@ export function formatTableCell(formatFunction: FormatFunction, cell: any) {
 
 		case 'integer':
 			return cell ? format(cell, 0) : '-'
+
+		case 'format2dec':
+			return cell ? format(cell, 2) : '-'
+
+		case 'formatPercentage':
+			return cell ? format(cell, 2) + '%' : '-'
 
 		default:
 			break
@@ -54,6 +60,16 @@ export function format(value: number, decimals: 0 | 2 | 3) {
 	if (decimals === 2) return dec2.format(value)
 	if (decimals === 3) return dec3.format(value)
 	return value
+}
+
+export function formatSymbol(value: string) {
+	// check if first character in the string is a =
+	// this means the symbol has been delisted
+	if (value.charAt(0) === '=') {
+		return value.substring(1)
+	}
+
+	return `<a href="/stocks/${value.toLowerCase()}/" sveltekit:prefetch>${value}</a>`
 }
 
 // Abbreviate a number as B/M/K

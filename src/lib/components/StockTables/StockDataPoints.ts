@@ -116,7 +116,7 @@ export const DataPoints: Props = {
 		colName: 'Div. Yield',
 		format: 'formatPercentage'
 	},
-	sector: { id: 'sector', name: 'Sector', format: 'string' },
+	sector: { id: 'sector', name: 'Sector', format: 'string', classes: 'sl' },
 	ch1w: {
 		id: 'ch1w',
 		name: 'Price Change 1W',
@@ -181,7 +181,7 @@ export const DataPoints: Props = {
 		colName: 'PT Diff. (%)',
 		format: 'colorPercentage'
 	},
-	country: { id: 'country', name: 'Country', format: 'string' },
+	country: { id: 'country', name: 'Country', format: 'string', classes: 'sl' },
 	employees: {
 		id: 'employees',
 		name: 'Employees',

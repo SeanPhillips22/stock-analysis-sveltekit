@@ -26,7 +26,7 @@
 	}
 
 	const initialStringified = stringifyObject(initialState)
-	const initialColumns = stringifyObject(initialQuery.columns)
+	const initialColumns = JSON.stringify(initialQuery.columns)
 	setContext('initialState', initialStringified) // to prevent the initial state from mutating, no idea why it happens
 
 	/**
@@ -77,8 +77,6 @@
 		fetchedData = res.data
 		initialData = fetchedData
 	}
-
-	// $: console.log(JSON.stringify($state, true, 2))
 </script>
 
 <StockTableBody {config} {initialData} />
