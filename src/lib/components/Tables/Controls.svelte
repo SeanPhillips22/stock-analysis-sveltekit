@@ -32,9 +32,3 @@
 		<Filter bind:filter />
 	{/if}
 {/if}
-
-<style type="text/postcss">
-	/* .wrap {
-		@apply flex gap-x-2;
-	} */
-</style>
