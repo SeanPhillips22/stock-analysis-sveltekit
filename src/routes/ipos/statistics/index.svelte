@@ -1,5 +1,7 @@
 <script lang="ts">
 	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
+	import StatsChartAnnual from '$lib/components/IPOs/Charts/StatsChartAnnual.svelte'
+	import StatsChartMonthly from '$lib/components/IPOs/Charts/StatsChartMonthly.svelte'
 	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
 	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
 
@@ -46,15 +48,15 @@
 				There have been {data.total.toLocaleString('en-US')} IPOs between 2000 and 2022. The least was in 2009 with only
 				62. The full year 2021 was an all-time record with 1035 IPOs, beating the previous record of 480 in the year 2020.
 			</p>
-			<!-- <StatsChartAnnual title="Annual IPOs, 2000-2022" data={data.year2022} /> -->
+			<StatsChartAnnual title="Annual IPOs, 2000-2022" data={data.year2022} />
 		</div>
 		<div>
 			<h2>2022 Initial Public Offerings</h2>
 			<p>
-				There have been ${data.year2022} IPOs so far in 2022.
+				There have been {data.year2022} IPOs so far in 2022.
 				<a href="/ipos/2022/" sveltekit:prefetch>View all 2022 IPOs.</a>
 			</p>
-			<!-- <StatsChartMonthly title="2022 IPOs" data={data.months2022} /> -->
+			<StatsChartMonthly title="2022 IPOs" data={data.months2022} />
 		</div>
 		<div>
 			<h2>2021 Initial Public Offerings</h2>
@@ -62,7 +64,7 @@
 				There were 1035 IPOs in 2021, which was an all-time record. March had the most with a total of 151, while August
 				had the fewest with only 40 IPOs. <a href="/ipos/2021/" sveltekit:prefetch>View all 2021 IPOs.</a>
 			</p>
-			<!-- <StatsChartMonthly title="2021 IPOs" data={data.months2021} /> -->
+			<StatsChartMonthly title="2021 IPOs" data={data.months2021} />
 		</div>
 		<div>
 			<h2>2020 Initial Public Offerings</h2>
@@ -70,7 +72,7 @@
 				There were 480 initial public offerings in 2020. October had the most with a total of 97 IPOs. March had the
 				fewest with only 5. <a href="/ipos/2020/" sveltekit:prefetch>View all 2020 IPOs.</a>
 			</p>
-			<!-- <StatsChartMonthly title="2020 IPOs" data={data.months2020} /> -->
+			<StatsChartMonthly title="2020 IPOs" data={data.months2020} />
 		</div>
 		<div>
 			<h2>2019 Initial Public Offerings</h2>
@@ -80,7 +82,7 @@
 					sveltekit:prefetch>View all 2019 IPOs.</a
 				>
 			</p>
-			<!-- <StatsChartMonthly title="2019 IPOs" data={data.months2019} /> -->
+			<StatsChartMonthly title="2019 IPOs" data={data.months2019} />
 		</div>
 	</div>
 
