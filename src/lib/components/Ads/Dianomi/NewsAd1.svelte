@@ -2,9 +2,9 @@
 	import { browser } from '$app/env'
 </script>
 
-{#if browser}
+<!-- {#if browser}
 	<script src="https://www.dianomi.com/js/contextfeed.js" id="dianomi_context_script"></script>
-{/if}
+{/if} -->
 
 <div id="ad-banner" class="dianomi_context" data-dianomi-context-id="410" />
 
