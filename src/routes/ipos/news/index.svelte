@@ -1,63 +1,46 @@
+<script lang="ts">
+	import NewsFeed from '$lib/components/News/_NewsFeed.svelte'
+	import IPONavigation from '$lib/components/IPOs/Navigation/IPONavigation.svelte'
+	import SidebarTable from '$lib/components/IPOs/SidebarTable.svelte'
+	import Sidebar1 from '$lib/components/Ads/AdSense/Sidebar1.svelte'
+
+	import type { SidebarTableProps } from '$lib/components/IPOs/ipo.types'
+	import type { NewsArray } from '$lib/components/News/types'
+
+	export let data: NewsArray
+	export let upcoming: SidebarTableProps
+	export let recent: SidebarTableProps
+</script>
+
+<svelte:head>
+	<title>Latest IPO News</title>
+	<meta
+		name="description"
+		content="The latest news about initial public offerings (IPOs) on the stock market, including both recent and upcoming IPOs."
+	/>
+	<link rel="canonical" href="https://stockanalysis.com/ipos/news/" />
+</svelte:head>
+
 <h1>IPO News</h1>
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+<IPONavigation page="news" />
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+<div class="page">
+	<NewsFeed news={data} related="Stocks" />
 
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi illum quidem rem officia beatae, laboriosam, soluta
-	ratione deleniti cumque voluptatibus velit odit voluptas distinctio cum sed dolorum earum laborum numquam a? Tenetur
-	ipsum, iusto reprehenderit optio nemo cupiditate pariatur provident esse, hic placeat molestias natus adipisci minus
-	non vel nihil laudantium odit porro, maxime sit nobis. Recusandae quidem repudiandae ipsam.
-</p>
+	<aside>
+		<SidebarTable title="Upcoming IPOs" btnTitle="Full IPO Calendar" btnUrl="/ipos/calendar/" data={upcoming} />
+		<Sidebar1 />
+		<SidebarTable title="Latest IPOs" btnTitle="All Recent IPOs" btnUrl="/ipos/" data={recent} />
+	</aside>
+</div>
 
 <style type="text/postcss">
-	p {
-		@apply text-lg mb-4;
+	.page {
+		@apply lg:grid lg:grid-cols-sidebar lg:gap-x-10;
+	}
+
+	aside:global {
+		@apply flex flex-col space-y-10 pt-6;
 	}
 </style>
